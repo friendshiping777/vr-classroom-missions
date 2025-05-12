@@ -75,12 +75,38 @@
             margin-right: 15px;
             border-radius: 4px;
             overflow: hidden;
+            position: relative;
         }
         
         .streamer-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+        
+        .avatar-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+        
+        .streamer-avatar:hover .avatar-overlay {
+            opacity: 1;
+        }
+        
+        .avatar-overlay-text {
+            color: white;
+            font-size: 12px;
+            text-align: center;
         }
         
         .streamer-details {
@@ -245,24 +271,7 @@
         }
         
         .file-upload {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-        }
-        
-        .file-upload label {
-            background-color: #2b5797;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 13px;
-            margin-right: 10px;
-        }
-        
-        .file-upload-info {
-            font-size: 12px;
-            color: #666;
+            display: none;
         }
         
         .upload-status {
@@ -328,6 +337,7 @@
         <ol>
             <li>각 스트리머의 미션 상태를 체크박스로 관리할 수 있습니다.</li>
             <li>미션 제목 옆 ✏️ 버튼을 클릭하면 미션 내용을 직접 수정할 수 있습니다.</li>
+            <li>프로필 이미지를 클릭하여 스트리머의 프로필 사진을 변경할 수 있습니다.</li>
             <li><strong>업데이트</strong> 버튼을 클릭하면 해당 스트리머의 미션 현황판이 실시간으로 업데이트됩니다.</li>
             <li>스트리머는 OBS에 미션 현황판 링크를 브라우저 소스로 추가하면 됩니다.</li>
         </ol>
@@ -339,8 +349,12 @@
             <div class="streamer-header">견자희</div>
             
             <div class="streamer-info">
-                <div class="streamer-avatar">
+                <div class="streamer-avatar" onclick="triggerFileUpload('kyeonjahee')">
                     <img id="kyeonjahee-avatar" src="#" alt="견자희">
+                    <div class="avatar-overlay">
+                        <div class="avatar-overlay-text">클릭하여<br>이미지 변경</div>
+                    </div>
+                    <input type="file" id="kyeonjahee-image" class="file-upload" accept="image/*" onchange="uploadImage('kyeonjahee')">
                 </div>
                 <div class="streamer-details">
                     <div class="streamer-role">[특이사항]</div>
@@ -383,11 +397,6 @@
                 </div>
                 <button class="copy-button" onclick="copyToClipboard('kyeonjahee-link')">복사</button>
                 
-                <div class="file-upload">
-                    <label for="kyeonjahee-image">이미지 변경</label>
-                    <input type="file" id="kyeonjahee-image" style="display:none" onchange="uploadImage('kyeonjahee')">
-                    <span class="file-upload-info">* PNG 이미지만 가능</span>
-                </div>
                 <div id="kyeonjahee-upload-status" class="upload-status"></div>
                 
                 <div class="control-buttons">
@@ -402,8 +411,12 @@
             <div class="streamer-header">우정잉</div>
             
             <div class="streamer-info">
-                <div class="streamer-avatar">
+                <div class="streamer-avatar" onclick="triggerFileUpload('woojeong')">
                     <img id="woojeong-avatar" src="./woojeong.png" alt="우정잉">
+                    <div class="avatar-overlay">
+                        <div class="avatar-overlay-text">클릭하여<br>이미지 변경</div>
+                    </div>
+                    <input type="file" id="woojeong-image" class="file-upload" accept="image/*" onchange="uploadImage('woojeong')">
                 </div>
                 <div class="streamer-details">
                     <div class="streamer-role">[특이사항]</div>
@@ -446,11 +459,6 @@
                 </div>
                 <button class="copy-button" onclick="copyToClipboard('woojeong-link')">복사</button>
                 
-                <div class="file-upload">
-                    <label for="woojeong-image">이미지 변경</label>
-                    <input type="file" id="woojeong-image" style="display:none" onchange="uploadImage('woojeong')">
-                    <span class="file-upload-info">* PNG 이미지만 가능</span>
-                </div>
                 <div id="woojeong-upload-status" class="upload-status"></div>
                 
                 <div class="control-buttons">
@@ -465,8 +473,12 @@
             <div class="streamer-header">민결희</div>
             
             <div class="streamer-info">
-                <div class="streamer-avatar">
+                <div class="streamer-avatar" onclick="triggerFileUpload('mingyeolhui')">
                     <img id="mingyeolhui-avatar" src="#" alt="민결희">
+                    <div class="avatar-overlay">
+                        <div class="avatar-overlay-text">클릭하여<br>이미지 변경</div>
+                    </div>
+                    <input type="file" id="mingyeolhui-image" class="file-upload" accept="image/*" onchange="uploadImage('mingyeolhui')">
                 </div>
                 <div class="streamer-details">
                     <div class="streamer-role">[특이사항]</div>
@@ -509,11 +521,6 @@
                 </div>
                 <button class="copy-button" onclick="copyToClipboard('mingyeolhui-link')">복사</button>
                 
-                <div class="file-upload">
-                    <label for="mingyeolhui-image">이미지 변경</label>
-                    <input type="file" id="mingyeolhui-image" style="display:none" onchange="uploadImage('mingyeolhui')">
-                    <span class="file-upload-info">* PNG 이미지만 가능</span>
-                </div>
                 <div id="mingyeolhui-upload-status" class="upload-status"></div>
                 
                 <div class="control-buttons">
@@ -528,8 +535,12 @@
             <div class="streamer-header">짬타수아</div>
             
             <div class="streamer-info">
-                <div class="streamer-avatar">
+                <div class="streamer-avatar" onclick="triggerFileUpload('jjamtasua')">
                     <img id="jjamtasua-avatar" src="#" alt="짬타수아">
+                    <div class="avatar-overlay">
+                        <div class="avatar-overlay-text">클릭하여<br>이미지 변경</div>
+                    </div>
+                    <input type="file" id="jjamtasua-image" class="file-upload" accept="image/*" onchange="uploadImage('jjamtasua')">
                 </div>
                 <div class="streamer-details">
                     <div class="streamer-role">[특이사항]</div>
@@ -572,11 +583,6 @@
                 </div>
                 <button class="copy-button" onclick="copyToClipboard('jjamtasua-link')">복사</button>
                 
-                <div class="file-upload">
-                    <label for="jjamtasua-image">이미지 변경</label>
-                    <input type="file" id="jjamtasua-image" style="display:none" onchange="uploadImage('jjamtasua')">
-                    <span class="file-upload-info">* PNG 이미지만 가능</span>
-                </div>
                 <div id="jjamtasua-upload-status" class="upload-status"></div>
                 
                 <div class="control-buttons">
@@ -591,8 +597,12 @@
             <div class="streamer-header">지니씨</div>
             
             <div class="streamer-info">
-                <div class="streamer-avatar">
+                <div class="streamer-avatar" onclick="triggerFileUpload('jini')">
                     <img id="jini-avatar" src="#" alt="지니씨">
+                    <div class="avatar-overlay">
+                        <div class="avatar-overlay-text">클릭하여<br>이미지 변경</div>
+                    </div>
+                    <input type="file" id="jini-image" class="file-upload" accept="image/*" onchange="uploadImage('jini')">
                 </div>
                 <div class="streamer-details">
                     <div class="streamer-role">[특이사항]</div>
@@ -635,11 +645,6 @@
                 </div>
                 <button class="copy-button" onclick="copyToClipboard('jini-link')">복사</button>
                 
-                <div class="file-upload">
-                    <label for="jini-image">이미지 변경</label>
-                    <input type="file" id="jini-image" style="display:none" onchange="uploadImage('jini')">
-                    <span class="file-upload-info">* PNG 이미지만 가능</span>
-                </div>
                 <div id="jini-upload-status" class="upload-status"></div>
                 
                 <div class="control-buttons">
@@ -654,8 +659,12 @@
             <div class="streamer-header">망구랑</div>
             
             <div class="streamer-info">
-                <div class="streamer-avatar">
+                <div class="streamer-avatar" onclick="triggerFileUpload('manggurang')">
                     <img id="manggurang-avatar" src="#" alt="망구랑">
+                    <div class="avatar-overlay">
+                        <div class="avatar-overlay-text">클릭하여<br>이미지 변경</div>
+                    </div>
+                    <input type="file" id="manggurang-image" class="file-upload" accept="image/*" onchange="uploadImage('manggurang')">
                 </div>
                 <div class="streamer-details">
                     <div class="streamer-role">[특이사항]</div>
@@ -698,11 +707,6 @@
                 </div>
                 <button class="copy-button" onclick="copyToClipboard('manggurang-link')">복사</button>
                 
-                <div class="file-upload">
-                    <label for="manggurang-image">이미지 변경</label>
-                    <input type="file" id="manggurang-image" style="display:none" onchange="uploadImage('manggurang')">
-                    <span class="file-upload-info">* PNG 이미지만 가능</span>
-                </div>
                 <div id="manggurang-upload-status" class="upload-status"></div>
                 
                 <div class="control-buttons">
@@ -717,8 +721,12 @@
             <div class="streamer-header">마이곰이</div>
             
             <div class="streamer-info">
-                <div class="streamer-avatar">
+                <div class="streamer-avatar" onclick="triggerFileUpload('mygomi')">
                     <img id="mygomi-avatar" src="#" alt="마이곰이">
+                    <div class="avatar-overlay">
+                        <div class="avatar-overlay-text">클릭하여<br>이미지 변경</div>
+                    </div>
+                    <input type="file" id="mygomi-image" class="file-upload" accept="image/*" onchange="uploadImage('mygomi')">
                 </div>
                 <div class="streamer-details">
                     <div class="streamer-role">[특이사항]</div>
@@ -761,11 +769,6 @@
                 </div>
                 <button class="copy-button" onclick="copyToClipboard('mygomi-link')">복사</button>
                 
-                <div class="file-upload">
-                    <label for="mygomi-image">이미지 변경</label>
-                    <input type="file" id="mygomi-image" style="display:none" onchange="uploadImage('mygomi')">
-                    <span class="file-upload-info">* PNG 이미지만 가능</span>
-                </div>
                 <div id="mygomi-upload-status" class="upload-status"></div>
                 
                 <div class="control-buttons">
@@ -790,6 +793,11 @@
                 .catch(err => console.error('클립보드 복사 실패:', err));
         }
         
+        // 파일 업로드 트리거 함수
+        function triggerFileUpload(streamerId) {
+            document.getElementById(`${streamerId}-image`).click();
+        }
+        
         // 미션 섹션 편집 함수
         function editMissionSection(buttonElement, type) {
             // 버튼이 속한 카드 찾기
@@ -808,31 +816,56 @@
                 ];
             }
             
-            // 미션 텍스트를 편집 가능하게 만들기
-            missionElements.forEach(element => {
-                if (element) {
-                    element.contentEditable = true;
-                    element.focus();
-                }
-            });
+            // 이미 편집 모드인지 확인
+            const isEditing = missionElements[0].contentEditable === 'true';
             
-            // 편집 완료 시 저장하는 이벤트 리스너 추가
-            missionElements.forEach(element => {
-                if (element) {
-                    element.addEventListener('blur', function() {
-                        element.contentEditable = false;
+            if (isEditing) {
+                // 편집 종료 및 저장
+                missionElements.forEach(element => {
+                    if (element) {
+                        element.contentEditable = 'false';
+                        element.style.outline = 'none';
+                        element.style.backgroundColor = '';
+                        
                         // 텍스트 변경사항 저장
                         saveMissionText(streamerId, element.getAttribute('data-mission-id'), element.textContent);
-                    });
-                    
-                    element.addEventListener('keydown', function(e) {
-                        if (e.key === 'Enter') {
-                            e.preventDefault();
-                            element.blur();
-                        }
-                    });
-                }
-            });
+                    }
+                });
+                
+                // 버튼 텍스트 변경
+                buttonElement.textContent = '✏️';
+                
+                // 업데이트 자동 호출 - 실시간으로 OBS에 반영
+                updateStreamer(streamerId);
+            } else {
+                // 편집 시작
+                missionElements.forEach(element => {
+                    if (element) {
+                        element.contentEditable = 'true';
+                        element.style.outline = '2px solid #2b5797';
+                        element.style.backgroundColor = '#f0f0f0';
+                    }
+                });
+                
+                // 첫 번째 요소에 포커스
+                missionElements[0].focus();
+                
+                // 버튼 텍스트 변경
+                buttonElement.textContent = '💾';
+                
+                // 엔터 키 누르면 저장하는 이벤트 리스너 추가
+                missionElements.forEach(element => {
+                    if (element) {
+                        element.addEventListener('keydown', function(e) {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                // 편집 버튼 다시 클릭하여 저장
+                                buttonElement.click();
+                            }
+                        }, { once: true });
+                    }
+                });
+            }
         }
         
         // 미션 텍스트 저장 함수
@@ -840,9 +873,6 @@
             // 로컬 스토리지에 저장
             const storageKey = `${streamerId}-mission-${missionId}`;
             localStorage.setItem(storageKey, text);
-            
-            // 저장 알림
-            showToast('미션 텍스트가 저장되었습니다.');
         }
         
         // 토스트 메시지 표시 함수
@@ -882,6 +912,9 @@
             const mission3 = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="3"]`).textContent;
             const mission4 = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="4"]`).textContent;
             
+            // 프로필 이미지 데이터 가져오기
+            const profileImage = localStorage.getItem(`${streamerId}-profile-image`);
+            
             // 기본 URL 가져오기
             const baseUrl = document.getElementById(`${streamerId}-link`).innerText.trim().split('?')[0];
             
@@ -897,6 +930,11 @@
             newUrl += `mission2=${encodeURIComponent(mission2)}&`;
             newUrl += `mission3=${encodeURIComponent(mission3)}&`;
             newUrl += `mission4=${encodeURIComponent(mission4)}&`;
+            
+            // 프로필 이미지 데이터 추가 (있는 경우)
+            if (profileImage) {
+                newUrl += `profileImage=${encodeURIComponent(profileImage)}&`;
+            }
             
             // 마지막 & 제거
             if (newUrl.endsWith('&')) {
@@ -934,12 +972,20 @@
             const mission3 = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="3"]`).textContent;
             const mission4 = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="4"]`).textContent;
             
+            // 프로필 이미지 데이터 가져오기
+            const profileImage = localStorage.getItem(`${streamerId}-profile-image`);
+            
             // 리셋 URL 생성
             let resetUrl = `${baseUrl}?reset=1`;
             resetUrl += `&mission1=${encodeURIComponent(mission1)}`;
             resetUrl += `&mission2=${encodeURIComponent(mission2)}`;
             resetUrl += `&mission3=${encodeURIComponent(mission3)}`;
             resetUrl += `&mission4=${encodeURIComponent(mission4)}`;
+            
+            // 프로필 이미지 데이터 추가 (있는 경우)
+            if (profileImage) {
+                resetUrl += `&profileImage=${encodeURIComponent(profileImage)}`;
+            }
             
             // 리셋 URL로 열기
             let streamerWindow = window.streamerWindows?.[streamerId];
@@ -963,31 +1009,26 @@
             if (!file) return;
             
             // 이미지 파일만 허용
-            if (!file.type.match('image/png')) {
-                const statusEl = document.getElementById(`${streamerId}-upload-status`);
-                statusEl.className = 'upload-status upload-error';
-                statusEl.style.display = 'block';
-                statusEl.textContent = '오류: PNG 이미지만 업로드 가능합니다.';
+            if (!file.type.match('image.*')) {
+                showToast('오류: 이미지 파일만 업로드 가능합니다.');
                 return;
             }
             
-            // GitHub에서는 이미지 업로드 API를 직접 사용할 수 없으므로,
-            // 대신 이미지를 Base64로 인코딩하여 미리보기로 보여주고
-            // 사용자에게 GitHub에 수동으로 업로드하도록 안내합니다.
-            
             const reader = new FileReader();
             reader.onload = function(e) {
+                const imageData = e.target.result;
+                
                 // 이미지 미리보기 업데이트
-                document.getElementById(`${streamerId}-avatar`).src = e.target.result;
+                document.getElementById(`${streamerId}-avatar`).src = imageData;
                 
-                // 상태 메시지 표시
-                const statusEl = document.getElementById(`${streamerId}-upload-status`);
-                statusEl.className = 'upload-status upload-success';
-                statusEl.style.display = 'block';
-                statusEl.textContent = '미리보기가 업데이트되었습니다. 실제 반영을 위해서는 GitHub에 이미지를 업로드해야 합니다.';
+                // 로컬 스토리지에 이미지 데이터 저장
+                localStorage.setItem(`${streamerId}-profile-image`, imageData);
                 
-                // 알림 표시
-                alert('이미지 미리보기가 업데이트되었습니다.\n\n실제 반영을 위해서는 GitHub에 이미지를 업로드해야 합니다:\n1. GitHub 저장소로 이동\n2. "Add file" → "Upload files" 클릭\n3. 이미지 업로드 및 "Commit changes" 클릭');
+                // 성공 메시지 표시
+                showToast('프로필 이미지가 업데이트되었습니다.');
+                
+                // 스트리머 OBS 자동 업데이트
+                updateStreamer(streamerId);
             };
             reader.readAsDataURL(file);
         }
@@ -1005,29 +1046,36 @@
                 if (linkElement) {
                     linkElement.innerText = `${repoUrl}/${streamerId}.html`;
                 }
+                
+                // 저장된 미션 텍스트 불러오기
+                loadMissionTexts(streamerId);
+                
+                // 저장된 프로필 이미지 불러오기
+                loadProfileImage(streamerId);
             });
-            
-            // 저장된 미션 텍스트 불러오기
-            loadMissionTexts();
         });
         
-        // 페이지 로드 시 저장된 미션 텍스트 적용
-        function loadMissionTexts() {
-            const streamers = ['kyeonjahee', 'woojeong', 'mingyeolhui', 'jjamtasua', 'jini', 'manggurang', 'mygomi'];
-            
-            streamers.forEach(streamerId => {
-                for (let i = 1; i <= 4; i++) {
-                    const storageKey = `${streamerId}-mission-${i}`;
-                    const savedText = localStorage.getItem(storageKey);
-                    
-                    if (savedText) {
-                        const element = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="${i}"]`);
-                        if (element) {
-                            element.textContent = savedText;
-                        }
+        // 저장된 미션 텍스트 불러오기
+        function loadMissionTexts(streamerId) {
+            for (let i = 1; i <= 4; i++) {
+                const storageKey = `${streamerId}-mission-${i}`;
+                const savedText = localStorage.getItem(storageKey);
+                
+                if (savedText) {
+                    const element = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="${i}"]`);
+                    if (element) {
+                        element.textContent = savedText;
                     }
                 }
-            });
+            }
+        }
+        
+        // 저장된 프로필 이미지 불러오기
+        function loadProfileImage(streamerId) {
+            const imageData = localStorage.getItem(`${streamerId}-profile-image`);
+            if (imageData) {
+                document.getElementById(`${streamerId}-avatar`).src = imageData;
+            }
         }
     </script>
 </body>
