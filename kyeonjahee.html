@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>견자희 미션 현황판</title>
+    <title>스트리머 미션 현황판</title>
+    <!-- 캐시 제어 메타태그 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
     <style>
         body {
             margin: 0;
@@ -12,177 +21,266 @@
             font-family: 'Malgun Gothic', sans-serif;
         }
         
-        .overlay-container {
-            position: relative;
-            width: 280px;
-            height: 205px;
+        .mission-panel {
+            width: 300px;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .streamer-header {
+            background-color: #2b5797;
+            color: white;
+            padding: 10px 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .streamer-info {
+            display: flex;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .streamer-avatar {
+            width: 60px;
+            height: 60px;
+            background-color: #ddd;
+            margin-right: 15px;
+            border-radius: 4px;
             overflow: hidden;
         }
         
-        .background-image {
+        .streamer-avatar img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
+            object-fit: cover;
         }
         
-        .checkmarks {
-            position: absolute;
-            z-index: 2;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
+        .streamer-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
-        .check {
-            position: absolute;
+        .streamer-role {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .streamer-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
+        .mission-section {
+            padding: 15px;
+        }
+        
+        .mission-category {
+            font-weight: bold;
+            background-color: #efefef;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .main-mission {
+            color: #c43e57;
+            border-left: 4px solid #c43e57;
+        }
+        
+        .sub-mission {
+            color: #b87d2b;
+            border-left: 4px solid #b87d2b;
+            margin-top: 15px;
+        }
+        
+        .mission-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 8px 0;
+        }
+        
+        .mission-checkbox {
             width: 20px;
             height: 20px;
-            display: none;
-            background-color: #4CAF50;
+            border: 2px solid #aaa;
             border-radius: 3px;
+            margin-right: 10px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
         }
         
-        .check:after {
+        .mission-checkbox.checked {
+            background-color: #44c767;
+            border-color: #44c767;
+        }
+        
+        .mission-checkbox.checked:after {
             content: "✓";
             color: white;
             font-weight: bold;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
         }
         
-        /* 체크마크 위치 - 미션 현황판에 맞게 조정 */
-        #check1 {
-            top: 219px;
-            left: 125px;
+        .mission-text {
+            font-size: 15px;
+            flex: 1;
         }
         
-        #check2 {
-            top: 275px;
-            left: 125px;
-        }
-        
-        #check3 {
-            top: 302px;
-            left: 125px;
-        }
-        
-        #check4 {
-            top: 330px;
-            left: 125px;
-        }
-        
-        .control-panel {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-        }
-        
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 5px;
-            margin-bottom: 10px;
-        }
-        
-        .control-button {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 8px 12px;
+        .loading-indicator {
             text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        
-        .control-button:hover {
-            background-color: #45a049;
+            padding: 20px;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <div class="overlay-container">
-        <!-- 배경 이미지 -->
-        <img src="./kyeonjahee.png" class="background-image" alt="견자희 미션 현황판">
+    <div class="mission-panel">
+        <div class="loading-indicator" id="loading">데이터 로딩 중...</div>
         
-        <!-- 체크마크 오버레이 -->
-        <div class="checkmarks">
-            <div class="check" id="check1"></div>
-            <div class="check" id="check2"></div>
-            <div class="check" id="check3"></div>
-            <div class="check" id="check4"></div>
+        <div class="streamer-header" id="streamer-name"></div>
+        
+        <div class="streamer-info">
+            <div class="streamer-avatar">
+                <img id="profile-image" src="./default-avatar.png" alt="프로필 이미지">
+            </div>
+            <div class="streamer-details">
+                <div class="streamer-role">[특이사항]</div>
+                <div class="streamer-name" id="streamer-role"></div>
+            </div>
         </div>
-    </div>
-    
-    <!-- 컨트롤 패널 (OBS에서 제외할 부분) -->
-    <div class="control-panel">
-        <div class="button-container">
-            <button class="control-button" onclick="toggleCheck('check1')">메인1 토글</button>
-            <button class="control-button" onclick="toggleCheck('check2')">서브1 토글</button>
-            <button class="control-button" onclick="toggleCheck('check3')">서브2 토글</button>
-            <button class="control-button" onclick="toggleCheck('check4')">서브3 토글</button>
-            <button class="control-button" onclick="resetAll()">모두 초기화</button>
+        
+        <div class="mission-section">
+            <div class="mission-category main-mission">메인 미션</div>
+            <div class="mission-item">
+                <div class="mission-checkbox" id="check1"></div>
+                <div class="mission-text" id="mission1">메인 미션 내용</div>
+            </div>
+            
+            <div class="mission-category sub-mission">서브 미션</div>
+            <div class="mission-item">
+                <div class="mission-checkbox" id="check2"></div>
+                <div class="mission-text" id="mission2">서브 미션 1</div>
+            </div>
+            <div class="mission-item">
+                <div class="mission-checkbox" id="check3"></div>
+                <div class="mission-text" id="mission3">서브 미션 2</div>
+            </div>
+            <div class="mission-item">
+                <div class="mission-checkbox" id="check4"></div>
+                <div class="mission-text" id="mission4">서브 미션 3</div>
+            </div>
         </div>
     </div>
 
     <script>
-        // 체크마크 토글 함수
-        function toggleCheck(id) {
-            const checkmark = document.getElementById(id);
-            if (checkmark.style.display === "block") {
-                checkmark.style.display = "none";
-            } else {
-                checkmark.style.display = "block";
-            }
+        // Firebase 초기화
+        const firebaseConfig = {
+          apiKey: "AIzaSyAAX8T5oKVHIaZf_xut7qmfn88LIB1jUcM",
+          authDomain: "friendshiping-ee9a0.firebaseapp.com",
+          databaseURL: "https://friendshiping-ee9a0-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "friendshiping-ee9a0",
+          storageBucket: "friendshiping-ee9a0.firebasestorage.app",
+          messagingSenderId: "142784785070",
+          appId: "1:142784785070:web:0c94cf9d10c5eb0bf19b3f"
+        };
+        
+        // Firebase 초기화
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        
+        // 스트리머 ID 추출 (파일명에서)
+        function getStreamerId() {
+            const path = window.location.pathname;
+            const filename = path.substring(path.lastIndexOf('/') + 1);
+            return filename.replace('.html', '');
         }
         
-        // 모든 체크마크 초기화
-        function resetAll() {
-            const checkmarks = document.querySelectorAll('.check');
-            checkmarks.forEach(check => {
-                check.style.display = "none";
+        // 페이지 로드 시 실행
+        window.addEventListener('load', function() {
+            const streamerId = getStreamerId();
+            console.log('스트리머 ID:', streamerId);
+            
+            // Firebase에서 데이터 가져오기
+            const streamerRef = database.ref(`streamers/${streamerId}`);
+            
+            // 실시간 데이터 감지 리스너
+            streamerRef.on('value', function(snapshot) {
+                console.log('Firebase 데이터 변경 감지!', new Date().toLocaleTimeString());
+                const data = snapshot.val();
+                console.log('받은 데이터:', data);
+                
+                // 로딩 표시 숨기기
+                document.getElementById('loading').style.display = 'none';
+                
+                if (data) {
+                    updateUI(data);
+                } else {
+                    console.log('데이터가 없습니다. 기본값 사용');
+                    document.getElementById('streamer-name').textContent = streamerId;
+                }
+            }, function(error) {
+                console.error('Firebase 데이터 로드 오류:', error);
             });
-        }
+        });
         
-        // URL 파라미터 파싱 함수
-        function getUrlParams() {
-            const params = {};
-            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, 
-                function(str, key, value) { params[key] = value; }
-            );
-            return params;
-        }
-        
-        // URL 파라미터로 체크 상태 설정
-        function applyUrlParams() {
-            const params = getUrlParams();
+        // UI 업데이트 함수
+        function updateUI(data) {
+            // 기본 정보 설정
+            document.getElementById('streamer-name').textContent = data.name || getStreamerId();
+            document.getElementById('streamer-role').textContent = data.role || '';
             
-            // 먼저 모든 체크를 리셋
-            if(params.reset === '1') {
-                resetAll();
-                return;
+            // 미션 설정
+            document.getElementById('mission1').textContent = data.mission1 || '';
+            document.getElementById('mission2').textContent = data.mission2 || '';
+            document.getElementById('mission3').textContent = data.mission3 || '';
+            document.getElementById('mission4').textContent = data.mission4 || '';
+            
+            // 체크박스 상태 설정
+            if (data.check1 === '1') document.getElementById('check1').classList.add('checked');
+            else document.getElementById('check1').classList.remove('checked');
+            
+            if (data.check2 === '1') document.getElementById('check2').classList.add('checked');
+            else document.getElementById('check2').classList.remove('checked');
+            
+            if (data.check3 === '1') document.getElementById('check3').classList.add('checked');
+            else document.getElementById('check3').classList.remove('checked');
+            
+            if (data.check4 === '1') document.getElementById('check4').classList.add('checked');
+            else document.getElementById('check4').classList.remove('checked');
+            
+            // 이미지 설정 - 최적화된 방식
+            if (data.image) {
+                const imgElement = document.getElementById('profile-image');
+                
+                // 현재 이미지 소스 확인
+                const currentSrc = imgElement.getAttribute('data-timestamp');
+                const newTimestamp = data.imageTimestamp || '';
+                
+                // 이미지가 변경되었을 경우에만 업데이트 (불필요한 새로고침 방지)
+                if (currentSrc !== newTimestamp.toString()) {
+                    // 이미지 에러 처리
+                    imgElement.onerror = function() {
+                        console.error('이미지 로드 실패');
+                        this.src = './default-avatar.png';
+                    };
+                    
+                    // 타임스탬프 저장
+                    imgElement.setAttribute('data-timestamp', newTimestamp.toString());
+                    
+                    // 이미지 소스 설정
+                    imgElement.src = data.image;
+                }
             }
-            
-            // 각 체크박스 상태 적용
-            if(params.check1 === '1') document.getElementById('check1').style.display = "block";
-            if(params.check2 === '1') document.getElementById('check2').style.display = "block";
-            if(params.check3 === '1') document.getElementById('check3').style.display = "block";
-            if(params.check4 === '1') document.getElementById('check4').style.display = "block";
         }
-        
-        // 페이지 로드 시 URL 파라미터 적용
-        window.addEventListener('load', applyUrlParams);
     </script>
 </body>
 </html>
