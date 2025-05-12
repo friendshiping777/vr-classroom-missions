@@ -129,7 +129,7 @@
 </head>
 <body>
     <div class="mission-panel">
-        <div class="streamer-header">우정잉</div>
+        <div class="streamer-header" id="streamer-name">우정잉</div>
         
         <div class="streamer-info">
             <div class="streamer-avatar">
@@ -137,7 +137,7 @@
             </div>
             <div class="streamer-details">
                 <div class="streamer-role">[특이사항]</div>
-                <div class="streamer-name">일진</div>
+                <div class="streamer-name" id="streamer-role">일진</div>
             </div>
         </div>
         
@@ -188,6 +188,10 @@
             if(params.check2 === '1') document.getElementById('check2').classList.add('checked');
             if(params.check3 === '1') document.getElementById('check3').classList.add('checked');
             if(params.check4 === '1') document.getElementById('check4').classList.add('checked');
+            
+            // 스트리머 이름과 역할 적용
+            if(params.name) document.getElementById('streamer-name').textContent = decodeURIComponent(params.name);
+            if(params.role) document.getElementById('streamer-role').textContent = decodeURIComponent(params.role);
             
             // 미션 텍스트 적용
             if(params.mission1) document.getElementById('mission1').textContent = decodeURIComponent(params.mission1);
