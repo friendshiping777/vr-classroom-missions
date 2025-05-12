@@ -283,6 +283,63 @@
     </div>
     
     <div class="container">
+        <!-- 견자희 카드 -->
+        <div class="streamer-card">
+            <div class="streamer-header">견자희</div>
+            
+            <div class="streamer-info">
+                <div class="streamer-avatar">
+                    <img id="kyeonjahee-avatar" src="#" alt="견자희">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role">[특이사항]</div>
+                    <div class="streamer-name">모범생</div>
+                </div>
+            </div>
+            
+            <div class="mission-section">
+                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="kyeonjahee-check1" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">선생님 도와주기</div>
+                </div>
+                
+                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="kyeonjahee-check2" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">발표 3번 하기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="kyeonjahee-check3" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">청소 담당되기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="kyeonjahee-check4" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">반장 선거 출마하기</div>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="kyeonjahee-link">
+                    https://friendshiping777.github.io/vr-classroom-missions/kyeonjahee.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('kyeonjahee-link')">복사</button>
+                
+                <div class="file-upload">
+                    <label for="kyeonjahee-image">이미지 변경</label>
+                    <input type="file" id="kyeonjahee-image" style="display:none" onchange="uploadImage('kyeonjahee')">
+                    <span class="file-upload-info">* PNG 이미지만 가능</span>
+                </div>
+                <div id="kyeonjahee-upload-status" class="upload-status"></div>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('kyeonjahee')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('kyeonjahee')">초기화</button>
+                </div>
+            </div>
+        </div>
+        
         <!-- 우정잉 카드 -->
         <div class="streamer-card">
             <div class="streamer-header">우정잉</div>
@@ -293,7 +350,7 @@
                 </div>
                 <div class="streamer-details">
                     <div class="streamer-role">[특이사항]</div>
-                    <div class="streamer-name">일 진</div>
+                    <div class="streamer-name">일진</div>
                 </div>
             </div>
             
@@ -339,14 +396,185 @@
                 </div>
             </div>
         </div>
-        
-        <!-- 스트리머2 카드 -->
+
+        <!-- 민결희 카드 -->
         <div class="streamer-card">
-            <div class="streamer-header">스트리머2</div>
+            <div class="streamer-header">민결희</div>
             
             <div class="streamer-info">
                 <div class="streamer-avatar">
-                    <img id="streamer2-avatar" src="#" alt="스트리머2">
+                    <img id="mingyeolhui-avatar" src="#" alt="민결희">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role">[특이사항]</div>
+                    <div class="streamer-name">일진</div>
+                </div>
+            </div>
+            
+            <div class="mission-section">
+                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="mingyeolhui-check1" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">1명 올리기</div>
+                </div>
+                
+                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="mingyeolhui-check2" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">수업 시간에 노래 부르기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="mingyeolhui-check3" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">아유 받기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="mingyeolhui-check4" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">반장 선거 2표 받기</div>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="mingyeolhui-link">
+                    https://friendshiping777.github.io/vr-classroom-missions/mingyeolhui.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('mingyeolhui-link')">복사</button>
+                
+                <div class="file-upload">
+                    <label for="mingyeolhui-image">이미지 변경</label>
+                    <input type="file" id="mingyeolhui-image" style="display:none" onchange="uploadImage('mingyeolhui')">
+                    <span class="file-upload-info">* PNG 이미지만 가능</span>
+                </div>
+                <div id="mingyeolhui-upload-status" class="upload-status"></div>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('mingyeolhui')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('mingyeolhui')">초기화</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 짬타수아 카드 -->
+        <div class="streamer-card">
+            <div class="streamer-header">짬타수아</div>
+            
+            <div class="streamer-info">
+                <div class="streamer-avatar">
+                    <img id="jjamtasua-avatar" src="#" alt="짬타수아">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role">[특이사항]</div>
+                    <div class="streamer-name">오타쿠</div>
+                </div>
+            </div>
+            
+            <div class="mission-section">
+                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jjamtasua-check1" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">일본어 사용하기</div>
+                </div>
+                
+                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jjamtasua-check2" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">애니 추천하기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jjamtasua-check3" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">애니 노래 흥얼거리기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jjamtasua-check4" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">애니 포즈 취하기</div>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="jjamtasua-link">
+                    https://friendshiping777.github.io/vr-classroom-missions/jjamtasua.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('jjamtasua-link')">복사</button>
+                
+                <div class="file-upload">
+                    <label for="jjamtasua-image">이미지 변경</label>
+                    <input type="file" id="jjamtasua-image" style="display:none" onchange="uploadImage('jjamtasua')">
+                    <span class="file-upload-info">* PNG 이미지만 가능</span>
+                </div>
+                <div id="jjamtasua-upload-status" class="upload-status"></div>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('jjamtasua')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('jjamtasua')">초기화</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 지니씨 카드 -->
+        <div class="streamer-card">
+            <div class="streamer-header">지니씨</div>
+            
+            <div class="streamer-info">
+                <div class="streamer-avatar">
+                    <img id="jini-avatar" src="#" alt="지니씨">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role">[특이사항]</div>
+                    <div class="streamer-name">찐따</div>
+                </div>
+            </div>
+            
+            <div class="mission-section">
+                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jini-check1" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">친구 사귀기</div>
+                </div>
+                
+                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jini-check2" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">점심 같이 먹기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jini-check3" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">체육시간 짝 찾기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jini-check4" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">괴롭힘 당하지 않기</div>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="jini-link">
+                    https://friendshiping777.github.io/vr-classroom-missions/jini.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('jini-link')">복사</button>
+                
+                <div class="file-upload">
+                    <label for="jini-image">이미지 변경</label>
+                    <input type="file" id="jini-image" style="display:none" onchange="uploadImage('jini')">
+                    <span class="file-upload-info">* PNG 이미지만 가능</span>
+                </div>
+                <div id="jini-upload-status" class="upload-status"></div>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('jini')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('jini')">초기화</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 망구랑 카드 -->
+        <div class="streamer-card">
+            <div class="streamer-header">망구랑</div>
+            
+            <div class="streamer-info">
+                <div class="streamer-avatar">
+                    <img id="manggurang-avatar" src="#" alt="망구랑">
                 </div>
                 <div class="streamer-details">
                     <div class="streamer-role">[특이사항]</div>
@@ -357,267 +585,99 @@
             <div class="mission-section">
                 <div class="mission-category main-mission">메인 미션</div>
                 <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer2-check1" onclick="toggleCheck(this)"></div>
+                    <div class="mission-checkbox" id="manggurang-check1" onclick="toggleCheck(this)"></div>
                     <div class="mission-text">선생님 도와주기</div>
                 </div>
                 
                 <div class="mission-category sub-mission">서브 미션</div>
                 <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer2-check2" onclick="toggleCheck(this)"></div>
+                    <div class="mission-checkbox" id="manggurang-check2" onclick="toggleCheck(this)"></div>
                     <div class="mission-text">발표 3번 하기</div>
                 </div>
                 <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer2-check3" onclick="toggleCheck(this)"></div>
+                    <div class="mission-checkbox" id="manggurang-check3" onclick="toggleCheck(this)"></div>
                     <div class="mission-text">청소 담당되기</div>
                 </div>
                 <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer2-check4" onclick="toggleCheck(this)"></div>
+                    <div class="mission-checkbox" id="manggurang-check4" onclick="toggleCheck(this)"></div>
                     <div class="mission-text">반장 선거 출마하기</div>
                 </div>
             </div>
             
             <div class="links-section">
                 <div class="links-title">스트리머 OBS 링크</div>
-                <div class="link-box" id="streamer2-link">
-                    https://friendshiping777.github.io/vr-classroom-missions/streamer2.html
+                <div class="link-box" id="manggurang-link">
+                    https://friendshiping777.github.io/vr-classroom-missions/manggurang.html
                 </div>
-                <button class="copy-button" onclick="copyToClipboard('streamer2-link')">복사</button>
+                <button class="copy-button" onclick="copyToClipboard('manggurang-link')">복사</button>
                 
                 <div class="file-upload">
-                    <label for="streamer2-image">이미지 변경</label>
-                    <input type="file" id="streamer2-image" style="display:none" onchange="uploadImage('streamer2')">
+                    <label for="manggurang-image">이미지 변경</label>
+                    <input type="file" id="manggurang-image" style="display:none" onchange="uploadImage('manggurang')">
                     <span class="file-upload-info">* PNG 이미지만 가능</span>
                 </div>
-                <div id="streamer2-upload-status" class="upload-status"></div>
+                <div id="manggurang-upload-status" class="upload-status"></div>
                 
                 <div class="control-buttons">
-                    <button class="update-button" onclick="updateStreamer('streamer2')">업데이트</button>
-                    <button class="reset-button" onclick="resetStreamer('streamer2')">초기화</button>
+                    <button class="update-button" onclick="updateStreamer('manggurang')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('manggurang')">초기화</button>
                 </div>
             </div>
         </div>
 
-        <!-- 스트리머3 카드 -->
+        <!-- 마이곰이 카드 -->
         <div class="streamer-card">
-            <div class="streamer-header">스트리머3</div>
+            <div class="streamer-header">마이곰이</div>
             
             <div class="streamer-info">
                 <div class="streamer-avatar">
-                    <img id="streamer3-avatar" src="#" alt="스트리머3">
+                    <img id="mygomi-avatar" src="#" alt="마이곰이">
                 </div>
                 <div class="streamer-details">
                     <div class="streamer-role">[특이사항]</div>
-                    <div class="streamer-name">왕따</div>
+                    <div class="streamer-name">유학생</div>
                 </div>
             </div>
             
             <div class="mission-section">
                 <div class="mission-category main-mission">메인 미션</div>
                 <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer3-check1" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">친구 사귀기</div>
-                </div>
-                
-                <div class="mission-category sub-mission">서브 미션</div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer3-check2" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">점심 같이 먹기</div>
-                </div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer3-check3" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">체육시간 짝 찾기</div>
-                </div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer3-check4" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">괴롭힘 당하지 않기</div>
-                </div>
-            </div>
-            
-            <div class="links-section">
-                <div class="links-title">스트리머 OBS 링크</div>
-                <div class="link-box" id="streamer3-link">
-                    https://friendshiping777.github.io/vr-classroom-missions/streamer3.html
-                </div>
-                <button class="copy-button" onclick="copyToClipboard('streamer3-link')">복사</button>
-                
-                <div class="file-upload">
-                    <label for="streamer3-image">이미지 변경</label>
-                    <input type="file" id="streamer3-image" style="display:none" onchange="uploadImage('streamer3')">
-                    <span class="file-upload-info">* PNG 이미지만 가능</span>
-                </div>
-                <div id="streamer3-upload-status" class="upload-status"></div>
-                
-                <div class="control-buttons">
-                    <button class="update-button" onclick="updateStreamer('streamer3')">업데이트</button>
-                    <button class="reset-button" onclick="resetStreamer('streamer3')">초기화</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 스트리머4 카드 -->
-        <div class="streamer-card">
-            <div class="streamer-header">스트리머4</div>
-            
-            <div class="streamer-info">
-                <div class="streamer-avatar">
-                    <img id="streamer4-avatar" src="#" alt="스트리머4">
-                </div>
-                <div class="streamer-details">
-                    <div class="streamer-role">[특이사항]</div>
-                    <div class="streamer-name">선생님 애제자</div>
-                </div>
-            </div>
-            
-            <div class="mission-section">
-                <div class="mission-category main-mission">메인 미션</div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer4-check1" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">질문 많이 하기</div>
-                </div>
-                
-                <div class="mission-category sub-mission">서브 미션</div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer4-check2" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">선생님 심부름하기</div>
-                </div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer4-check3" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">선생님 칭찬받기</div>
-                </div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer4-check4" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">선생님 물건 빌리기</div>
-                </div>
-            </div>
-            
-            <div class="links-section">
-                <div class="links-title">스트리머 OBS 링크</div>
-                <div class="link-box" id="streamer4-link">
-                    https://friendshiping777.github.io/vr-classroom-missions/streamer4.html
-                    <div class="file-upload">
-                    <label for="streamer5-image">이미지 변경</label>
-                    <input type="file" id="streamer5-image" style="display:none" onchange="uploadImage('streamer5')">
-                    <span class="file-upload-info">* PNG 이미지만 가능</span>
-                </div>
-                <div id="streamer5-upload-status" class="upload-status"></div>
-                
-                <div class="control-buttons">
-                    <button class="update-button" onclick="updateStreamer('streamer5')">업데이트</button>
-                    <button class="reset-button" onclick="resetStreamer('streamer5')">초기화</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 스트리머6 카드 -->
-        <div class="streamer-card">
-            <div class="streamer-header">스트리머6</div>
-            
-            <div class="streamer-info">
-                <div class="streamer-avatar">
-                    <img id="streamer6-avatar" src="#" alt="스트리머6">
-                </div>
-                <div class="streamer-details">
-                    <div class="streamer-role">[특이사항]</div>
-                    <div class="streamer-name">반장 후보</div>
-                </div>
-            </div>
-            
-            <div class="mission-section">
-                <div class="mission-category main-mission">메인 미션</div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer6-check1" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">반장 선거 출마하기</div>
-                </div>
-                
-                <div class="mission-category sub-mission">서브 미션</div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer6-check2" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">공약 발표하기</div>
-                </div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer6-check3" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">지지자 모으기</div>
-                </div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer6-check4" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">선생님 도와주기</div>
-                </div>
-            </div>
-            
-            <div class="links-section">
-                <div class="links-title">스트리머 OBS 링크</div>
-                <div class="link-box" id="streamer6-link">
-                    https://friendshiping777.github.io/vr-classroom-missions/streamer6.html
-                </div>
-                <button class="copy-button" onclick="copyToClipboard('streamer6-link')">복사</button>
-                
-                <div class="file-upload">
-                    <label for="streamer6-image">이미지 변경</label>
-                    <input type="file" id="streamer6-image" style="display:none" onchange="uploadImage('streamer6')">
-                    <span class="file-upload-info">* PNG 이미지만 가능</span>
-                </div>
-                <div id="streamer6-upload-status" class="upload-status"></div>
-                
-                <div class="control-buttons">
-                    <button class="update-button" onclick="updateStreamer('streamer6')">업데이트</button>
-                    <button class="reset-button" onclick="resetStreamer('streamer6')">초기화</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 스트리머7 카드 -->
-        <div class="streamer-card">
-            <div class="streamer-header">스트리머7</div>
-            
-            <div class="streamer-info">
-                <div class="streamer-avatar">
-                    <img id="streamer7-avatar" src="#" alt="스트리머7">
-                </div>
-                <div class="streamer-details">
-                    <div class="streamer-role">[특이사항]</div>
-                    <div class="streamer-name">전학생</div>
-                </div>
-            </div>
-            
-            <div class="mission-section">
-                <div class="mission-category main-mission">메인 미션</div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer7-check1" onclick="toggleCheck(this)"></div>
+                    <div class="mission-checkbox" id="mygomi-check1" onclick="toggleCheck(this)"></div>
                     <div class="mission-text">자기소개하기</div>
                 </div>
                 
                 <div class="mission-category sub-mission">서브 미션</div>
                 <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer7-check2" onclick="toggleCheck(this)"></div>
+                    <div class="mission-checkbox" id="mygomi-check2" onclick="toggleCheck(this)"></div>
                     <div class="mission-text">친구 3명 사귀기</div>
                 </div>
                 <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer7-check3" onclick="toggleCheck(this)"></div>
+                    <div class="mission-checkbox" id="mygomi-check3" onclick="toggleCheck(this)"></div>
                     <div class="mission-text">급식 줄 서기</div>
                 </div>
                 <div class="mission-item">
-                    <div class="mission-checkbox" id="streamer7-check4" onclick="toggleCheck(this)"></div>
+                    <div class="mission-checkbox" id="mygomi-check4" onclick="toggleCheck(this)"></div>
                     <div class="mission-text">교실 돌아다니기</div>
                 </div>
             </div>
             
             <div class="links-section">
                 <div class="links-title">스트리머 OBS 링크</div>
-                <div class="link-box" id="streamer7-link">
-                    https://friendshiping777.github.io/vr-classroom-missions/streamer7.html
+                <div class="link-box" id="mygomi-link">
+                    https://friendshiping777.github.io/vr-classroom-missions/mygomi.html
                 </div>
-                <button class="copy-button" onclick="copyToClipboard('streamer7-link')">복사</button>
+                <button class="copy-button" onclick="copyToClipboard('mygomi-link')">복사</button>
                 
                 <div class="file-upload">
-                    <label for="streamer7-image">이미지 변경</label>
-                    <input type="file" id="streamer7-image" style="display:none" onchange="uploadImage('streamer7')">
+                    <label for="mygomi-image">이미지 변경</label>
+                    <input type="file" id="mygomi-image" style="display:none" onchange="uploadImage('mygomi')">
                     <span class="file-upload-info">* PNG 이미지만 가능</span>
                 </div>
-                <div id="streamer7-upload-status" class="upload-status"></div>
+                <div id="mygomi-upload-status" class="upload-status"></div>
                 
                 <div class="control-buttons">
-                    <button class="update-button" onclick="updateStreamer('streamer7')">업데이트</button>
-                    <button class="reset-button" onclick="resetStreamer('streamer7')">초기화</button>
+                    <button class="update-button" onclick="updateStreamer('mygomi')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('mygomi')">초기화</button>
                 </div>
             </div>
         </div>
@@ -725,7 +785,7 @@
                 statusEl.textContent = '미리보기가 업데이트되었습니다. 실제 반영을 위해서는 GitHub에 이미지를 업로드해야 합니다.';
                 
                 // 알림 표시
-                alert('이미지 미리보기가 업데이트되었습니다.\n\n실제 반영을 위해서는 GitHub에 이미지를 업로드해야 합니다:\n1. GitHub 저장소로 이동\n2. "images" 폴더 클릭\n3. "Add file" → "Upload files" 클릭\n4. 이미지 업로드 및 "Commit changes" 클릭');
+                alert('이미지 미리보기가 업데이트되었습니다.\n\n실제 반영을 위해서는 GitHub에 이미지를 업로드해야 합니다:\n1. GitHub 저장소로 이동\n2. "Add file" → "Upload files" 클릭\n3. 이미지 업로드 및 "Commit changes" 클릭');
             };
             reader.readAsDataURL(file);
         }
@@ -736,13 +796,14 @@
             const repoUrl = 'https://friendshiping777.github.io/vr-classroom-missions';
             
             // 각 스트리머의 OBS 링크 업데이트
-            for (let i = 1; i <= 7; i++) {
-                const streamerId = i === 1 ? 'woojeong' : `streamer${i}`;
+            const streamers = ['kyeonjahee', 'woojeong', 'mingyeolhui', 'jjamtasua', 'jini', 'manggurang', 'mygomi'];
+            
+            streamers.forEach(streamerId => {
                 const linkElement = document.getElementById(`${streamerId}-link`);
                 if (linkElement) {
                     linkElement.innerText = `${repoUrl}/${streamerId}.html`;
                 }
-            }
+            });
         });
     </script>
 </body>
