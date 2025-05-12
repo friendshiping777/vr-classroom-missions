@@ -494,3 +494,256 @@
                 <div class="links-title">스트리머 OBS 링크</div>
                 <div class="link-box" id="streamer4-link">
                     https://friendshiping777.github.io/vr-classroom-missions/streamer4.html
+                    <div class="file-upload">
+                    <label for="streamer5-image">이미지 변경</label>
+                    <input type="file" id="streamer5-image" style="display:none" onchange="uploadImage('streamer5')">
+                    <span class="file-upload-info">* PNG 이미지만 가능</span>
+                </div>
+                <div id="streamer5-upload-status" class="upload-status"></div>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('streamer5')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('streamer5')">초기화</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 스트리머6 카드 -->
+        <div class="streamer-card">
+            <div class="streamer-header">스트리머6</div>
+            
+            <div class="streamer-info">
+                <div class="streamer-avatar">
+                    <img id="streamer6-avatar" src="#" alt="스트리머6">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role">[특이사항]</div>
+                    <div class="streamer-name">반장 후보</div>
+                </div>
+            </div>
+            
+            <div class="mission-section">
+                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer6-check1" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">반장 선거 출마하기</div>
+                </div>
+                
+                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer6-check2" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">공약 발표하기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer6-check3" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">지지자 모으기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer6-check4" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">선생님 도와주기</div>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="streamer6-link">
+                    https://friendshiping777.github.io/vr-classroom-missions/streamer6.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('streamer6-link')">복사</button>
+                
+                <div class="file-upload">
+                    <label for="streamer6-image">이미지 변경</label>
+                    <input type="file" id="streamer6-image" style="display:none" onchange="uploadImage('streamer6')">
+                    <span class="file-upload-info">* PNG 이미지만 가능</span>
+                </div>
+                <div id="streamer6-upload-status" class="upload-status"></div>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('streamer6')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('streamer6')">초기화</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 스트리머7 카드 -->
+        <div class="streamer-card">
+            <div class="streamer-header">스트리머7</div>
+            
+            <div class="streamer-info">
+                <div class="streamer-avatar">
+                    <img id="streamer7-avatar" src="#" alt="스트리머7">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role">[특이사항]</div>
+                    <div class="streamer-name">전학생</div>
+                </div>
+            </div>
+            
+            <div class="mission-section">
+                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer7-check1" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">자기소개하기</div>
+                </div>
+                
+                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer7-check2" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">친구 3명 사귀기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer7-check3" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">급식 줄 서기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer7-check4" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">교실 돌아다니기</div>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="streamer7-link">
+                    https://friendshiping777.github.io/vr-classroom-missions/streamer7.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('streamer7-link')">복사</button>
+                
+                <div class="file-upload">
+                    <label for="streamer7-image">이미지 변경</label>
+                    <input type="file" id="streamer7-image" style="display:none" onchange="uploadImage('streamer7')">
+                    <span class="file-upload-info">* PNG 이미지만 가능</span>
+                </div>
+                <div id="streamer7-upload-status" class="upload-status"></div>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('streamer7')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('streamer7')">초기화</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 체크박스 토글 함수
+        function toggleCheck(element) {
+            element.classList.toggle('checked');
+        }
+        
+        // 클립보드에 텍스트 복사
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText.trim();
+            navigator.clipboard.writeText(text)
+                .then(() => alert('링크가 복사되었습니다!'))
+                .catch(err => console.error('클립보드 복사 실패:', err));
+        }
+        
+        // 스트리머 미션 상태 업데이트
+        function updateStreamer(streamerId) {
+            // 체크된 박스 확인
+            const check1 = document.getElementById(`${streamerId}-check1`).classList.contains('checked') ? '1' : '0';
+            const check2 = document.getElementById(`${streamerId}-check2`).classList.contains('checked') ? '1' : '0';
+            const check3 = document.getElementById(`${streamerId}-check3`).classList.contains('checked') ? '1' : '0';
+            const check4 = document.getElementById(`${streamerId}-check4`).classList.contains('checked') ? '1' : '0';
+            
+            // 기본 URL 가져오기
+            const baseUrl = document.getElementById(`${streamerId}-link`).innerText.trim().split('?')[0];
+            
+            // 새 URL 생성
+            let newUrl = `${baseUrl}?`;
+            if (check1 === '1') newUrl += 'check1=1&';
+            if (check2 === '1') newUrl += 'check2=1&';
+            if (check3 === '1') newUrl += 'check3=1&';
+            if (check4 === '1') newUrl += 'check4=1&';
+            
+            // 마지막 & 제거
+            if (newUrl.endsWith('&')) {
+                newUrl = newUrl.slice(0, -1);
+            }
+            
+            // 페이지가 이미 열려있는지 확인
+            let streamerWindow = window.streamerWindows?.[streamerId];
+            if (streamerWindow && !streamerWindow.closed) {
+                streamerWindow.location.href = newUrl;
+            } else {
+                // 새 창에서 열기
+                if (!window.streamerWindows) window.streamerWindows = {};
+                window.streamerWindows[streamerId] = window.open(newUrl, streamerId);
+            }
+        }
+        
+        // 스트리머 미션 초기화
+        function resetStreamer(streamerId) {
+            // 체크박스 초기화
+            document.getElementById(`${streamerId}-check1`).classList.remove('checked');
+            document.getElementById(`${streamerId}-check2`).classList.remove('checked');
+            document.getElementById(`${streamerId}-check3`).classList.remove('checked');
+            document.getElementById(`${streamerId}-check4`).classList.remove('checked');
+            
+            // 기본 URL 가져오기
+            const baseUrl = document.getElementById(`${streamerId}-link`).innerText.trim().split('?')[0];
+            
+            // 리셋 URL로 열기
+            let streamerWindow = window.streamerWindows?.[streamerId];
+            if (streamerWindow && !streamerWindow.closed) {
+                streamerWindow.location.href = `${baseUrl}?reset=1`;
+            } else {
+                // 새 창에서 열기
+                if (!window.streamerWindows) window.streamerWindows = {};
+                window.streamerWindows[streamerId] = window.open(`${baseUrl}?reset=1`, streamerId);
+            }
+        }
+        
+        // 이미지 업로드 함수
+        function uploadImage(streamerId) {
+            const fileInput = document.getElementById(`${streamerId}-image`);
+            const file = fileInput.files[0];
+            
+            if (!file) return;
+            
+            // 이미지 파일만 허용
+            if (!file.type.match('image/png')) {
+                const statusEl = document.getElementById(`${streamerId}-upload-status`);
+                statusEl.className = 'upload-status upload-error';
+                statusEl.style.display = 'block';
+                statusEl.textContent = '오류: PNG 이미지만 업로드 가능합니다.';
+                return;
+            }
+            
+            // GitHub에서는 이미지 업로드 API를 직접 사용할 수 없으므로,
+            // 대신 이미지를 Base64로 인코딩하여 미리보기로 보여주고
+            // 사용자에게 GitHub에 수동으로 업로드하도록 안내합니다.
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // 이미지 미리보기 업데이트
+                document.getElementById(`${streamerId}-avatar`).src = e.target.result;
+                
+                // 상태 메시지 표시
+                const statusEl = document.getElementById(`${streamerId}-upload-status`);
+                statusEl.className = 'upload-status upload-success';
+                statusEl.style.display = 'block';
+                statusEl.textContent = '미리보기가 업데이트되었습니다. 실제 반영을 위해서는 GitHub에 이미지를 업로드해야 합니다.';
+                
+                // 알림 표시
+                alert('이미지 미리보기가 업데이트되었습니다.\n\n실제 반영을 위해서는 GitHub에 이미지를 업로드해야 합니다:\n1. GitHub 저장소로 이동\n2. "images" 폴더 클릭\n3. "Add file" → "Upload files" 클릭\n4. 이미지 업로드 및 "Commit changes" 클릭');
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        // 페이지 로드 시 실행
+        window.addEventListener('load', function() {
+            // GitHub 저장소 URL 설정
+            const repoUrl = 'https://friendshiping777.github.io/vr-classroom-missions';
+            
+            // 각 스트리머의 OBS 링크 업데이트
+            for (let i = 1; i <= 7; i++) {
+                const streamerId = i === 1 ? 'woojeong' : `streamer${i}`;
+                const linkElement = document.getElementById(`${streamerId}-link`);
+                if (linkElement) {
+                    linkElement.innerText = `${repoUrl}/${streamerId}.html`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
