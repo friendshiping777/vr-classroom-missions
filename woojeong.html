@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>우정잉 미션 현황판</title>
+    <title>스트리머 미션 현황판</title>
     <style>
         body {
             margin: 0;
@@ -129,15 +129,15 @@
 </head>
 <body>
     <div class="mission-panel">
-        <div class="streamer-header" id="streamer-name">우정잉</div>
+        <div class="streamer-header" id="streamer-name">스트리머 이름</div>
         
         <div class="streamer-info">
             <div class="streamer-avatar">
-                <img id="profile-image" src="./woojeong.png" alt="우정잉">
+                <img id="profile-image" src="./default-avatar.png" alt="프로필 이미지">
             </div>
             <div class="streamer-details">
                 <div class="streamer-role">[특이사항]</div>
-                <div class="streamer-name" id="streamer-role">일진</div>
+                <div class="streamer-name" id="streamer-role">역할</div>
             </div>
         </div>
         
@@ -145,91 +145,92 @@
             <div class="mission-category main-mission">메인 미션</div>
             <div class="mission-item">
                 <div class="mission-checkbox" id="check1"></div>
-                <div class="mission-text" id="mission1">1명 올리기</div>
+                <div class="mission-text" id="mission1">메인 미션 내용</div>
             </div>
             
             <div class="mission-category sub-mission">서브 미션</div>
             <div class="mission-item">
                 <div class="mission-checkbox" id="check2"></div>
-                <div class="mission-text" id="mission2">수업 시간에 노래 부르기</div>
+                <div class="mission-text" id="mission2">서브 미션 1</div>
             </div>
             <div class="mission-item">
                 <div class="mission-checkbox" id="check3"></div>
-                <div class="mission-text" id="mission3">아유 받기</div>
+                <div class="mission-text" id="mission3">서브 미션 2</div>
             </div>
             <div class="mission-item">
                 <div class="mission-checkbox" id="check4"></div>
-                <div class="mission-text" id="mission4">반장 선거 2표 받기</div>
+                <div class="mission-text" id="mission4">서브 미션 3</div>
             </div>
         </div>
     </div>
 
     <script>
-        // URL 파라미터 파싱 함수
-        function getUrlParams() {
-            const params = {};
-            window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, 
-                function(str, key, value) { params[key] = decodeURIComponent(value); }
-            );
-            return params;
+        // 스트리머 ID 추출 (파일명에서)
+        function getStreamerId() {
+            // URL에서 파일명 추출 (예: woojeong.html)
+            const path = window.location.pathname;
+            const filename = path.substring(path.lastIndexOf('/') + 1);
+            
+            // 확장자 제거
+            return filename.replace('.html', '');
         }
         
-        // URL 파라미터로 체크 상태 및 미션 텍스트 설정
-        function applyUrlParams() {
-            const params = getUrlParams();
+        // 데이터 로딩 및 적용 함수
+        function loadData() {
+            const streamerId = getStreamerId();
+            const dataKey = `streamer_${streamerId}`;
             
-            // 먼저 모든 체크를 리셋
-            if(params.reset === '1') {
-                resetAllChecks();
+            // 로컬 스토리지에서 데이터 가져오기
+            const dataStr = localStorage.getItem(dataKey);
+            
+            if (dataStr) {
+                try {
+                    const data = JSON.parse(dataStr);
+                    
+                    // 데이터 적용
+                    document.getElementById('streamer-name').textContent = data.name || streamerId;
+                    document.getElementById('streamer-role').textContent = data.role || '';
+                    
+                    // 미션 설정
+                    document.getElementById('mission1').textContent = data.mission1 || '';
+                    document.getElementById('mission2').textContent = data.mission2 || '';
+                    document.getElementById('mission3').textContent = data.mission3 || '';
+                    document.getElementById('mission4').textContent = data.mission4 || '';
+                    
+                    // 체크박스 상태 설정
+                    if (data.check1 === '1') document.getElementById('check1').classList.add('checked');
+                    else document.getElementById('check1').classList.remove('checked');
+                    
+                    if (data.check2 === '1') document.getElementById('check2').classList.add('checked');
+                    else document.getElementById('check2').classList.remove('checked');
+                    
+                    if (data.check3 === '1') document.getElementById('check3').classList.add('checked');
+                    else document.getElementById('check3').classList.remove('checked');
+                    
+                    if (data.check4 === '1') document.getElementById('check4').classList.add('checked');
+                    else document.getElementById('check4').classList.remove('checked');
+                    
+                    // 이미지 설정
+                    if (data.image) {
+                        document.getElementById('profile-image').src = data.image;
+                    }
+                } catch (error) {
+                    console.error('데이터 로드 중 오류:', error);
+                }
             }
-            
-            // 체크박스 상태 적용
-            if(params.check1 === '1') document.getElementById('check1').classList.add('checked');
-            if(params.check2 === '1') document.getElementById('check2').classList.add('checked');
-            if(params.check3 === '1') document.getElementById('check3').classList.add('checked');
-            if(params.check4 === '1') document.getElementById('check4').classList.add('checked');
-            
-            // 스트리머 이름과 역할 적용
-            if(params.name) document.getElementById('streamer-name').textContent = params.name;
-            if(params.role) document.getElementById('streamer-role').textContent = params.role;
-            
-            // 미션 텍스트 적용
-            if(params.mission1) document.getElementById('mission1').textContent = params.mission1;
-            if(params.mission2) document.getElementById('mission2').textContent = params.mission2;
-            if(params.mission3) document.getElementById('mission3').textContent = params.mission3;
-            if(params.mission4) document.getElementById('mission4').textContent = params.mission4;
-            
-            // 프로필 이미지 적용
-            if(params.profileImage) {
-                document.getElementById('profile-image').src = params.profileImage;
-            }
         }
         
-        // 모든 체크마크 초기화
-        function resetAllChecks() {
-            const checkmarks = document.querySelectorAll('.mission-checkbox');
-            checkmarks.forEach(check => {
-                check.classList.remove('checked');
-            });
+        // 주기적으로 데이터 새로고침
+        function autoRefresh() {
+            loadData();
+            setTimeout(autoRefresh, 1000); // 1초마다 새로고침
         }
         
-        // 페이지 로드 시 URL 파라미터 적용
+        // 초기 로드 및 주기적 새로고침 시작
         window.addEventListener('load', function() {
-            applyUrlParams();
-            
-            // 자동 새로고침 설정 (5초마다)
-            setInterval(checkForUpdates, 5000);
+            loadData();
+            autoRefresh();
         });
-        
-        // OBS 브라우저 소스 자동 새로고침을 위한 함수
-        function checkForUpdates() {
-            // 현재 타임스탬프를 가져와서 URL에 추가 (캐시 방지)
-            const currentTime = new Date().getTime();
-            const currentUrl = window.location.href.split('?')[0] + '?' + window.location.search.substring(1).split('&timestamp=')[0] + '&timestamp=' + currentTime;
-            
-            // 페이지 새로고침
-            window.location.href = currentUrl;
-        }
     </script>
 </body>
 </html>
