@@ -169,7 +169,7 @@
         function getUrlParams() {
             const params = {};
             window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, 
-                function(str, key, value) { params[key] = value; }
+                function(str, key, value) { params[key] = decodeURIComponent(value); }
             );
             return params;
         }
@@ -190,18 +190,18 @@
             if(params.check4 === '1') document.getElementById('check4').classList.add('checked');
             
             // 스트리머 이름과 역할 적용
-            if(params.name) document.getElementById('streamer-name').textContent = decodeURIComponent(params.name);
-            if(params.role) document.getElementById('streamer-role').textContent = decodeURIComponent(params.role);
+            if(params.name) document.getElementById('streamer-name').textContent = params.name;
+            if(params.role) document.getElementById('streamer-role').textContent = params.role;
             
             // 미션 텍스트 적용
-            if(params.mission1) document.getElementById('mission1').textContent = decodeURIComponent(params.mission1);
-            if(params.mission2) document.getElementById('mission2').textContent = decodeURIComponent(params.mission2);
-            if(params.mission3) document.getElementById('mission3').textContent = decodeURIComponent(params.mission3);
-            if(params.mission4) document.getElementById('mission4').textContent = decodeURIComponent(params.mission4);
+            if(params.mission1) document.getElementById('mission1').textContent = params.mission1;
+            if(params.mission2) document.getElementById('mission2').textContent = params.mission2;
+            if(params.mission3) document.getElementById('mission3').textContent = params.mission3;
+            if(params.mission4) document.getElementById('mission4').textContent = params.mission4;
             
             // 프로필 이미지 적용
             if(params.profileImage) {
-                document.getElementById('profile-image').src = decodeURIComponent(params.profileImage);
+                document.getElementById('profile-image').src = params.profileImage;
             }
         }
         
@@ -214,7 +214,22 @@
         }
         
         // 페이지 로드 시 URL 파라미터 적용
-        window.addEventListener('load', applyUrlParams);
+        window.addEventListener('load', function() {
+            applyUrlParams();
+            
+            // 자동 새로고침 설정 (5초마다)
+            setInterval(checkForUpdates, 5000);
+        });
+        
+        // OBS 브라우저 소스 자동 새로고침을 위한 함수
+        function checkForUpdates() {
+            // 현재 타임스탬프를 가져와서 URL에 추가 (캐시 방지)
+            const currentTime = new Date().getTime();
+            const currentUrl = window.location.href.split('?')[0] + '?' + window.location.search.substring(1).split('&timestamp=')[0] + '&timestamp=' + currentTime;
+            
+            // 페이지 새로고침
+            window.location.href = currentUrl;
+        }
     </script>
 </body>
 </html>
