@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>스트리머 미션 현황판</title>
+    <!-- OBS 캐시 무력화를 위한 메타 태그 추가 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <style>
         body {
             margin: 0;
@@ -175,62 +179,109 @@
             return filename.replace('.html', '');
         }
         
-        // 데이터 로딩 및 적용 함수
-        function loadData() {
+        // 브라우저 로컬 스토리지에서 데이터 가져오기
+        function getDataFromLocalStorage() {
             const streamerId = getStreamerId();
             const dataKey = `streamer_${streamerId}`;
             
             // 로컬 스토리지에서 데이터 가져오기
             const dataStr = localStorage.getItem(dataKey);
+            if (!dataStr) return null;
             
-            if (dataStr) {
-                try {
-                    const data = JSON.parse(dataStr);
-                    
-                    // 데이터 적용
-                    document.getElementById('streamer-name').textContent = data.name || streamerId;
-                    document.getElementById('streamer-role').textContent = data.role || '';
-                    
-                    // 미션 설정
-                    document.getElementById('mission1').textContent = data.mission1 || '';
-                    document.getElementById('mission2').textContent = data.mission2 || '';
-                    document.getElementById('mission3').textContent = data.mission3 || '';
-                    document.getElementById('mission4').textContent = data.mission4 || '';
-                    
-                    // 체크박스 상태 설정
-                    if (data.check1 === '1') document.getElementById('check1').classList.add('checked');
-                    else document.getElementById('check1').classList.remove('checked');
-                    
-                    if (data.check2 === '1') document.getElementById('check2').classList.add('checked');
-                    else document.getElementById('check2').classList.remove('checked');
-                    
-                    if (data.check3 === '1') document.getElementById('check3').classList.add('checked');
-                    else document.getElementById('check3').classList.remove('checked');
-                    
-                    if (data.check4 === '1') document.getElementById('check4').classList.add('checked');
-                    else document.getElementById('check4').classList.remove('checked');
-                    
-                    // 이미지 설정
-                    if (data.image) {
-                        document.getElementById('profile-image').src = data.image;
-                    }
-                } catch (error) {
-                    console.error('데이터 로드 중 오류:', error);
-                }
+            try {
+                return JSON.parse(dataStr);
+            } catch (error) {
+                console.error('데이터 파싱 중 오류:', error);
+                return null;
             }
         }
         
-        // 주기적으로 데이터 새로고침
-        function autoRefresh() {
-            loadData();
-            setTimeout(autoRefresh, 1000); // 1초마다 새로고침
+        // 데이터 적용 함수
+        function applyData(data) {
+            if (!data) return;
+            
+            // 기본 정보 설정
+            document.getElementById('streamer-name').textContent = data.name || getStreamerId();
+            document.getElementById('streamer-role').textContent = data.role || '';
+            
+            // 미션 설정
+            document.getElementById('mission1').textContent = data.mission1 || '';
+            document.getElementById('mission2').textContent = data.mission2 || '';
+            document.getElementById('mission3').textContent = data.mission3 || '';
+            document.getElementById('mission4').textContent = data.mission4 || '';
+            
+            // 체크박스 상태 설정
+            if (data.check1 === '1') document.getElementById('check1').classList.add('checked');
+            else document.getElementById('check1').classList.remove('checked');
+            
+            if (data.check2 === '1') document.getElementById('check2').classList.add('checked');
+            else document.getElementById('check2').classList.remove('checked');
+            
+            if (data.check3 === '1') document.getElementById('check3').classList.add('checked');
+            else document.getElementById('check3').classList.remove('checked');
+            
+            if (data.check4 === '1') document.getElementById('check4').classList.add('checked');
+            else document.getElementById('check4').classList.remove('checked');
+            
+            // 이미지 설정 (특별히 처리)
+            if (data.image) {
+                const img = document.getElementById('profile-image');
+                
+                // 이미지 로드 에러 처리 추가
+                img.onerror = function() {
+                    console.error('이미지 로드 실패');
+                    img.src = './default-avatar.png'; // 기본 이미지로 대체
+                };
+                
+                // 캐시 방지를 위한 타임스탬프 추가
+                img.src = data.image + '?t=' + new Date().getTime();
+            }
         }
         
-        // 초기 로드 및 주기적 새로고침 시작
-        window.addEventListener('load', function() {
+        // 데이터 로드 함수
+        function loadData() {
+            const data = getDataFromLocalStorage();
+            applyData(data);
+        }
+        
+        // 자동 새로고침 설정 (보다 적극적인 방식)
+        function setupAutoRefresh() {
+            // 강제 새로고침 함수
+            function forceRefresh() {
+                // 페이지 강제 새로고침 (OBS에서는 이렇게 해야 캐시를 무시함)
+                if (window.location.href.indexOf('?') === -1) {
+                    window.location.href = window.location.href + '?t=' + new Date().getTime();
+                } else {
+                    window.location.href = window.location.href.split('?')[0] + '?t=' + new Date().getTime();
+                }
+            }
+            
+            // 초기 데이터 로드
             loadData();
-            autoRefresh();
-        });
+            
+            // 데이터 변경 감지 및 반영
+            let lastDataStr = JSON.stringify(getDataFromLocalStorage() || {});
+            
+            // 주기적으로 데이터 확인 (500ms마다)
+            setInterval(function() {
+                const newData = getDataFromLocalStorage();
+                const newDataStr = JSON.stringify(newData || {});
+                
+                // 데이터가 변경되었으면 반영
+                if (newDataStr !== lastDataStr) {
+                    console.log('데이터 변경 감지, 업데이트 중...');
+                    applyData(newData);
+                    lastDataStr = newDataStr;
+                }
+            }, 500);
+            
+            // 정기적으로 강제 새로고침 (30초마다)
+            // OBS의 캐시 문제를 완전히 우회하기 위함
+            setInterval(forceRefresh, 30000);
+        }
+        
+        // 페이지 로드 시 초기화
+        window.addEventListener('load', setupAutoRefresh);
     </script>
 </body>
 </html>
