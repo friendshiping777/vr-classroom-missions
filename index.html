@@ -110,7 +110,9 @@
             padding: 8px 12px;
             border-radius: 4px;
             margin-bottom: 10px;
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         
         .main-mission {
@@ -142,6 +144,7 @@
             justify-content: center;
             cursor: pointer;
             background-color: white;
+            flex-shrink: 0;
         }
         
         .mission-checkbox.checked {
@@ -158,6 +161,14 @@
         .mission-text {
             font-size: 15px;
             flex: 1;
+            padding: 5px;
+            border-radius: 3px;
+            min-height: 20px;
+        }
+        
+        .mission-text:focus {
+            outline: 2px solid #2b5797;
+            background-color: #f0f0f0;
         }
         
         .links-section {
@@ -267,6 +278,46 @@
         .upload-error {
             color: #e74c3c;
         }
+        
+        .edit-button {
+            font-size: 14px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .edit-button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .toast.fade-out {
+            animation: fadeOut 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translate(-50%, 0); }
+            to { opacity: 0; transform: translate(-50%, 20px); }
+        }
     </style>
 </head>
 <body>
@@ -276,15 +327,15 @@
         <h2>사용 방법</h2>
         <ol>
             <li>각 스트리머의 미션 상태를 체크박스로 관리할 수 있습니다.</li>
+            <li>미션 제목 옆 ✏️ 버튼을 클릭하면 미션 내용을 직접 수정할 수 있습니다.</li>
             <li><strong>업데이트</strong> 버튼을 클릭하면 해당 스트리머의 미션 현황판이 실시간으로 업데이트됩니다.</li>
             <li>스트리머는 OBS에 미션 현황판 링크를 브라우저 소스로 추가하면 됩니다.</li>
-            <li>체크박스가 실시간으로 업데이트됩니다.</li>
         </ol>
     </div>
     
     <div class="container">
         <!-- 견자희 카드 -->
-        <div class="streamer-card">
+        <div class="streamer-card" data-streamer-id="kyeonjahee">
             <div class="streamer-header">견자희</div>
             
             <div class="streamer-info">
@@ -298,24 +349,30 @@
             </div>
             
             <div class="mission-section">
-                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-category main-mission">
+                    메인 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'main')">✏️</button>
+                </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="kyeonjahee-check1" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">선생님 도와주기</div>
+                    <div class="mission-text" data-mission-id="1">선생님 도와주기</div>
                 </div>
                 
-                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-category sub-mission">
+                    서브 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'sub')">✏️</button>
+                </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="kyeonjahee-check2" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">발표 3번 하기</div>
+                    <div class="mission-text" data-mission-id="2">발표 3번 하기</div>
                 </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="kyeonjahee-check3" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">청소 담당되기</div>
+                    <div class="mission-text" data-mission-id="3">청소 담당되기</div>
                 </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="kyeonjahee-check4" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">반장 선거 출마하기</div>
+                    <div class="mission-text" data-mission-id="4">반장 선거 출마하기</div>
                 </div>
             </div>
             
@@ -341,7 +398,7 @@
         </div>
         
         <!-- 우정잉 카드 -->
-        <div class="streamer-card">
+        <div class="streamer-card" data-streamer-id="woojeong">
             <div class="streamer-header">우정잉</div>
             
             <div class="streamer-info">
@@ -355,24 +412,30 @@
             </div>
             
             <div class="mission-section">
-                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-category main-mission">
+                    메인 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'main')">✏️</button>
+                </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="woojeong-check1" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">1명 올리기</div>
+                    <div class="mission-text" data-mission-id="1">1명 올리기</div>
                 </div>
                 
-                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-category sub-mission">
+                    서브 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'sub')">✏️</button>
+                </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="woojeong-check2" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">수업 시간에 노래 부르기</div>
+                    <div class="mission-text" data-mission-id="2">수업 시간에 노래 부르기</div>
                 </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="woojeong-check3" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">아유 받기</div>
+                    <div class="mission-text" data-mission-id="3">아유 받기</div>
                 </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="woojeong-check4" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">반장 선거 2표 받기</div>
+                    <div class="mission-text" data-mission-id="4">반장 선거 2표 받기</div>
                 </div>
             </div>
             
@@ -398,7 +461,7 @@
         </div>
 
         <!-- 민결희 카드 -->
-        <div class="streamer-card">
+        <div class="streamer-card" data-streamer-id="mingyeolhui">
             <div class="streamer-header">민결희</div>
             
             <div class="streamer-info">
@@ -412,24 +475,30 @@
             </div>
             
             <div class="mission-section">
-                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-category main-mission">
+                    메인 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'main')">✏️</button>
+                </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="mingyeolhui-check1" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">1명 올리기</div>
+                    <div class="mission-text" data-mission-id="1">1명 올리기</div>
                 </div>
                 
-                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-category sub-mission">
+                    서브 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'sub')">✏️</button>
+                </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="mingyeolhui-check2" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">수업 시간에 노래 부르기</div>
+                    <div class="mission-text" data-mission-id="2">수업 시간에 노래 부르기</div>
                 </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="mingyeolhui-check3" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">아유 받기</div>
+                    <div class="mission-text" data-mission-id="3">아유 받기</div>
                 </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="mingyeolhui-check4" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">반장 선거 2표 받기</div>
+                    <div class="mission-text" data-mission-id="4">반장 선거 2표 받기</div>
                 </div>
             </div>
             
@@ -455,7 +524,7 @@
         </div>
 
         <!-- 짬타수아 카드 -->
-        <div class="streamer-card">
+        <div class="streamer-card" data-streamer-id="jjamtasua">
             <div class="streamer-header">짬타수아</div>
             
             <div class="streamer-info">
@@ -469,24 +538,30 @@
             </div>
             
             <div class="mission-section">
-                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-category main-mission">
+                    메인 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'main')">✏️</button>
+                </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="jjamtasua-check1" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">일본어 사용하기</div>
+                    <div class="mission-text" data-mission-id="1">일본어 사용하기</div>
                 </div>
                 
-                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-category sub-mission">
+                    서브 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'sub')">✏️</button>
+                </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="jjamtasua-check2" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">애니 추천하기</div>
+                    <div class="mission-text" data-mission-id="2">애니 추천하기</div>
                 </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="jjamtasua-check3" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">애니 노래 흥얼거리기</div>
+                    <div class="mission-text" data-mission-id="3">애니 노래 흥얼거리기</div>
                 </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="jjamtasua-check4" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">애니 포즈 취하기</div>
+                    <div class="mission-text" data-mission-id="4">애니 포즈 취하기</div>
                 </div>
             </div>
             
@@ -512,7 +587,7 @@
         </div>
 
         <!-- 지니씨 카드 -->
-        <div class="streamer-card">
+        <div class="streamer-card" data-streamer-id="jini">
             <div class="streamer-header">지니씨</div>
             
             <div class="streamer-info">
@@ -526,24 +601,30 @@
             </div>
             
             <div class="mission-section">
-                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-category main-mission">
+                    메인 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'main')">✏️</button>
+                </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="jini-check1" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">친구 사귀기</div>
+                    <div class="mission-text" data-mission-id="1">친구 사귀기</div>
                 </div>
                 
-                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-category sub-mission">
+                    서브 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'sub')">✏️</button>
+                </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="jini-check2" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">점심 같이 먹기</div>
+                    <div class="mission-text" data-mission-id="2">점심 같이 먹기</div>
                 </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="jini-check3" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">체육시간 짝 찾기</div>
+                    <div class="mission-text" data-mission-id="3">체육시간 짝 찾기</div>
                 </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="jini-check4" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">괴롭힘 당하지 않기</div>
+                    <div class="mission-text" data-mission-id="4">괴롭힘 당하지 않기</div>
                 </div>
             </div>
             
@@ -569,7 +650,7 @@
         </div>
 
         <!-- 망구랑 카드 -->
-        <div class="streamer-card">
+        <div class="streamer-card" data-streamer-id="manggurang">
             <div class="streamer-header">망구랑</div>
             
             <div class="streamer-info">
@@ -583,24 +664,30 @@
             </div>
             
             <div class="mission-section">
-                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-category main-mission">
+                    메인 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'main')">✏️</button>
+                </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="manggurang-check1" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">선생님 도와주기</div>
+                    <div class="mission-text" data-mission-id="1">선생님 도와주기</div>
                 </div>
                 
-                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-category sub-mission">
+                    서브 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'sub')">✏️</button>
+                </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="manggurang-check2" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">발표 3번 하기</div>
+                    <div class="mission-text" data-mission-id="2">발표 3번 하기</div>
                 </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="manggurang-check3" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">청소 담당되기</div>
+                    <div class="mission-text" data-mission-id="3">청소 담당되기</div>
                 </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="manggurang-check4" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">반장 선거 출마하기</div>
+                    <div class="mission-text" data-mission-id="4">반장 선거 출마하기</div>
                 </div>
             </div>
             
@@ -626,7 +713,7 @@
         </div>
 
         <!-- 마이곰이 카드 -->
-        <div class="streamer-card">
+        <div class="streamer-card" data-streamer-id="mygomi">
             <div class="streamer-header">마이곰이</div>
             
             <div class="streamer-info">
@@ -640,24 +727,30 @@
             </div>
             
             <div class="mission-section">
-                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-category main-mission">
+                    메인 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'main')">✏️</button>
+                </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="mygomi-check1" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">자기소개하기</div>
+                    <div class="mission-text" data-mission-id="1">자기소개하기</div>
                 </div>
                 
-                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-category sub-mission">
+                    서브 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'sub')">✏️</button>
+                </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="mygomi-check2" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">친구 3명 사귀기</div>
+                    <div class="mission-text" data-mission-id="2">친구 3명 사귀기</div>
                 </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="mygomi-check3" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">급식 줄 서기</div>
+                    <div class="mission-text" data-mission-id="3">급식 줄 서기</div>
                 </div>
                 <div class="mission-item">
                     <div class="mission-checkbox" id="mygomi-check4" onclick="toggleCheck(this)"></div>
-                    <div class="mission-text">교실 돌아다니기</div>
+                    <div class="mission-text" data-mission-id="4">교실 돌아다니기</div>
                 </div>
             </div>
             
@@ -697,6 +790,84 @@
                 .catch(err => console.error('클립보드 복사 실패:', err));
         }
         
+        // 미션 섹션 편집 함수
+        function editMissionSection(buttonElement, type) {
+            // 버튼이 속한 카드 찾기
+            const card = buttonElement.closest('.streamer-card');
+            const streamerId = card.getAttribute('data-streamer-id');
+            
+            // 해당 타입의 미션 텍스트 요소들 찾기
+            let missionElements;
+            if (type === 'main') {
+                missionElements = [card.querySelector('.mission-text[data-mission-id="1"]')];
+            } else { // sub
+                missionElements = [
+                    card.querySelector('.mission-text[data-mission-id="2"]'),
+                    card.querySelector('.mission-text[data-mission-id="3"]'),
+                    card.querySelector('.mission-text[data-mission-id="4"]')
+                ];
+            }
+            
+            // 미션 텍스트를 편집 가능하게 만들기
+            missionElements.forEach(element => {
+                if (element) {
+                    element.contentEditable = true;
+                    element.focus();
+                }
+            });
+            
+            // 편집 완료 시 저장하는 이벤트 리스너 추가
+            missionElements.forEach(element => {
+                if (element) {
+                    element.addEventListener('blur', function() {
+                        element.contentEditable = false;
+                        // 텍스트 변경사항 저장
+                        saveMissionText(streamerId, element.getAttribute('data-mission-id'), element.textContent);
+                    });
+                    
+                    element.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            element.blur();
+                        }
+                    });
+                }
+            });
+        }
+        
+        // 미션 텍스트 저장 함수
+        function saveMissionText(streamerId, missionId, text) {
+            // 로컬 스토리지에 저장
+            const storageKey = `${streamerId}-mission-${missionId}`;
+            localStorage.setItem(storageKey, text);
+            
+            // 저장 알림
+            showToast('미션 텍스트가 저장되었습니다.');
+        }
+        
+        // 토스트 메시지 표시 함수
+        function showToast(message) {
+            // 이미 존재하는 토스트 제거
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+            
+            // 토스트 생성
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            // 2초 후 제거
+            setTimeout(() => {
+                toast.classList.add('fade-out');
+                setTimeout(() => {
+                    toast.remove();
+                }, 500);
+            }, 2000);
+        }
+        
         // 스트리머 미션 상태 업데이트
         function updateStreamer(streamerId) {
             // 체크된 박스 확인
@@ -704,6 +875,12 @@
             const check2 = document.getElementById(`${streamerId}-check2`).classList.contains('checked') ? '1' : '0';
             const check3 = document.getElementById(`${streamerId}-check3`).classList.contains('checked') ? '1' : '0';
             const check4 = document.getElementById(`${streamerId}-check4`).classList.contains('checked') ? '1' : '0';
+            
+            // 미션 텍스트 가져오기
+            const mission1 = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="1"]`).textContent;
+            const mission2 = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="2"]`).textContent;
+            const mission3 = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="3"]`).textContent;
+            const mission4 = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="4"]`).textContent;
             
             // 기본 URL 가져오기
             const baseUrl = document.getElementById(`${streamerId}-link`).innerText.trim().split('?')[0];
@@ -714,6 +891,12 @@
             if (check2 === '1') newUrl += 'check2=1&';
             if (check3 === '1') newUrl += 'check3=1&';
             if (check4 === '1') newUrl += 'check4=1&';
+            
+            // 미션 텍스트 추가
+            newUrl += `mission1=${encodeURIComponent(mission1)}&`;
+            newUrl += `mission2=${encodeURIComponent(mission2)}&`;
+            newUrl += `mission3=${encodeURIComponent(mission3)}&`;
+            newUrl += `mission4=${encodeURIComponent(mission4)}&`;
             
             // 마지막 & 제거
             if (newUrl.endsWith('&')) {
@@ -729,6 +912,9 @@
                 if (!window.streamerWindows) window.streamerWindows = {};
                 window.streamerWindows[streamerId] = window.open(newUrl, streamerId);
             }
+            
+            // 성공 메시지 표시
+            showToast('미션 현황판이 업데이트되었습니다.');
         }
         
         // 스트리머 미션 초기화
@@ -742,15 +928,31 @@
             // 기본 URL 가져오기
             const baseUrl = document.getElementById(`${streamerId}-link`).innerText.trim().split('?')[0];
             
+            // 미션 텍스트 가져오기 (초기화해도 텍스트는 유지)
+            const mission1 = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="1"]`).textContent;
+            const mission2 = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="2"]`).textContent;
+            const mission3 = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="3"]`).textContent;
+            const mission4 = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="4"]`).textContent;
+            
+            // 리셋 URL 생성
+            let resetUrl = `${baseUrl}?reset=1`;
+            resetUrl += `&mission1=${encodeURIComponent(mission1)}`;
+            resetUrl += `&mission2=${encodeURIComponent(mission2)}`;
+            resetUrl += `&mission3=${encodeURIComponent(mission3)}`;
+            resetUrl += `&mission4=${encodeURIComponent(mission4)}`;
+            
             // 리셋 URL로 열기
             let streamerWindow = window.streamerWindows?.[streamerId];
             if (streamerWindow && !streamerWindow.closed) {
-                streamerWindow.location.href = `${baseUrl}?reset=1`;
+                streamerWindow.location.href = resetUrl;
             } else {
                 // 새 창에서 열기
                 if (!window.streamerWindows) window.streamerWindows = {};
-                window.streamerWindows[streamerId] = window.open(`${baseUrl}?reset=1`, streamerId);
+                window.streamerWindows[streamerId] = window.open(resetUrl, streamerId);
             }
+            
+            // 성공 메시지 표시
+            showToast('미션 현황판이 초기화되었습니다.');
         }
         
         // 이미지 업로드 함수
@@ -804,7 +1006,29 @@
                     linkElement.innerText = `${repoUrl}/${streamerId}.html`;
                 }
             });
+            
+            // 저장된 미션 텍스트 불러오기
+            loadMissionTexts();
         });
+        
+        // 페이지 로드 시 저장된 미션 텍스트 적용
+        function loadMissionTexts() {
+            const streamers = ['kyeonjahee', 'woojeong', 'mingyeolhui', 'jjamtasua', 'jini', 'manggurang', 'mygomi'];
+            
+            streamers.forEach(streamerId => {
+                for (let i = 1; i <= 4; i++) {
+                    const storageKey = `${streamerId}-mission-${i}`;
+                    const savedText = localStorage.getItem(storageKey);
+                    
+                    if (savedText) {
+                        const element = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="${i}"]`);
+                        if (element) {
+                            element.textContent = savedText;
+                        }
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>
