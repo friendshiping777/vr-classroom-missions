@@ -133,7 +133,7 @@
         
         <div class="streamer-info">
             <div class="streamer-avatar">
-                <img src="./woojeong.png" alt="우정잉">
+                <img id="profile-image" src="./woojeong.png" alt="우정잉">
             </div>
             <div class="streamer-details">
                 <div class="streamer-role">[특이사항]</div>
@@ -194,6 +194,11 @@
             if(params.mission2) document.getElementById('mission2').textContent = decodeURIComponent(params.mission2);
             if(params.mission3) document.getElementById('mission3').textContent = decodeURIComponent(params.mission3);
             if(params.mission4) document.getElementById('mission4').textContent = decodeURIComponent(params.mission4);
+            
+            // 프로필 이미지 적용
+            if(params.profileImage) {
+                document.getElementById('profile-image').src = decodeURIComponent(params.profileImage);
+            }
         }
         
         // 모든 체크마크 초기화
