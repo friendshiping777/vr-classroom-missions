@@ -343,6 +343,10 @@
             background-color: #f0f0f0;
         }
         
+        #hidden-frames {
+            display: none;
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translate(-50%, 20px); }
             to { opacity: 1; transform: translate(-50%, 0); }
@@ -860,6 +864,9 @@
         </div>
     </div>
     
+    <!-- 숨겨진 프레임 컨테이너 -->
+    <div id="hidden-frames"></div>
+    
     <script>
         // 체크박스 토글 함수
         function toggleCheck(element) {
@@ -1072,7 +1079,7 @@
             }, 2000);
         }
         
-        // 스트리머 미션 상태 업데이트
+        // 스트리머 미션 상태 업데이트 (수정된 함수)
         function updateStreamer(streamerId) {
             // 체크된 박스 확인
             const check1 = document.getElementById(`${streamerId}-check1`).classList.contains('checked') ? '1' : '0';
@@ -1117,27 +1124,32 @@
             if (profileImage) {
                 newUrl += `profileImage=${encodeURIComponent(profileImage)}&`;
             }
+
+            // 현재 시간 추가 (캐시 방지용)
+            newUrl += `timestamp=${Date.now()}`;
             
-            // 마지막 & 제거
-            if (newUrl.endsWith('&')) {
-                newUrl = newUrl.slice(0, -1);
+            // 히든 프레임 생성하여 백그라운드에서 URL 로드
+            const hiddenFrameId = `${streamerId}-frame`;
+            let hiddenFrame = document.getElementById(hiddenFrameId);
+            
+            if (!hiddenFrame) {
+                hiddenFrame = document.createElement('iframe');
+                hiddenFrame.id = hiddenFrameId;
+                hiddenFrame.style.display = 'none';
+                document.getElementById('hidden-frames').appendChild(hiddenFrame);
             }
             
-            // 페이지가 이미 열려있는지 확인
-            let streamerWindow = window.streamerWindows?.[streamerId];
-            if (streamerWindow && !streamerWindow.closed) {
-                streamerWindow.location.href = newUrl;
-            } else {
-                // 새 창에서 열기
-                if (!window.streamerWindows) window.streamerWindows = {};
-                window.streamerWindows[streamerId] = window.open(newUrl, streamerId);
-            }
+            // iframe의 src 속성 업데이트
+            hiddenFrame.src = newUrl;
             
             // 성공 메시지 표시
             showToast('미션 현황판이 업데이트되었습니다.');
+            
+            // 로컬 스토리지에 현재 URL 저장 (OBS 페이지에서 참조할 수 있도록)
+            localStorage.setItem(`${streamerId}-current-url`, newUrl);
         }
         
-        // 스트리머 미션 초기화
+        // 스트리머 미션 초기화 (수정된 함수)
         function resetStreamer(streamerId) {
             // 체크박스 초기화
             document.getElementById(`${streamerId}-check1`).classList.remove('checked');
@@ -1175,15 +1187,25 @@
                 resetUrl += `&profileImage=${encodeURIComponent(profileImage)}`;
             }
             
-            // 리셋 URL로 열기
-            let streamerWindow = window.streamerWindows?.[streamerId];
-            if (streamerWindow && !streamerWindow.closed) {
-                streamerWindow.location.href = resetUrl;
-            } else {
-                // 새 창에서 열기
-                if (!window.streamerWindows) window.streamerWindows = {};
-                window.streamerWindows[streamerId] = window.open(resetUrl, streamerId);
+            // 현재 시간 추가 (캐시 방지용)
+            resetUrl += `&timestamp=${Date.now()}`;
+            
+            // 히든 프레임 생성하여 백그라운드에서 URL 로드
+            const hiddenFrameId = `${streamerId}-frame`;
+            let hiddenFrame = document.getElementById(hiddenFrameId);
+            
+            if (!hiddenFrame) {
+                hiddenFrame = document.createElement('iframe');
+                hiddenFrame.id = hiddenFrameId;
+                hiddenFrame.style.display = 'none';
+                document.getElementById('hidden-frames').appendChild(hiddenFrame);
             }
+            
+            // iframe의 src 속성 업데이트
+            hiddenFrame.src = resetUrl;
+            
+            // 로컬 스토리지에 현재 URL 저장 (OBS 페이지에서 참조할 수 있도록)
+            localStorage.setItem(`${streamerId}-current-url`, resetUrl);
             
             // 성공 메시지 표시
             showToast('미션 현황판이 초기화되었습니다.');
@@ -1292,3 +1314,4 @@
     </script>
 </body>
 </html>
+                    
