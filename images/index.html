@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VR 교실 스트리머 미션 컨트롤러</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        h1, h2 {
+            text-align: center;
+            color: #2b5797;
+        }
+        
+        .instructions {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .streamer-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .streamer-header {
+            background-color: #2b5797;
+            color: white;
+            padding: 10px 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .mission-section {
+            padding: 15px;
+        }
+        
+        .mission-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .mission-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #aaa;
+            border-radius: 3px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .mission-checkbox.checked {
+            background-color: #44c767;
+            border-color: #44c767;
+        }
+        
+        .mission-checkbox.checked:after {
+            content: "✓";
+            color: white;
+            font-weight: bold;
+        }
+        
+        .mission-text {
+            font-size: 15px;
+        }
+        
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .update-button {
+            background-color: #44c767;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            flex: 1;
+        }
+        
+        .reset-button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100px;
+        }
+        
+        .link-box {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            word-break: break-all;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>VR 교실 스트리머 미션 컨트롤러</h1>
+    
+    <div class="instructions">
+        <h2>사용 방법</h2>
+        <ol>
+            <li>각 스트리머의 미션 상태를 체크박스로 관리할 수 있습니다.</li>
+            <li><strong>업데이트</strong> 버튼을 클릭하면 해당 스트리머의 미션 현황판이 실시간으로 업데이트됩니다.</li>
+            <li>스트리머는 OBS에 미션 현황판 링크를 브라우저 소스로 추가하면 됩니다.</li>
+            <li>체크박스가 실시간으로 업데이트됩니다.</li>
+        </ol>
+    </div>
+    
+    <!-- 우정잉 카드 -->
+    <div class="streamer-card">
+        <div class="streamer-header">우정잉</div>
+        
+        <div class="mission-section">
+            <h3>메인 미션</h3>
+            <div class="mission-item">
+                <div class="mission-checkbox" id="woojeong-check1" onclick="toggleCheck(this)"></div>
+                <div class="mission-text">1명 올리기</div>
+            </div>
+            
+            <h3>서브 미션</h3>
+            <div class="mission-item">
+                <div class="mission-checkbox" id="woojeong-check2" onclick="toggleCheck(this)"></div>
+                <div class="mission-text">수업 시간에 노래 부르기</div>
+            </div>
+            <div class="mission-item">
+                <div class="mission-checkbox" id="woojeong-check3" onclick="toggleCheck(this)"></div>
+                <div class="mission-text">아유 받기</div>
+            </div>
+            <div class="mission-item">
+                <div class="mission-checkbox" id="woojeong-check4" onclick="toggleCheck(this)"></div>
+                <div class="mission-text">반장 선거 2표 받기</div>
+            </div>
+            
+            <div class="link-box" id="woojeong-link">
+                https://friendshiping777.github.io/vr-classroom-missions/woojeong.html
+            </div>
+            
+            <div class="control-buttons">
+                <button class="update-button" onclick="updateStreamer('woojeong')">업데이트</button>
+                <button class="reset-button" onclick="resetStreamer('woojeong')">초기화</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 체크박스 토글 함수
+        function toggleCheck(element) {
+            element.classList.toggle('checked');
+        }
+        
+        // 스트리머 미션 상태 업데이트
+        function updateStreamer(streamerId) {
+            // 체크된 박스 확인
+            const check1 = document.getElementById(`${streamerId}-check1`).classList.contains('checked') ? '1' : '0';
+            const check2 = document.getElementById(`${streamerId}-check2`).classList.contains('checked') ? '1' : '0';
+            const check3 = document.getElementById(`${streamerId}-check3`).classList.contains('checked') ? '1' : '0';
+            const check4 = document.getElementById(`${streamerId}-check4`).classList.contains('checked') ? '1' : '0';
+            
+            // 기본 URL 가져오기
+            const baseUrl = document.getElementById(`${streamerId}-link`).innerText.trim().split('?')[0];
+            
+            // 새 URL 생성
+            let newUrl = `${baseUrl}?`;
+            if (check1 === '1') newUrl += 'check1=1&';
+            if (check2 === '1') newUrl += 'check2=1&';
+            if (check3 === '1') newUrl += 'check3=1&';
+            if (check4 === '1') newUrl += 'check4=1&';
+            
+            // 마지막 & 제거
+            if (newUrl.endsWith('&')) {
+                newUrl = newUrl.slice(0, -1);
+            }
+            
+            // 새 창에서 열기
+            window.open(newUrl, streamerId);
+        }
+        
+        // 스트리머 미션 초기화
+        function resetStreamer(streamerId) {
+            // 체크박스 초기화
+            document.getElementById(`${streamerId}-check1`).classList.remove('checked');
+            document.getElementById(`${streamerId}-check2`).classList.remove('checked');
+            document.getElementById(`${streamerId}-check3`).classList.remove('checked');
+            document.getElementById(`${streamerId}-check4`).classList.remove('checked');
+            
+            // 기본 URL 가져오기
+            const baseUrl = document.getElementById(`${streamerId}-link`).innerText.trim().split('?')[0];
+            
+            // 리셋 URL로 열기
+            window.open(`${baseUrl}?reset=1`, streamerId);
+        }
+    </script>
+</body>
+</html>
