@@ -15,9 +15,17 @@
             background-color: #f5f5f5;
         }
         
-        h1, h2 {
+        h1 {
             text-align: center;
             color: #2b5797;
+            margin-bottom: 30px;
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
         }
         
         .instructions {
@@ -28,12 +36,22 @@
             margin-bottom: 30px;
         }
         
+        .instructions h2 {
+            color: #2b5797;
+            text-align: center;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
         .streamer-card {
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            width: 350px;
             overflow: hidden;
+            margin-bottom: 20px;
         }
         
         .streamer-header {
@@ -44,14 +62,73 @@
             font-weight: bold;
         }
         
+        .streamer-info {
+            display: flex;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .streamer-avatar {
+            width: 80px;
+            height: 80px;
+            background-color: #ddd;
+            margin-right: 15px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .streamer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .streamer-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .streamer-role {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .streamer-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
         .mission-section {
             padding: 15px;
+        }
+        
+        .mission-category {
+            font-weight: bold;
+            background-color: #efefef;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .main-mission {
+            color: #c43e57;
+            border-left: 4px solid #c43e57;
+        }
+        
+        .sub-mission {
+            color: #b87d2b;
+            border-left: 4px solid #b87d2b;
+            margin-top: 15px;
         }
         
         .mission-item {
             display: flex;
             align-items: center;
             margin-bottom: 8px;
+            padding: 8px 0;
         }
         
         .mission-checkbox {
@@ -64,6 +141,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            background-color: white;
         }
         
         .mission-checkbox.checked {
@@ -79,11 +157,48 @@
         
         .mission-text {
             font-size: 15px;
+            flex: 1;
+        }
+        
+        .links-section {
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #eee;
+        }
+        
+        .links-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .link-box {
+            background-color: #efefef;
+            padding: 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin-bottom: 8px;
+            word-break: break-all;
+            font-size: 13px;
+        }
+        
+        .copy-button {
+            background-color: #2b5797;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        
+        .copy-button:hover {
+            background-color: #1e3a6a;
         }
         
         .control-buttons {
             display: flex;
-            gap: 10px;
+            justify-content: space-between;
             margin-top: 15px;
         }
         
@@ -96,6 +211,7 @@
             cursor: pointer;
             font-weight: bold;
             flex: 1;
+            margin-right: 8px;
         }
         
         .reset-button {
@@ -109,13 +225,47 @@
             width: 100px;
         }
         
-        .link-box {
-            background-color: #f0f0f0;
-            padding: 10px;
+        .update-button:hover {
+            background-color: #3d9e5c;
+        }
+        
+        .reset-button:hover {
+            background-color: #c0392b;
+        }
+        
+        .file-upload {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .file-upload label {
+            background-color: #2b5797;
+            color: white;
+            padding: 6px 12px;
             border-radius: 4px;
-            margin: 10px 0;
-            word-break: break-all;
-            font-family: monospace;
+            cursor: pointer;
+            font-size: 13px;
+            margin-right: 10px;
+        }
+        
+        .file-upload-info {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .upload-status {
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .upload-success {
+            color: #44c767;
+        }
+        
+        .upload-error {
+            color: #e74c3c;
         }
     </style>
 </head>
@@ -132,89 +282,215 @@
         </ol>
     </div>
     
-    <!-- 우정잉 카드 -->
-    <div class="streamer-card">
-        <div class="streamer-header">우정잉</div>
-        
-        <div class="mission-section">
-            <h3>메인 미션</h3>
-            <div class="mission-item">
-                <div class="mission-checkbox" id="woojeong-check1" onclick="toggleCheck(this)"></div>
-                <div class="mission-text">1명 올리기</div>
+    <div class="container">
+        <!-- 우정잉 카드 -->
+        <div class="streamer-card">
+            <div class="streamer-header">우정잉</div>
+            
+            <div class="streamer-info">
+                <div class="streamer-avatar">
+                    <img id="woojeong-avatar" src="./woojeong.png" alt="우정잉">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role">[특이사항]</div>
+                    <div class="streamer-name">일 진</div>
+                </div>
             </div>
             
-            <h3>서브 미션</h3>
-            <div class="mission-item">
-                <div class="mission-checkbox" id="woojeong-check2" onclick="toggleCheck(this)"></div>
-                <div class="mission-text">수업 시간에 노래 부르기</div>
-            </div>
-            <div class="mission-item">
-                <div class="mission-checkbox" id="woojeong-check3" onclick="toggleCheck(this)"></div>
-                <div class="mission-text">아유 받기</div>
-            </div>
-            <div class="mission-item">
-                <div class="mission-checkbox" id="woojeong-check4" onclick="toggleCheck(this)"></div>
-                <div class="mission-text">반장 선거 2표 받기</div>
+            <div class="mission-section">
+                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="woojeong-check1" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">1명 올리기</div>
+                </div>
+                
+                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="woojeong-check2" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">수업 시간에 노래 부르기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="woojeong-check3" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">아유 받기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="woojeong-check4" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">반장 선거 2표 받기</div>
+                </div>
             </div>
             
-            <div class="link-box" id="woojeong-link">
-                https://friendshiping777.github.io/vr-classroom-missions/woojeong.html
-            </div>
-            
-            <div class="control-buttons">
-                <button class="update-button" onclick="updateStreamer('woojeong')">업데이트</button>
-                <button class="reset-button" onclick="resetStreamer('woojeong')">초기화</button>
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="woojeong-link">
+                    https://friendshiping777.github.io/vr-classroom-missions/woojeong.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('woojeong-link')">복사</button>
+                
+                <div class="file-upload">
+                    <label for="woojeong-image">이미지 변경</label>
+                    <input type="file" id="woojeong-image" style="display:none" onchange="uploadImage('woojeong')">
+                    <span class="file-upload-info">* PNG 이미지만 가능</span>
+                </div>
+                <div id="woojeong-upload-status" class="upload-status"></div>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('woojeong')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('woojeong')">초기화</button>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <script>
-        // 체크박스 토글 함수
-        function toggleCheck(element) {
-            element.classList.toggle('checked');
-        }
         
-        // 스트리머 미션 상태 업데이트
-        function updateStreamer(streamerId) {
-            // 체크된 박스 확인
-            const check1 = document.getElementById(`${streamerId}-check1`).classList.contains('checked') ? '1' : '0';
-            const check2 = document.getElementById(`${streamerId}-check2`).classList.contains('checked') ? '1' : '0';
-            const check3 = document.getElementById(`${streamerId}-check3`).classList.contains('checked') ? '1' : '0';
-            const check4 = document.getElementById(`${streamerId}-check4`).classList.contains('checked') ? '1' : '0';
+        <!-- 스트리머2 카드 -->
+        <div class="streamer-card">
+            <div class="streamer-header">스트리머2</div>
             
-            // 기본 URL 가져오기
-            const baseUrl = document.getElementById(`${streamerId}-link`).innerText.trim().split('?')[0];
+            <div class="streamer-info">
+                <div class="streamer-avatar">
+                    <img id="streamer2-avatar" src="#" alt="스트리머2">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role">[특이사항]</div>
+                    <div class="streamer-name">모범생</div>
+                </div>
+            </div>
             
-            // 새 URL 생성
-            let newUrl = `${baseUrl}?`;
-            if (check1 === '1') newUrl += 'check1=1&';
-            if (check2 === '1') newUrl += 'check2=1&';
-            if (check3 === '1') newUrl += 'check3=1&';
-            if (check4 === '1') newUrl += 'check4=1&';
+            <div class="mission-section">
+                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer2-check1" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">선생님 도와주기</div>
+                </div>
+                
+                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer2-check2" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">발표 3번 하기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer2-check3" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">청소 담당되기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer2-check4" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">반장 선거 출마하기</div>
+                </div>
+            </div>
             
-            // 마지막 & 제거
-            if (newUrl.endsWith('&')) {
-                newUrl = newUrl.slice(0, -1);
-            }
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="streamer2-link">
+                    https://friendshiping777.github.io/vr-classroom-missions/streamer2.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('streamer2-link')">복사</button>
+                
+                <div class="file-upload">
+                    <label for="streamer2-image">이미지 변경</label>
+                    <input type="file" id="streamer2-image" style="display:none" onchange="uploadImage('streamer2')">
+                    <span class="file-upload-info">* PNG 이미지만 가능</span>
+                </div>
+                <div id="streamer2-upload-status" class="upload-status"></div>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('streamer2')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('streamer2')">초기화</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 스트리머3 카드 -->
+        <div class="streamer-card">
+            <div class="streamer-header">스트리머3</div>
             
-            // 새 창에서 열기
-            window.open(newUrl, streamerId);
-        }
-        
-        // 스트리머 미션 초기화
-        function resetStreamer(streamerId) {
-            // 체크박스 초기화
-            document.getElementById(`${streamerId}-check1`).classList.remove('checked');
-            document.getElementById(`${streamerId}-check2`).classList.remove('checked');
-            document.getElementById(`${streamerId}-check3`).classList.remove('checked');
-            document.getElementById(`${streamerId}-check4`).classList.remove('checked');
+            <div class="streamer-info">
+                <div class="streamer-avatar">
+                    <img id="streamer3-avatar" src="#" alt="스트리머3">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role">[특이사항]</div>
+                    <div class="streamer-name">왕따</div>
+                </div>
+            </div>
             
-            // 기본 URL 가져오기
-            const baseUrl = document.getElementById(`${streamerId}-link`).innerText.trim().split('?')[0];
+            <div class="mission-section">
+                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer3-check1" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">친구 사귀기</div>
+                </div>
+                
+                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer3-check2" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">점심 같이 먹기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer3-check3" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">체육시간 짝 찾기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer3-check4" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">괴롭힘 당하지 않기</div>
+                </div>
+            </div>
             
-            // 리셋 URL로 열기
-            window.open(`${baseUrl}?reset=1`, streamerId);
-        }
-    </script>
-</body>
-</html>
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="streamer3-link">
+                    https://friendshiping777.github.io/vr-classroom-missions/streamer3.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('streamer3-link')">복사</button>
+                
+                <div class="file-upload">
+                    <label for="streamer3-image">이미지 변경</label>
+                    <input type="file" id="streamer3-image" style="display:none" onchange="uploadImage('streamer3')">
+                    <span class="file-upload-info">* PNG 이미지만 가능</span>
+                </div>
+                <div id="streamer3-upload-status" class="upload-status"></div>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('streamer3')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('streamer3')">초기화</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 스트리머4 카드 -->
+        <div class="streamer-card">
+            <div class="streamer-header">스트리머4</div>
+            
+            <div class="streamer-info">
+                <div class="streamer-avatar">
+                    <img id="streamer4-avatar" src="#" alt="스트리머4">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role">[특이사항]</div>
+                    <div class="streamer-name">선생님 애제자</div>
+                </div>
+            </div>
+            
+            <div class="mission-section">
+                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer4-check1" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">질문 많이 하기</div>
+                </div>
+                
+                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer4-check2" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">선생님 심부름하기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer4-check3" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">선생님 칭찬받기</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="streamer4-check4" onclick="toggleCheck(this)"></div>
+                    <div class="mission-text">선생님 물건 빌리기</div>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="streamer4-link">
+                    https://friendshiping777.github.io/vr-classroom-missions/streamer4.html
