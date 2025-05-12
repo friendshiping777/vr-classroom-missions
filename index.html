@@ -60,6 +60,9 @@
             padding: 10px 15px;
             font-size: 18px;
             font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .streamer-info {
@@ -113,6 +116,13 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            flex: 1;
+        }
+        
+        .streamer-role-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         
         .streamer-role {
@@ -318,6 +328,21 @@
             animation: fadeOut 0.5s ease-in-out;
         }
         
+        .editable {
+            cursor: text;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .editable:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .editable:focus {
+            outline: 2px solid #2b5797;
+            background-color: #f0f0f0;
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translate(-50%, 20px); }
             to { opacity: 1; transform: translate(-50%, 0); }
@@ -335,9 +360,9 @@
     <div class="instructions">
         <h2>사용 방법</h2>
         <ol>
-            <li>각 스트리머의 미션 상태를 체크박스로 관리할 수 있습니다.</li>
-            <li>미션 제목 옆 ✏️ 버튼을 클릭하면 미션 내용을 직접 수정할 수 있습니다.</li>
+            <li>각 스트리머의 이름, 역할, 미션 내용을 편집 버튼(✏️)을 클릭하여 수정할 수 있습니다.</li>
             <li>프로필 이미지를 클릭하여 스트리머의 프로필 사진을 변경할 수 있습니다.</li>
+            <li>각 스트리머의 미션 상태를 체크박스로 관리할 수 있습니다.</li>
             <li><strong>업데이트</strong> 버튼을 클릭하면 해당 스트리머의 미션 현황판이 실시간으로 업데이트됩니다.</li>
             <li>스트리머는 OBS에 미션 현황판 링크를 브라우저 소스로 추가하면 됩니다.</li>
         </ol>
@@ -346,7 +371,12 @@
     <div class="container">
         <!-- 견자희 카드 -->
         <div class="streamer-card" data-streamer-id="kyeonjahee">
-            <div class="streamer-header">견자희</div>
+            <div class="streamer-header">
+                <div class="streamer-name-container">
+                    <span class="streamer-name-text editable" contenteditable="false" data-field="name">견자희</span>
+                </div>
+                <button class="edit-button" onclick="editStreamerName(this)">✏️</button>
+            </div>
             
             <div class="streamer-info">
                 <div class="streamer-avatar" onclick="triggerFileUpload('kyeonjahee')">
@@ -357,8 +387,11 @@
                     <input type="file" id="kyeonjahee-image" class="file-upload" accept="image/*" onchange="uploadImage('kyeonjahee')">
                 </div>
                 <div class="streamer-details">
-                    <div class="streamer-role">[특이사항]</div>
-                    <div class="streamer-name">모범생</div>
+                    <div class="streamer-role-container">
+                        <div class="streamer-role">[특이사항]</div>
+                        <button class="edit-button" onclick="editStreamerRole(this)">✏️</button>
+                    </div>
+                    <div class="streamer-name editable" contenteditable="false" data-field="role">모범생</div>
                 </div>
             </div>
             
@@ -408,7 +441,12 @@
         
         <!-- 우정잉 카드 -->
         <div class="streamer-card" data-streamer-id="woojeong">
-            <div class="streamer-header">우정잉</div>
+            <div class="streamer-header">
+                <div class="streamer-name-container">
+                    <span class="streamer-name-text editable" contenteditable="false" data-field="name">우정잉</span>
+                </div>
+                <button class="edit-button" onclick="editStreamerName(this)">✏️</button>
+            </div>
             
             <div class="streamer-info">
                 <div class="streamer-avatar" onclick="triggerFileUpload('woojeong')">
@@ -419,8 +457,11 @@
                     <input type="file" id="woojeong-image" class="file-upload" accept="image/*" onchange="uploadImage('woojeong')">
                 </div>
                 <div class="streamer-details">
-                    <div class="streamer-role">[특이사항]</div>
-                    <div class="streamer-name">일진</div>
+                    <div class="streamer-role-container">
+                        <div class="streamer-role">[특이사항]</div>
+                        <button class="edit-button" onclick="editStreamerRole(this)">✏️</button>
+                    </div>
+                    <div class="streamer-name editable" contenteditable="false" data-field="role">일진</div>
                 </div>
             </div>
             
@@ -470,7 +511,12 @@
 
         <!-- 민결희 카드 -->
         <div class="streamer-card" data-streamer-id="mingyeolhui">
-            <div class="streamer-header">민결희</div>
+            <div class="streamer-header">
+                <div class="streamer-name-container">
+                    <span class="streamer-name-text editable" contenteditable="false" data-field="name">민결희</span>
+                </div>
+                <button class="edit-button" onclick="editStreamerName(this)">✏️</button>
+            </div>
             
             <div class="streamer-info">
                 <div class="streamer-avatar" onclick="triggerFileUpload('mingyeolhui')">
@@ -481,8 +527,11 @@
                     <input type="file" id="mingyeolhui-image" class="file-upload" accept="image/*" onchange="uploadImage('mingyeolhui')">
                 </div>
                 <div class="streamer-details">
-                    <div class="streamer-role">[특이사항]</div>
-                    <div class="streamer-name">일진</div>
+                    <div class="streamer-role-container">
+                        <div class="streamer-role">[특이사항]</div>
+                        <button class="edit-button" onclick="editStreamerRole(this)">✏️</button>
+                    </div>
+                    <div class="streamer-name editable" contenteditable="false" data-field="role">일진</div>
                 </div>
             </div>
             
@@ -532,7 +581,12 @@
 
         <!-- 짬타수아 카드 -->
         <div class="streamer-card" data-streamer-id="jjamtasua">
-            <div class="streamer-header">짬타수아</div>
+            <div class="streamer-header">
+                <div class="streamer-name-container">
+                    <span class="streamer-name-text editable" contenteditable="false" data-field="name">짬타수아</span>
+                </div>
+                <button class="edit-button" onclick="editStreamerName(this)">✏️</button>
+            </div>
             
             <div class="streamer-info">
                 <div class="streamer-avatar" onclick="triggerFileUpload('jjamtasua')">
@@ -543,8 +597,11 @@
                     <input type="file" id="jjamtasua-image" class="file-upload" accept="image/*" onchange="uploadImage('jjamtasua')">
                 </div>
                 <div class="streamer-details">
-                    <div class="streamer-role">[특이사항]</div>
-                    <div class="streamer-name">오타쿠</div>
+                    <div class="streamer-role-container">
+                        <div class="streamer-role">[특이사항]</div>
+                        <button class="edit-button" onclick="editStreamerRole(this)">✏️</button>
+                    </div>
+                    <div class="streamer-name editable" contenteditable="false" data-field="role">오타쿠</div>
                 </div>
             </div>
             
@@ -594,7 +651,12 @@
 
         <!-- 지니씨 카드 -->
         <div class="streamer-card" data-streamer-id="jini">
-            <div class="streamer-header">지니씨</div>
+            <div class="streamer-header">
+                <div class="streamer-name-container">
+                    <span class="streamer-name-text editable" contenteditable="false" data-field="name">지니씨</span>
+                </div>
+                <button class="edit-button" onclick="editStreamerName(this)">✏️</button>
+            </div>
             
             <div class="streamer-info">
                 <div class="streamer-avatar" onclick="triggerFileUpload('jini')">
@@ -605,8 +667,11 @@
                     <input type="file" id="jini-image" class="file-upload" accept="image/*" onchange="uploadImage('jini')">
                 </div>
                 <div class="streamer-details">
-                    <div class="streamer-role">[특이사항]</div>
-                    <div class="streamer-name">찐따</div>
+                    <div class="streamer-role-container">
+                        <div class="streamer-role">[특이사항]</div>
+                        <button class="edit-button" onclick="editStreamerRole(this)">✏️</button>
+                    </div>
+                    <div class="streamer-name editable" contenteditable="false" data-field="role">찐따</div>
                 </div>
             </div>
             
@@ -656,7 +721,12 @@
 
         <!-- 망구랑 카드 -->
         <div class="streamer-card" data-streamer-id="manggurang">
-            <div class="streamer-header">망구랑</div>
+            <div class="streamer-header">
+                <div class="streamer-name-container">
+                    <span class="streamer-name-text editable" contenteditable="false" data-field="name">망구랑</span>
+                </div>
+                <button class="edit-button" onclick="editStreamerName(this)">✏️</button>
+            </div>
             
             <div class="streamer-info">
                 <div class="streamer-avatar" onclick="triggerFileUpload('manggurang')">
@@ -667,8 +737,11 @@
                     <input type="file" id="manggurang-image" class="file-upload" accept="image/*" onchange="uploadImage('manggurang')">
                 </div>
                 <div class="streamer-details">
-                    <div class="streamer-role">[특이사항]</div>
-                    <div class="streamer-name">모범생</div>
+                    <div class="streamer-role-container">
+                        <div class="streamer-role">[특이사항]</div>
+                        <button class="edit-button" onclick="editStreamerRole(this)">✏️</button>
+                    </div>
+                    <div class="streamer-name editable" contenteditable="false" data-field="role">모범생</div>
                 </div>
             </div>
             
@@ -718,7 +791,12 @@
 
         <!-- 마이곰이 카드 -->
         <div class="streamer-card" data-streamer-id="mygomi">
-            <div class="streamer-header">마이곰이</div>
+            <div class="streamer-header">
+                <div class="streamer-name-container">
+                    <span class="streamer-name-text editable" contenteditable="false" data-field="name">마이곰이</span>
+                </div>
+                <button class="edit-button" onclick="editStreamerName(this)">✏️</button>
+            </div>
             
             <div class="streamer-info">
                 <div class="streamer-avatar" onclick="triggerFileUpload('mygomi')">
@@ -729,8 +807,11 @@
                     <input type="file" id="mygomi-image" class="file-upload" accept="image/*" onchange="uploadImage('mygomi')">
                 </div>
                 <div class="streamer-details">
-                    <div class="streamer-role">[특이사항]</div>
-                    <div class="streamer-name">유학생</div>
+                    <div class="streamer-role-container">
+                        <div class="streamer-role">[특이사항]</div>
+                        <button class="edit-button" onclick="editStreamerRole(this)">✏️</button>
+                    </div>
+                    <div class="streamer-name editable" contenteditable="false" data-field="role">유학생</div>
                 </div>
             </div>
             
@@ -789,13 +870,106 @@
         function copyToClipboard(elementId) {
             const text = document.getElementById(elementId).innerText.trim();
             navigator.clipboard.writeText(text)
-                .then(() => alert('링크가 복사되었습니다!'))
+                .then(() => showToast('링크가 복사되었습니다!'))
                 .catch(err => console.error('클립보드 복사 실패:', err));
         }
         
         // 파일 업로드 트리거 함수
         function triggerFileUpload(streamerId) {
             document.getElementById(`${streamerId}-image`).click();
+        }
+        
+        // 스트리머 이름 편집 함수
+        function editStreamerName(buttonElement) {
+            const card = buttonElement.closest('.streamer-card');
+            const streamerId = card.getAttribute('data-streamer-id');
+            const nameElement = card.querySelector('.streamer-name-text');
+            
+            const isEditing = nameElement.contentEditable === 'true';
+            
+            if (isEditing) {
+                // 편집 종료 및 저장
+                nameElement.contentEditable = 'false';
+                nameElement.style.outline = 'none';
+                nameElement.style.backgroundColor = '';
+                
+                // 이름 변경사항 저장
+                const newName = nameElement.textContent.trim();
+                saveStreamerInfo(streamerId, 'name', newName);
+                
+                // 버튼 텍스트 변경
+                buttonElement.textContent = '✏️';
+                
+                // 업데이트 자동 호출
+                updateStreamer(streamerId);
+            } else {
+                // 편집 시작
+                nameElement.contentEditable = 'true';
+                nameElement.style.outline = '2px solid #2b5797';
+                nameElement.style.backgroundColor = '#f0f0f0';
+                nameElement.focus();
+                
+                // 버튼 텍스트 변경
+                buttonElement.textContent = '💾';
+                
+                // 엔터 키 누르면 저장하는 이벤트 리스너 추가
+                nameElement.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        buttonElement.click();
+                    }
+                }, { once: true });
+            }
+        }
+        
+        // 스트리머 역할 편집 함수
+        function editStreamerRole(buttonElement) {
+            const card = buttonElement.closest('.streamer-card');
+            const streamerId = card.getAttribute('data-streamer-id');
+            const roleElement = card.querySelector('.streamer-name[data-field="role"]');
+            
+            const isEditing = roleElement.contentEditable === 'true';
+            
+            if (isEditing) {
+                // 편집 종료 및 저장
+                roleElement.contentEditable = 'false';
+                roleElement.style.outline = 'none';
+                roleElement.style.backgroundColor = '';
+                
+                // 역할 변경사항 저장
+                const newRole = roleElement.textContent.trim();
+                saveStreamerInfo(streamerId, 'role', newRole);
+                
+                // 버튼 텍스트 변경
+                buttonElement.textContent = '✏️';
+                
+                // 업데이트 자동 호출
+                updateStreamer(streamerId);
+            } else {
+                // 편집 시작
+                roleElement.contentEditable = 'true';
+                roleElement.style.outline = '2px solid #2b5797';
+                roleElement.style.backgroundColor = '#f0f0f0';
+                roleElement.focus();
+                
+                // 버튼 텍스트 변경
+                buttonElement.textContent = '💾';
+                
+                // 엔터 키 누르면 저장하는 이벤트 리스너 추가
+                roleElement.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        buttonElement.click();
+                    }
+                }, { once: true });
+            }
+        }
+        
+        // 스트리머 정보 저장 함수
+        function saveStreamerInfo(streamerId, field, value) {
+            const storageKey = `${streamerId}-${field}`;
+            localStorage.setItem(storageKey, value);
+            showToast(`스트리머 ${field === 'name' ? '이름' : '역할'}이 업데이트되었습니다.`);
         }
         
         // 미션 섹션 편집 함수
@@ -906,6 +1080,10 @@
             const check3 = document.getElementById(`${streamerId}-check3`).classList.contains('checked') ? '1' : '0';
             const check4 = document.getElementById(`${streamerId}-check4`).classList.contains('checked') ? '1' : '0';
             
+            // 스트리머 이름과 역할 가져오기
+            const name = document.querySelector(`[data-streamer-id="${streamerId}"] .streamer-name-text`).textContent;
+            const role = document.querySelector(`[data-streamer-id="${streamerId}"] .streamer-name[data-field="role"]`).textContent;
+            
             // 미션 텍스트 가져오기
             const mission1 = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="1"]`).textContent;
             const mission2 = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="2"]`).textContent;
@@ -924,6 +1102,10 @@
             if (check2 === '1') newUrl += 'check2=1&';
             if (check3 === '1') newUrl += 'check3=1&';
             if (check4 === '1') newUrl += 'check4=1&';
+            
+            // 스트리머 정보 추가
+            newUrl += `name=${encodeURIComponent(name)}&`;
+            newUrl += `role=${encodeURIComponent(role)}&`;
             
             // 미션 텍스트 추가
             newUrl += `mission1=${encodeURIComponent(mission1)}&`;
@@ -963,8 +1145,9 @@
             document.getElementById(`${streamerId}-check3`).classList.remove('checked');
             document.getElementById(`${streamerId}-check4`).classList.remove('checked');
             
-            // 기본 URL 가져오기
-            const baseUrl = document.getElementById(`${streamerId}-link`).innerText.trim().split('?')[0];
+            // 스트리머 이름과 역할 가져오기
+            const name = document.querySelector(`[data-streamer-id="${streamerId}"] .streamer-name-text`).textContent;
+            const role = document.querySelector(`[data-streamer-id="${streamerId}"] .streamer-name[data-field="role"]`).textContent;
             
             // 미션 텍스트 가져오기 (초기화해도 텍스트는 유지)
             const mission1 = document.querySelector(`[data-streamer-id="${streamerId}"] .mission-text[data-mission-id="1"]`).textContent;
@@ -975,8 +1158,13 @@
             // 프로필 이미지 데이터 가져오기
             const profileImage = localStorage.getItem(`${streamerId}-profile-image`);
             
+            // 기본 URL 가져오기
+            const baseUrl = document.getElementById(`${streamerId}-link`).innerText.trim().split('?')[0];
+            
             // 리셋 URL 생성
             let resetUrl = `${baseUrl}?reset=1`;
+            resetUrl += `&name=${encodeURIComponent(name)}`;
+            resetUrl += `&role=${encodeURIComponent(role)}`;
             resetUrl += `&mission1=${encodeURIComponent(mission1)}`;
             resetUrl += `&mission2=${encodeURIComponent(mission2)}`;
             resetUrl += `&mission3=${encodeURIComponent(mission3)}`;
@@ -1052,6 +1240,9 @@
                 
                 // 저장된 프로필 이미지 불러오기
                 loadProfileImage(streamerId);
+                
+                // 저장된 스트리머 정보 불러오기
+                loadStreamerInfo(streamerId);
             });
         });
         
@@ -1075,6 +1266,27 @@
             const imageData = localStorage.getItem(`${streamerId}-profile-image`);
             if (imageData) {
                 document.getElementById(`${streamerId}-avatar`).src = imageData;
+            }
+        }
+        
+        // 저장된 스트리머 정보 불러오기
+        function loadStreamerInfo(streamerId) {
+            // 이름 불러오기
+            const savedName = localStorage.getItem(`${streamerId}-name`);
+            if (savedName) {
+                const nameElement = document.querySelector(`[data-streamer-id="${streamerId}"] .streamer-name-text`);
+                if (nameElement) {
+                    nameElement.textContent = savedName;
+                }
+            }
+            
+            // 역할 불러오기
+            const savedRole = localStorage.getItem(`${streamerId}-role`);
+            if (savedRole) {
+                const roleElement = document.querySelector(`[data-streamer-id="${streamerId}"] .streamer-name[data-field="role"]`);
+                if (roleElement) {
+                    roleElement.textContent = savedRole;
+                }
             }
         }
     </script>
