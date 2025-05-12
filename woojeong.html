@@ -12,149 +12,159 @@
             font-family: 'Malgun Gothic', sans-serif;
         }
         
-        .overlay-container {
-            position: relative;
-            width: 280px;
-            height: 205px;
+        .mission-panel {
+            width: 300px;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .streamer-header {
+            background-color: #2b5797;
+            color: white;
+            padding: 10px 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .streamer-info {
+            display: flex;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .streamer-avatar {
+            width: 60px;
+            height: 60px;
+            background-color: #ddd;
+            margin-right: 15px;
+            border-radius: 4px;
             overflow: hidden;
         }
         
-        .background-image {
+        .streamer-avatar img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
+            object-fit: cover;
         }
         
-        .checkmarks {
-            position: absolute;
-            z-index: 2;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
+        .streamer-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
-        .check {
-            position: absolute;
+        .streamer-role {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .streamer-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
+        .mission-section {
+            padding: 15px;
+        }
+        
+        .mission-category {
+            font-weight: bold;
+            background-color: #efefef;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .main-mission {
+            color: #c43e57;
+            border-left: 4px solid #c43e57;
+        }
+        
+        .sub-mission {
+            color: #b87d2b;
+            border-left: 4px solid #b87d2b;
+            margin-top: 15px;
+        }
+        
+        .mission-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 8px 0;
+        }
+        
+        .mission-checkbox {
             width: 20px;
             height: 20px;
-            display: none;
-            background-color: #4CAF50;
+            border: 2px solid #aaa;
             border-radius: 3px;
+            margin-right: 10px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
         }
         
-        .check:after {
+        .mission-checkbox.checked {
+            background-color: #44c767;
+            border-color: #44c767;
+        }
+        
+        .mission-checkbox.checked:after {
             content: "✓";
             color: white;
             font-weight: bold;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
         }
         
-        /* 체크마크 위치 - 우정잉 미션 현황판에 맞게 조정 */
-        #check1 {
-            top: 219px;
-            left: 125px;
-        }
-        
-        #check2 {
-            top: 275px;
-            left: 125px;
-        }
-        
-        #check3 {
-            top: 302px;
-            left: 125px;
-        }
-        
-        #check4 {
-            top: 330px;
-            left: 125px;
-        }
-        
-        .control-panel {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-        }
-        
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 5px;
-            margin-bottom: 10px;
-        }
-        
-        .control-button {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 8px 12px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        
-        .control-button:hover {
-            background-color: #45a049;
+        .mission-text {
+            font-size: 15px;
+            flex: 1;
         }
     </style>
 </head>
 <body>
-    <div class="overlay-container">
-        <!-- 배경 이미지 -->
-        <img src="./woojeong.png" class="background-image" alt="우정잉 미션 현황판">
+    <div class="mission-panel">
+        <div class="streamer-header">우정잉</div>
         
-        <!-- 체크마크 오버레이 -->
-        <div class="checkmarks">
-            <div class="check" id="check1"></div>
-            <div class="check" id="check2"></div>
-            <div class="check" id="check3"></div>
-            <div class="check" id="check4"></div>
+        <div class="streamer-info">
+            <div class="streamer-avatar">
+                <img src="./woojeong.png" alt="우정잉">
+            </div>
+            <div class="streamer-details">
+                <div class="streamer-role">[특이사항]</div>
+                <div class="streamer-name">일진</div>
+            </div>
         </div>
-    </div>
-    
-    <!-- 컨트롤 패널 (OBS에서 제외할 부분) -->
-    <div class="control-panel">
-        <div class="button-container">
-            <button class="control-button" onclick="toggleCheck('check1')">메인1 토글</button>
-            <button class="control-button" onclick="toggleCheck('check2')">서브1 토글</button>
-            <button class="control-button" onclick="toggleCheck('check3')">서브2 토글</button>
-            <button class="control-button" onclick="toggleCheck('check4')">서브3 토글</button>
-            <button class="control-button" onclick="resetAll()">모두 초기화</button>
+        
+        <div class="mission-section">
+            <div class="mission-category main-mission">메인 미션</div>
+            <div class="mission-item">
+                <div class="mission-checkbox" id="check1"></div>
+                <div class="mission-text" id="mission1">1명 올리기</div>
+            </div>
+            
+            <div class="mission-category sub-mission">서브 미션</div>
+            <div class="mission-item">
+                <div class="mission-checkbox" id="check2"></div>
+                <div class="mission-text" id="mission2">수업 시간에 노래 부르기</div>
+            </div>
+            <div class="mission-item">
+                <div class="mission-checkbox" id="check3"></div>
+                <div class="mission-text" id="mission3">아유 받기</div>
+            </div>
+            <div class="mission-item">
+                <div class="mission-checkbox" id="check4"></div>
+                <div class="mission-text" id="mission4">반장 선거 2표 받기</div>
+            </div>
         </div>
     </div>
 
     <script>
-        // 체크마크 토글 함수
-        function toggleCheck(id) {
-            const checkmark = document.getElementById(id);
-            if (checkmark.style.display === "block") {
-                checkmark.style.display = "none";
-            } else {
-                checkmark.style.display = "block";
-            }
-        }
-        
-        // 모든 체크마크 초기화
-        function resetAll() {
-            const checkmarks = document.querySelectorAll('.check');
-            checkmarks.forEach(check => {
-                check.style.display = "none";
-            });
-        }
-        
         // URL 파라미터 파싱 함수
         function getUrlParams() {
             const params = {};
@@ -164,21 +174,34 @@
             return params;
         }
         
-        // URL 파라미터로 체크 상태 설정
+        // URL 파라미터로 체크 상태 및 미션 텍스트 설정
         function applyUrlParams() {
             const params = getUrlParams();
             
             // 먼저 모든 체크를 리셋
             if(params.reset === '1') {
-                resetAll();
-                return;
+                resetAllChecks();
             }
             
-            // 각 체크박스 상태 적용
-            if(params.check1 === '1') document.getElementById('check1').style.display = "block";
-            if(params.check2 === '1') document.getElementById('check2').style.display = "block";
-            if(params.check3 === '1') document.getElementById('check3').style.display = "block";
-            if(params.check4 === '1') document.getElementById('check4').style.display = "block";
+            // 체크박스 상태 적용
+            if(params.check1 === '1') document.getElementById('check1').classList.add('checked');
+            if(params.check2 === '1') document.getElementById('check2').classList.add('checked');
+            if(params.check3 === '1') document.getElementById('check3').classList.add('checked');
+            if(params.check4 === '1') document.getElementById('check4').classList.add('checked');
+            
+            // 미션 텍스트 적용
+            if(params.mission1) document.getElementById('mission1').textContent = decodeURIComponent(params.mission1);
+            if(params.mission2) document.getElementById('mission2').textContent = decodeURIComponent(params.mission2);
+            if(params.mission3) document.getElementById('mission3').textContent = decodeURIComponent(params.mission3);
+            if(params.mission4) document.getElementById('mission4').textContent = decodeURIComponent(params.mission4);
+        }
+        
+        // 모든 체크마크 초기화
+        function resetAllChecks() {
+            const checkmarks = document.querySelectorAll('.mission-checkbox');
+            checkmarks.forEach(check => {
+                check.classList.remove('checked');
+            });
         }
         
         // 페이지 로드 시 URL 파라미터 적용
