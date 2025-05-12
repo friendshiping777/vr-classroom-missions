@@ -690,7 +690,9 @@
             const check3 = card.querySelector(`#${streamerId}-check3`).classList.contains('checked') ? '1' : '0';
             const check4 = card.querySelector(`#${streamerId}-check4`).classList.contains('checked') ? '1' : '0';
             
-            // 이미지 데이터는 별도 업로드 함수에서 처리됨
+            // 이미지 데이터 가져오기 (이미 별도 함수로 처리 중)
+            const imageElement = card.querySelector(`#${streamerId}-avatar`);
+            const imageData = imageElement.src;
             
             // Firebase에 데이터 업데이트
             const streamerRef = database.ref(`streamers/${streamerId}`);
@@ -705,7 +707,14 @@
                 check2: check2,
                 check3: check3,
                 check4: check4,
+                image: imageData,
                 lastUpdate: firebase.database.ServerValue.TIMESTAMP
+            }, function(error) {
+                if (error) {
+                    console.error('Firebase 데이터 업데이트 오류:', error);
+                } else {
+                    console.log('Firebase 데이터 업데이트 성공:', streamerId);
+                }
             });
         }
         
@@ -766,13 +775,23 @@
             }
         }
         
-        // 스트리머 업데이트 버튼 클릭 함수
+        // 업데이트 버튼 클릭 시 실행되는 함수
         function updateStreamer(streamerId) {
+            console.log('업데이트 요청:', streamerId);
+            
             // 데이터 업데이트
             updateStreamerData(streamerId);
             
             // 업데이트 메시지 표시
             showToast('미션 현황판이 업데이트되었습니다.');
+            
+            // Firebase 데이터 상태 확인
+            setTimeout(() => {
+                const streamerRef = database.ref(`streamers/${streamerId}`);
+                streamerRef.once('value', snapshot => {
+                    console.log('업데이트 후 Firebase 데이터:', snapshot.val());
+                });
+            }, 1000);
         }
         
         // 스트리머 리셋 버튼 클릭 함수
