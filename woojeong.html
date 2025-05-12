@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>스트리머 미션 현황판</title>
-    <!-- OBS 캐시 무력화를 위한 메타 태그 추가 -->
+    <!-- 캐시 제어 메타태그 -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
     <style>
         body {
             margin: 0;
@@ -129,11 +134,19 @@
             font-size: 15px;
             flex: 1;
         }
+        
+        .loading-indicator {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
     <div class="mission-panel">
-        <div class="streamer-header" id="streamer-name">스트리머 이름</div>
+        <div class="loading-indicator" id="loading">데이터 로딩 중...</div>
+        
+        <div class="streamer-header" id="streamer-name"></div>
         
         <div class="streamer-info">
             <div class="streamer-avatar">
@@ -141,7 +154,7 @@
             </div>
             <div class="streamer-details">
                 <div class="streamer-role">[특이사항]</div>
-                <div class="streamer-name" id="streamer-role">역할</div>
+                <div class="streamer-name" id="streamer-role"></div>
             </div>
         </div>
         
@@ -169,37 +182,58 @@
     </div>
 
     <script>
+        // Firebase 초기화
+        const firebaseConfig = {
+            apiKey: "AIzaSyA2TQ2XSEUzuAKfPQV-hZ7n7VB3qEHG81g",
+            authDomain: "vr-classroom-missions.firebaseapp.com",
+            databaseURL: "https://vr-classroom-missions-default-rtdb.firebaseio.com",
+            projectId: "vr-classroom-missions",
+            storageBucket: "vr-classroom-missions.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:1234567890abcdef"
+        };
+        
+        // Firebase 초기화
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        
         // 스트리머 ID 추출 (파일명에서)
         function getStreamerId() {
-            // URL에서 파일명 추출 (예: woojeong.html)
             const path = window.location.pathname;
             const filename = path.substring(path.lastIndexOf('/') + 1);
-            
-            // 확장자 제거
             return filename.replace('.html', '');
         }
         
-        // 브라우저 로컬 스토리지에서 데이터 가져오기
-        function getDataFromLocalStorage() {
+        // 페이지 로드 시 실행
+        window.addEventListener('load', function() {
             const streamerId = getStreamerId();
-            const dataKey = `streamer_${streamerId}`;
+            console.log('스트리머 ID:', streamerId);
             
-            // 로컬 스토리지에서 데이터 가져오기
-            const dataStr = localStorage.getItem(dataKey);
-            if (!dataStr) return null;
+            // Firebase에서 데이터 가져오기
+            const streamerRef = database.ref(`streamers/${streamerId}`);
             
-            try {
-                return JSON.parse(dataStr);
-            } catch (error) {
-                console.error('데이터 파싱 중 오류:', error);
-                return null;
-            }
-        }
+            // 실시간 업데이트 리스너
+            streamerRef.on('value', snapshot => {
+                const data = snapshot.val();
+                
+                // 로딩 표시 숨기기
+                document.getElementById('loading').style.display = 'none';
+                
+                if (data) {
+                    // 데이터 적용
+                    updateUI(data);
+                } else {
+                    console.log('데이터가 없습니다. 기본값 사용');
+                    document.getElementById('streamer-name').textContent = streamerId;
+                }
+            }, error => {
+                console.error('Firebase 데이터 로드 오류:', error);
+                document.getElementById('loading').textContent = '데이터 로드 오류. 새로고침 해주세요.';
+            });
+        });
         
-        // 데이터 적용 함수
-        function applyData(data) {
-            if (!data) return;
-            
+        // UI 업데이트 함수
+        function updateUI(data) {
             // 기본 정보 설정
             document.getElementById('streamer-name').textContent = data.name || getStreamerId();
             document.getElementById('streamer-role').textContent = data.role || '';
@@ -223,65 +257,21 @@
             if (data.check4 === '1') document.getElementById('check4').classList.add('checked');
             else document.getElementById('check4').classList.remove('checked');
             
-            // 이미지 설정 (특별히 처리)
+            // 이미지 설정
             if (data.image) {
-                const img = document.getElementById('profile-image');
+                const imgElement = document.getElementById('profile-image');
                 
-                // 이미지 로드 에러 처리 추가
-                img.onerror = function() {
+                // 이미지 에러 처리
+                imgElement.onerror = function() {
                     console.error('이미지 로드 실패');
-                    img.src = './default-avatar.png'; // 기본 이미지로 대체
+                    imgElement.src = './default-avatar.png';
                 };
                 
-                // 캐시 방지를 위한 타임스탬프 추가
-                img.src = data.image + '?t=' + new Date().getTime();
+                // 타임스탬프 추가하여 캐시 방지
+                const timestamp = new Date().getTime();
+                imgElement.src = data.image + '?t=' + timestamp;
             }
         }
-        
-        // 데이터 로드 함수
-        function loadData() {
-            const data = getDataFromLocalStorage();
-            applyData(data);
-        }
-        
-        // 자동 새로고침 설정 (보다 적극적인 방식)
-        function setupAutoRefresh() {
-            // 강제 새로고침 함수
-            function forceRefresh() {
-                // 페이지 강제 새로고침 (OBS에서는 이렇게 해야 캐시를 무시함)
-                if (window.location.href.indexOf('?') === -1) {
-                    window.location.href = window.location.href + '?t=' + new Date().getTime();
-                } else {
-                    window.location.href = window.location.href.split('?')[0] + '?t=' + new Date().getTime();
-                }
-            }
-            
-            // 초기 데이터 로드
-            loadData();
-            
-            // 데이터 변경 감지 및 반영
-            let lastDataStr = JSON.stringify(getDataFromLocalStorage() || {});
-            
-            // 주기적으로 데이터 확인 (500ms마다)
-            setInterval(function() {
-                const newData = getDataFromLocalStorage();
-                const newDataStr = JSON.stringify(newData || {});
-                
-                // 데이터가 변경되었으면 반영
-                if (newDataStr !== lastDataStr) {
-                    console.log('데이터 변경 감지, 업데이트 중...');
-                    applyData(newData);
-                    lastDataStr = newDataStr;
-                }
-            }, 500);
-            
-            // 정기적으로 강제 새로고침 (30초마다)
-            // OBS의 캐시 문제를 완전히 우회하기 위함
-            setInterval(forceRefresh, 30000);
-        }
-        
-        // 페이지 로드 시 초기화
-        window.addEventListener('load', setupAutoRefresh);
     </script>
 </body>
 </html>
