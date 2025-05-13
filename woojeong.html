@@ -22,7 +22,8 @@
         }
         
         .mission-panel {
-            width: 400px;
+            width: 465px; /* 너비 수정 */
+            height: 255px; /* 높이 명시적 설정 */
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
@@ -32,28 +33,36 @@
         .streamer-header {
             background-color: #2b5797;
             color: white;
-            padding: 10px 15px;
-            font-size: 18px;
+            padding: 10px 28px; /* 좌측 패딩 증가로 텍스트 위치 조정 */
+            font-size: 20px;
             font-weight: bold;
-            text-align: center;
+            text-align: left; /* 좌측 정렬 */
+            height: 24px; /* 헤더 높이 고정 */
+            line-height: 24px; /* 텍스트 수직 중앙 정렬 */
         }
         
         .panel-content {
             display: flex;
             flex-direction: row;
+            height: calc(100% - 44px); /* 헤더 제외한 높이 */
         }
         
         .left-section {
-            width: 120px;
-            border-right: 1px solid #eee;
-            padding: 10px;
+            width: 140px; /* 왼쪽 섹션 너비 수정 */
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            position: relative;
+        }
+        
+        .right-section {
+            width: 325px; /* 오른쪽 섹션 너비 수정 */
+            padding: 10px 15px;
         }
         
         .streamer-avatar {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 10px;
-            border-radius: 4px;
+            width: 140px; /* 프로필 이미지 너비 */
+            height: 140px; /* 프로필 이미지 높이 - 정사각형 */
             overflow: hidden;
         }
         
@@ -63,50 +72,52 @@
             object-fit: cover;
         }
         
+        .streamer-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            text-align: center;
+            flex-grow: 1; /* 남은 공간 채우기 */
+        }
+        
         .streamer-role {
             color: #666;
-            text-align: center;
-            font-size: 14px;
+            font-size: 12px;
             margin-bottom: 5px;
         }
         
         .streamer-name {
             font-size: 18px;
             font-weight: bold;
-            text-align: center;
             color: #1a1a1a;
         }
         
-        .right-section {
-            flex: 1;
-            padding: 10px;
-        }
-        
         .mission-category {
+            display: inline-block; /* 텍스트 길이에 맞게 너비 조정 */
             font-weight: bold;
-            padding: 8px 12px;
-            border-radius: 4px;
+            padding: 8px 15px;
+            border-radius: 18px; /* 모서리 둥글게 */
             margin-bottom: 10px;
         }
         
         .main-mission {
             background-color: #c43e57;
             color: white;
-            border-radius: 4px;
         }
         
         .sub-mission {
             background-color: #b87d2b;
             color: white;
             margin-top: 15px;
-            border-radius: 4px;
         }
         
         .mission-item {
             display: flex;
             align-items: center;
             margin-bottom: 8px;
-            padding: 8px 0;
+            padding: 6px 0;
         }
         
         .mission-checkbox {
@@ -156,8 +167,10 @@
                 <div class="streamer-avatar">
                     <img id="profile-image" src="./default-avatar.png" alt="프로필 이미지">
                 </div>
-                <div class="streamer-role">[특이사항]</div>
-                <div class="streamer-name" id="streamer-role">선생님</div>
+                <div class="streamer-info">
+                    <div class="streamer-role">[특이사항]</div>
+                    <div class="streamer-name" id="streamer-role">선생님</div>
+                </div>
             </div>
             
             <div class="right-section">
