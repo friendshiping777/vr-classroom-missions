@@ -449,6 +449,30 @@
             });
         }
 
+        // ✅ 강력한 실시간 반영을 위해 Resize + MutationObserver 병행
+        const resizeObserver = new ResizeObserver(() => {
+            adjustPanelHeight();
+        });
+        
+        const contentContainer = document.getElementById('content-container');
+        if (contentContainer) {
+            resizeObserver.observe(contentContainer);
+        }
+        
+        // MutationObserver로 텍스트 변경 감지 보완 (텍스트가 줄어드는 경우 포함)
+        const missionTextNodes = document.querySelectorAll('.mission-text');
+        const mutationObserver = new MutationObserver(() => {
+            adjustPanelHeight();
+        });
+        missionTextNodes.forEach(node => {
+            mutationObserver.observe(node, {
+                childList: true,
+                characterData: true,
+                subtree: true,
+            });
+        });
+
+
         // ResizeObserver를 사용해 패널 내부 크기 변화를 정확하게 감지
         const resizeObserver = new ResizeObserver(() => {
             adjustPanelHeight();
