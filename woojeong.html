@@ -57,6 +57,7 @@
             height: 45px;
             flex-shrink: 0; /* 헤더 높이 고정 */
             display: flex;
+            border-bottom: 2px solid #2a4a6c; /* 닉네임 하단 구분선 강화 */
         }
         
         .name-area {
@@ -75,7 +76,7 @@
             font-size: 29px;
             font-family: 'Sandoll Nemony2', sans-serif;
             font-weight: 700; /* 04 Basic Bold */
-            letter-spacing: 1px;
+            letter-spacing: 3px; /* 자간 확대 */
             text-align: center;
         }
         
@@ -95,7 +96,7 @@
             width: 138px;
             display: flex;
             flex-direction: column;
-            border-right: 1px solid #eee;
+            border-right: 2px solid #e0e0e0; /* 세로 구분선 강화 */
             flex-shrink: 0; /* 너비 고정 */
         }
         
@@ -150,7 +151,7 @@
             font-size: 29px;
             font-family: 'Sandoll Nemony2', sans-serif;
             font-weight: 700; /* 04 Basic Bold */
-            letter-spacing: 1px;
+            letter-spacing: 3px; /* 자간 확대 */
             text-align: center;
         }
         
@@ -190,7 +191,7 @@
         
         .mission-item {
             display: flex;
-            align-items: flex-start; /* 텍스트가 길 때 상단 정렬 */
+            align-items: center; /* 체크박스와 텍스트 중앙 정렬 */
             margin-bottom: 7px;
             padding: 0;
             padding-right: 10px;
@@ -211,7 +212,6 @@
             align-items: center;
             justify-content: center;
             background-color: white;
-            margin-top: 2px; /* 텍스트와 수직 정렬 개선 */
         }
         
         .mission-checkbox.checked {
@@ -235,6 +235,8 @@
             flex: 1;
             word-wrap: break-word;
             overflow-wrap: break-word;
+            /* 글자 높이를 체크박스 중앙에 맞추기 위한 미세 조정 */
+            padding-top: 1px;
         }
         
         .loading-indicator {
@@ -251,8 +253,8 @@
         
         /* 구분선 */
         .divider {
-            height: 1px;
-            background-color: #eee;
+            height: 2px; /* 구분선 굵기 강화 */
+            background-color: #e0e0e0; /* 더 잘 보이는 색상 */
             margin: 4px 0;
             width: 316px;
         }
