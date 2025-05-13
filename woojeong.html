@@ -35,8 +35,8 @@
         .streamer-header {
             background-color: #2b5797;
             color: white;
-            padding: 10px 15px;
-            font-size: 20px;
+            padding: 6px 15px;
+            font-size: 18px;
             font-weight: bold;
             height: 24px;
             line-height: 24px;
@@ -46,7 +46,6 @@
             display: flex;
             flex-direction: row;
             flex: 1;
-            overflow: hidden;
         }
         
         .left-section {
@@ -54,20 +53,20 @@
             display: flex;
             flex-direction: column;
             border-right: 1px solid #eee;
+            padding-top: 10px;
         }
         
         .right-section {
             width: 324px;
-            padding: 0;
+            padding: 10px;
             display: flex;
             flex-direction: column;
-            overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
         }
         
         .streamer-avatar {
-            width: 120px;
-            height: 120px;
-            margin: 10px auto;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 10px auto;
         }
         
         .streamer-avatar img {
@@ -78,7 +77,7 @@
         
         .streamer-info {
             text-align: center;
-            padding: 0 10px 10px 10px;
+            padding: 0 10px;
         }
         
         .streamer-role {
@@ -93,32 +92,14 @@
             color: #153067;
         }
         
-        .mission-block {
-            padding: 10px 15px;
-            border-bottom: 1px solid #eeeeee;
+        .mission-section {
+            margin-bottom: 15px;
         }
         
-        .mission-block:last-child {
-            border-bottom: none;
-        }
-        
-        .mission-category {
-            display: inline-block;
-            font-weight: bold;
-            padding: 5px 20px;
-            border-radius: 16px;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        
-        .main-mission {
-            background-color: #c43e57;
-            color: white;
-        }
-        
-        .sub-mission {
-            background-color: #b87d2b;
-            color: white;
+        .mission-label {
+            display: block;
+            margin-bottom: 5px;
+            height: 30px; /* 이미지 높이에 맞게 조정 */
         }
         
         .mission-items {
@@ -199,30 +180,32 @@
             </div>
             
             <div class="right-section">
-                <div class="mission-block">
-                    <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-section">
+                    <!-- 메인 미션 이미지 -->
+                    <img src="main-mission.png" alt="메인 미션" class="mission-label">
                     <div class="mission-items">
                         <div class="mission-item">
                             <div class="mission-checkbox" id="check1"></div>
-                            <div class="mission-text" id="mission1">학생에게 훈나기</div>
+                            <div class="mission-text" id="mission1">메인 미션 내용</div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="mission-block">
-                    <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-section">
+                    <!-- 서브 미션 이미지 -->
+                    <img src="sub-mission.png" alt="서브 미션" class="mission-label">
                     <div class="mission-items">
                         <div class="mission-item">
                             <div class="mission-checkbox" id="check2"></div>
-                            <div class="mission-text" id="mission2">가성으로 수업하기</div>
+                            <div class="mission-text" id="mission2">서브 미션 1</div>
                         </div>
                         <div class="mission-item">
                             <div class="mission-checkbox" id="check3"></div>
-                            <div class="mission-text" id="mission3">RP 깨고 참여자 팬미팅 발하기</div>
+                            <div class="mission-text" id="mission3">서브 미션 2</div>
                         </div>
                         <div class="mission-item">
                             <div class="mission-checkbox" id="check4"></div>
-                            <div class="mission-text" id="mission4">학생들 앞에서 큰 소리로 울기</div>
+                            <div class="mission-text" id="mission4">서브 미션 3</div>
                         </div>
                     </div>
                 </div>
@@ -230,49 +213,8 @@
         </div>
     </div>
 
-    <!-- 테스트용 스크립트 (로컬 미리보기용) -->
     <script>
-    // 테스트용 데이터 (Firebase 미리보기용)
-    window.addEventListener('load', function() {
-        // 로딩 표시 숨기기
-        document.getElementById('loading').style.display = 'none';
-        
-        // 테스트 데이터
-        const testData = {
-            name: "닉네임",
-            role: "선생님",
-            mission1: "학생에게 훈나기",
-            mission2: "가성으로 수업하기",
-            mission3: "RP 깨고 참여자 팬미팅 발하기",
-            mission4: "학생들 앞에서 큰 소리로 울기",
-            check1: "1",
-            check2: "0",
-            check3: "1",
-            check4: "0",
-            image: "https://via.placeholder.com/120" // 테스트용 이미지
-        };
-        
-        // UI 업데이트 함수 직접 호출
-        document.getElementById('streamer-name').textContent = testData.name;
-        document.getElementById('streamer-role').textContent = testData.role;
-        
-        document.getElementById('mission1').textContent = testData.mission1;
-        document.getElementById('mission2').textContent = testData.mission2;
-        document.getElementById('mission3').textContent = testData.mission3;
-        document.getElementById('mission4').textContent = testData.mission4;
-        
-        if (testData.check1 === '1') document.getElementById('check1').classList.add('checked');
-        if (testData.check2 === '1') document.getElementById('check2').classList.add('checked');
-        if (testData.check3 === '1') document.getElementById('check3').classList.add('checked');
-        if (testData.check4 === '1') document.getElementById('check4').classList.add('checked');
-        
-        document.getElementById('profile-image').src = testData.image;
-    });
-    </script>
-
-    <script>
-        // Firebase 초기화 (실제 배포 시 주석 해제)
-        /*
+        // Firebase 초기화
         const firebaseConfig = {
           apiKey: "AIzaSyAAX8T5oKVHIaZf_xut7qmfn88LIB1jUcM",
           authDomain: "friendshiping-ee9a0.firebaseapp.com",
@@ -371,7 +313,6 @@
                 }
             }
         }
-        */
     </script>
 </body>
 </html>
