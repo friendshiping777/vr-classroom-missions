@@ -32,14 +32,16 @@
             flex-direction: column;
         }
         
+        /* 헤더 영역 - 닉네임 */
         .header-section {
             background-color: #3d6794;
+            height: 45px; /* 닉네임 영역 높이 */
             display: flex;
-            height: 36px;
         }
         
         .name-area {
-            width: 140px; /* 왼쪽 영역 너비와 동일 */
+            width: 138px; /* 왼쪽 영역 너비 */
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -47,7 +49,7 @@
         
         .name-area span {
             color: white;
-            font-size: 18px;
+            font-size: 22px; /* 텍스트 크기 증가 */
             font-weight: bold;
             text-align: center;
         }
@@ -56,37 +58,34 @@
             flex: 1; /* 나머지 공간 차지 */
         }
         
+        /* 컨텐츠 영역 */
         .content-container {
             display: flex;
             flex: 1;
         }
         
+        /* 왼쪽 섹션 */
         .left-section {
-            width: 140px;
+            width: 138px;
             display: flex;
             flex-direction: column;
             border-right: 1px solid #eee;
         }
         
-        .right-section {
-            width: 324px;
-            padding: 15px 10px;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto; /* 내용이 늘어날 경우 스크롤 */
-        }
-        
+        /* 프로필 영역 */
         .profile-area {
-            height: 140px; /* 프로필 영역 고정 높이 */
+            height: 131px; /* 프로필 영역 높이 */
             display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 10px 0;
+            padding-top: 8px; /* 상단 여백 */
+            padding-left: 8px; /* 좌측 여백 */
+            padding-right: 8px; /* 우측 여백 */
+            padding-bottom: 0; /* 하단 여백 없음 */
         }
         
         .streamer-avatar {
-            width: 120px;
-            height: 120px;
+            width: 122px; /* 프로필 이미지 너비 (138-8-8) */
+            height: 123px; /* 프로필 이미지 높이 (131-8) */
         }
         
         .streamer-avatar img {
@@ -95,27 +94,36 @@
             object-fit: cover;
         }
         
+        /* 역할 영역 */
         .role-area {
-            flex: 1; /* 남은 영역 모두 차지 */
+            height: 79px; /* 역할 영역 높이 */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 5px 10px;
         }
         
         .streamer-role {
             color: #666;
             font-size: 12px;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
             text-align: center;
         }
         
         .streamer-name {
-            font-size: 28px; /* 크기 증가 */
+            font-size: 30px; /* 역할 텍스트 크기 더 증가 */
             font-weight: bold;
             color: #153067;
             text-align: center;
+        }
+        
+        /* 오른쪽 섹션 - 미션 영역 */
+        .right-section {
+            width: 326px;
+            padding: 15px 0 15px 10px; /* 좌측 패딩만 적용 */
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto; /* 내용이 늘어날 경우 스크롤 */
         }
         
         .mission-section {
@@ -129,8 +137,8 @@
         .mission-label {
             display: block;
             margin-bottom: 8px;
-            height: 20px; /* 이미지 높이 조정 */
-            width: 70px; /* 이미지 너비 조정 */
+            height: 20px; /* 이미지 높이 */
+            width: 70px; /* 이미지 너비 */
             opacity: 0.95;
         }
         
@@ -143,6 +151,7 @@
             align-items: center;
             margin-bottom: 6px;
             padding: 0;
+            padding-right: 10px; /* 우측 여백 */
         }
         
         .mission-item:last-child {
@@ -198,6 +207,7 @@
             background-color: #eee;
             margin: 8px 0;
             width: 100%;
+            padding-right: 10px;
         }
     </style>
 </head>
