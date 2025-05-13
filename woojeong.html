@@ -32,20 +32,32 @@
             flex-direction: column;
         }
         
-        .streamer-header {
+        .header-section {
             background-color: #3d6794;
-            color: white;
-            padding: 0 30px; /* 좌측 여백 증가 */
-            font-size: 18px;
-            font-weight: bold;
+            display: flex;
             height: 36px;
-            line-height: 36px;
-            text-align: left;
         }
         
-        .panel-content {
+        .name-area {
+            width: 140px; /* 왼쪽 영역 너비와 동일 */
             display: flex;
-            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .name-area span {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .empty-area {
+            flex: 1; /* 나머지 공간 차지 */
+        }
+        
+        .content-container {
+            display: flex;
             flex: 1;
         }
         
@@ -54,7 +66,6 @@
             display: flex;
             flex-direction: column;
             border-right: 1px solid #eee;
-            position: relative;
         }
         
         .right-section {
@@ -65,10 +76,17 @@
             overflow-y: auto; /* 내용이 늘어날 경우 스크롤 */
         }
         
+        .profile-area {
+            height: 140px; /* 프로필 영역 고정 높이 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0;
+        }
+        
         .streamer-avatar {
             width: 120px;
             height: 120px;
-            margin: 10px auto 8px auto;
         }
         
         .streamer-avatar img {
@@ -77,25 +95,27 @@
             object-fit: cover;
         }
         
-        .streamer-info {
-            text-align: center;
+        .role-area {
+            flex: 1; /* 남은 영역 모두 차지 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 5px 10px;
-            position: absolute;
-            bottom: 10px;
-            left: 0;
-            right: 0;
         }
         
         .streamer-role {
             color: #666;
             font-size: 12px;
             margin-bottom: 2px;
+            text-align: center;
         }
         
         .streamer-name {
             font-size: 28px; /* 크기 증가 */
             font-weight: bold;
             color: #153067;
+            text-align: center;
         }
         
         .mission-section {
@@ -109,8 +129,8 @@
         .mission-label {
             display: block;
             margin-bottom: 8px;
-            height: 20px; /* 이미지 높이 더 줄임 */
-            width: 70px; /* 이미지 너비 더 줄임 */
+            height: 20px; /* 이미지 높이 조정 */
+            width: 70px; /* 이미지 너비 조정 */
             opacity: 0.95;
         }
         
@@ -185,19 +205,33 @@
     <div class="mission-panel">
         <div class="loading-indicator" id="loading">데이터 로딩 중...</div>
         
-        <div class="streamer-header" id="streamer-name">닉네임</div>
+        <!-- 헤더 영역 - 닉네임 -->
+        <div class="header-section">
+            <div class="name-area">
+                <span id="streamer-name">닉네임</span>
+            </div>
+            <div class="empty-area"></div>
+        </div>
         
-        <div class="panel-content">
+        <!-- 컨텐츠 영역 -->
+        <div class="content-container">
+            <!-- 왼쪽 섹션 - 프로필 및 역할 -->
             <div class="left-section">
-                <div class="streamer-avatar">
-                    <img id="profile-image" src="./default-avatar.png" alt="프로필 이미지">
+                <!-- 프로필 영역 -->
+                <div class="profile-area">
+                    <div class="streamer-avatar">
+                        <img id="profile-image" src="./default-avatar.png" alt="프로필 이미지">
+                    </div>
                 </div>
-                <div class="streamer-info">
+                
+                <!-- 역할 영역 -->
+                <div class="role-area">
                     <div class="streamer-role">[특이사항]</div>
                     <div class="streamer-name" id="streamer-role">선생님</div>
                 </div>
             </div>
             
+            <!-- 오른쪽 섹션 - 미션 목록 -->
             <div class="right-section">
                 <div class="mission-section">
                     <!-- 메인 미션 이미지 -->
