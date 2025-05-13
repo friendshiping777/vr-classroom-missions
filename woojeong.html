@@ -13,16 +13,40 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     
-    <!-- 산돌 네모니2 03 Basic Regular -->
-    <link rel="preconnect" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com">
-    <link rel="stylesheet" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com/v1/api/css/drop_fontstream_css/?sid=gAAAAABoIxPBcQCEF4aaKexGpCgU073eTsLHzrUD2gxCvLHSM-ddD1JXhi0dRlmKz5nxqAb02keBhvXGjFWR-x8VeJ4aBfEzxh4gIgenaagVxOdiYnNMUJA1gkIoHqG8nd6_YZbNGKFZkLO1b34y1s_dEU79JQsK5xhvb1xNupr0RbwoMaX1txPYPYW75TgptookWRS22lDjU5cReP79DFHOQm9mjgId_aDkBSum29YhSmu_fPAHw5vOD5Q14ukfePmpWAYTPrBp" charset="utf-8" referrerpolicy="origin">
-
-    <!-- 산돌 네모니2 04 Basic Bold (닉네임/역할용) -->
-    <link rel="preconnect" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com">
-    <link rel="stylesheet" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com/v1/api/css/drop_fontstream_css/?sid=gAAAAABoIvrnGDxNsD_y2Pa1yAbit-8bEcBXiO2oWyoOJ9n8tYaeXBWIPXHPrmN8quh7kmzmJWSv3QOPs530HwySGvlpjz73XZMa2jmtDIerRMrEH0IdF-LM4aSB7rr_Y6zXxlLSZ_kybdaiGR2bX5FQaTwu7Wq71qE2OmWifR6r37Uob0-YISRQbAe1IpMdW-6tS1pUJPNWRI7hiv1Gp-0CercdxDCnDTl7w0xBluOr5MHXYCmohQ9TCRtJK6ouAaxjUhqun6Rh" charset="utf-8" referrerpolicy="origin">
-    
-    <!-- G마켓 산스 폰트 -->
+    <!-- 산돌 네모니2 폰트 스타일 - 모든 굵기 종류 -->
     <style>
+        @font-face {
+            font-family: 'SandollNemony2-Thin';
+            src: url('https://cdn.jsdelivr.net/gh/fonts-archive/SandollNemony2/SandollNemony2-Thin.woff2') format('woff2'),
+                 url('https://cdn.jsdelivr.net/gh/fonts-archive/SandollNemony2/SandollNemony2-Thin.woff') format('woff');
+            font-weight: 100;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'SandollNemony2-Light';
+            src: url('https://cdn.jsdelivr.net/gh/fonts-archive/SandollNemony2/SandollNemony2-Light.woff2') format('woff2'),
+                 url('https://cdn.jsdelivr.net/gh/fonts-archive/SandollNemony2/SandollNemony2-Light.woff') format('woff');
+            font-weight: 300;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'SandollNemony2-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/fonts-archive/SandollNemony2/SandollNemony2-Regular.woff2') format('woff2'),
+                 url('https://cdn.jsdelivr.net/gh/fonts-archive/SandollNemony2/SandollNemony2-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'SandollNemony2-Bold';
+            src: url('https://cdn.jsdelivr.net/gh/fonts-archive/SandollNemony2/SandollNemony2-Bold.woff2') format('woff2'),
+                 url('https://cdn.jsdelivr.net/gh/fonts-archive/SandollNemony2/SandollNemony2-Bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+        }
+        
         @font-face {
             font-family: 'GmarketSansMedium';
             src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
@@ -35,7 +59,7 @@
             margin: 0;
             padding: 0;
             background-color: transparent;
-            font-family: 'Sandoll Nemony2', 'GmarketSansMedium', 'Malgun Gothic', sans-serif;
+            font-family: 'SandollNemony2-Regular', 'GmarketSansMedium', 'Malgun Gothic', sans-serif;
         }
         
         /* 전체 컨테이너 - 우측 정렬 및 여백 설정 */
@@ -78,12 +102,12 @@
             padding-bottom: 3px;
         }
         
-        /* 닉네임 - Bold 폰트 적용 */
+        /* 닉네임 - 03 Regular 폰트 적용 (한 단계 내림) */
         .name-text {
             color: #ffffff; 
             font-size: 29px;
-            font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 700; /* 04 Basic Bold */
+            font-family: 'SandollNemony2-Regular', sans-serif;
+            font-weight: 400; /* 03 Basic Regular */
             letter-spacing: 3px; /* 자간 확대 */
             text-align: center;
         }
@@ -142,23 +166,23 @@
             margin-top: -10px;
         }
         
-        /* 특이사항 - Regular 폰트 적용 */
+        /* 특이사항 - 02 Light 폰트 적용 (한 단계 내림) */
         .special-note {
             color: #343434;
             font-size: 16px;
-            font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 400; /* 03 Basic Regular */
+            font-family: 'SandollNemony2-Light', sans-serif;
+            font-weight: 300; /* 02 Basic Light */
             letter-spacing: -0.5px;
             text-align: center;
             margin-bottom: 4px;
         }
         
-        /* 역할명 - Bold 폰트 적용 */
+        /* 역할명 - 03 Regular 폰트 적용 (한 단계 내림) */
         .role-text {
             color: #103155;
             font-size: 29px;
-            font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 700; /* 04 Basic Bold */
+            font-family: 'SandollNemony2-Regular', sans-serif;
+            font-weight: 400; /* 03 Basic Regular */
             letter-spacing: 3px; /* 자간 확대 */
             text-align: center;
         }
