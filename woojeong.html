@@ -65,7 +65,7 @@
             color: #ffffff; /* 닉네임 색상 */
             font-size: 29px; /* 28.89pt */
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: bold;
+            font-weight: 700; /* 05 Bold - 더 굵게 */
             letter-spacing: 1px; /* 자간 100 대략 1px로 환산 */
             text-align: center;
         }
@@ -124,7 +124,7 @@
             color: #1e1e1e; /* 특이사항 색상 */
             font-size: 16px; /* 16.12pt */
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: normal; /* Regular */
+            font-weight: 400; /* Regular */
             letter-spacing: -0.5px; /* 자간 -50 대략 -0.5px로 환산 */
             text-align: center;
             margin-bottom: 4px;
@@ -134,7 +134,7 @@
             color: #103155; /* 역할 색상 */
             font-size: 29px; /* 28.79pt */
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: bold;
+            font-weight: 700; /* 05 Bold - 더 굵게 */
             letter-spacing: 1px; /* 자간 100 대략 1px로 환산 */
             text-align: center;
         }
@@ -142,27 +142,27 @@
         /* 오른쪽 섹션 - 미션 영역 */
         .right-section {
             width: 326px;
-            padding: 15px 0 15px 10px;
+            padding: 10px 0 10px 10px; /* 여백 축소 */
             display: flex;
             flex-direction: column;
         }
         
         .mission-section {
-            margin-bottom: 10px;
+            margin-bottom: 6px; /* 여백 축소 */
             width: 316px;
         }
         
         .mission-section:first-child {
-            margin-bottom: 12px;
+            margin-bottom: 6px; /* 여백 축소 */
         }
         
         .sub-mission-section {
-            margin-top: 6px;
+            margin-top: 3px; /* 여백 축소 */
         }
         
         .mission-label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 5px; /* 여백 축소 */
             height: 20px;
             width: 70px;
             opacity: 0.95;
@@ -175,7 +175,7 @@
         .mission-item {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 6px; /* 여백 축소 */
             padding: 0;
             padding-right: 10px;
         }
@@ -211,10 +211,10 @@
         
         .mission-text {
             color: #1c1c1c; /* 미션내용 색상 */
-            font-size: 21px; /* 20.83pt */
+            font-size: 19px; /* 20.83pt - 약간 축소 */
             font-family: 'GmarketSansMedium', sans-serif;
             letter-spacing: -0.3px; /* 자간 -30 대략 -0.3px로 환산 */
-            line-height: 1.4;
+            line-height: 1.3; /* 줄 간격 축소 */
             flex: 1;
             word-wrap: break-word;
             overflow-wrap: break-word;
@@ -236,7 +236,7 @@
         .divider {
             height: 1px;
             background-color: #eee;
-            margin: 8px 0;
+            margin: 4px 0; /* 여백 축소 */
             width: 316px;
         }
     </style>
