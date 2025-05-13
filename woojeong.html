@@ -428,26 +428,27 @@
             panel.style.height = DEFAULT_PANEL_HEIGHT + 'px';
         }
         
-        // 패널 높이 자동 조정 함수 - 줄어드는 높이도 반영 가능하게 개선
         function adjustPanelHeight() {
             requestAnimationFrame(() => {
-                const panel = document.getElementById('mission-panel');
-                const content = document.getElementById('content-container');
-                const header = document.querySelector('.header-section');
+                requestAnimationFrame(() => {  // 렌더링 완료 시점 확보
+                    const panel = document.getElementById('mission-panel');
+                    const content = document.getElementById('content-container');
+                    const header = document.querySelector('.header-section');
         
-                if (!panel || !content || !header) return;
+                    if (!panel || !content || !header) return;
         
-                const contentHeight = content.scrollHeight;
-                const headerHeight = header.offsetHeight;
-                const totalRequiredHeight = contentHeight + headerHeight;
+                    const contentHeight = content.scrollHeight;
+                    const headerHeight = header.offsetHeight;
+                    const totalRequiredHeight = contentHeight + headerHeight;
         
-                const finalHeight = Math.max(totalRequiredHeight, DEFAULT_PANEL_HEIGHT);
-                panel.style.height = finalHeight + 'px';
-                console.log('패널 높이 갱신됨:', finalHeight);
+                    const finalHeight = Math.max(totalRequiredHeight, DEFAULT_PANEL_HEIGHT);
+                    panel.style.height = finalHeight + 'px';
+        
+                    console.log('✅ 패널 높이 최종 갱신됨:', finalHeight);
+                });
             });
         }
 
-        
         // 높이 변화 감지를 위한 MutationObserver 설정 - 텍스트 외에도 전체 컨테이너 감지
         const observer = new MutationObserver(function (mutations) {
             adjustPanelHeight();
