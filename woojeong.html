@@ -449,19 +449,16 @@
             });
         }
 
-        // 높이 변화 감지를 위한 MutationObserver 설정 - 텍스트 외에도 전체 컨테이너 감지
-        const observer = new MutationObserver(function (mutations) {
+        // ResizeObserver를 사용해 패널 내부 크기 변화를 정확하게 감지
+        const resizeObserver = new ResizeObserver(() => {
             adjustPanelHeight();
         });
         
         const contentContainer = document.getElementById('content-container');
         if (contentContainer) {
-            observer.observe(contentContainer, {
-                childList: true,
-                characterData: true,
-                subtree: true,
-            });
+            resizeObserver.observe(contentContainer);
         }
+
 
     </script>
 </body>
