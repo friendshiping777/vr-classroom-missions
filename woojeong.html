@@ -23,28 +23,30 @@
         
         .mission-panel {
             width: 465px; /* 너비 수정 */
-            height: 255px; /* 높이 명시적 설정 */
+            min-height: 255px; /* 최소 높이 설정, 내용에 따라 확장 가능 */
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd; /* 전체 테두리 추가 */
         }
         
         .streamer-header {
-            background-color: #2b5797;
+            background-color: #3a5795; /* 예시 이미지의 파란색 적용 */
             color: white;
             padding: 10px 28px; /* 좌측 패딩 증가로 텍스트 위치 조정 */
-            font-size: 20px;
+            font-size: 22px; /* 폰트 크기 증가 */
             font-weight: bold;
             text-align: left; /* 좌측 정렬 */
-            height: 24px; /* 헤더 높이 고정 */
-            line-height: 24px; /* 텍스트 수직 중앙 정렬 */
+            height: 26px; /* 헤더 높이 고정 */
+            line-height: 26px; /* 텍스트 수직 중앙 정렬 */
+            border-bottom: 1px solid #222; /* 헤더 아래 구분선 */
         }
         
         .panel-content {
             display: flex;
             flex-direction: row;
-            height: calc(100% - 44px); /* 헤더 제외한 높이 */
+            min-height: calc(100% - 47px); /* 헤더 제외한 높이 */
         }
         
         .left-section {
@@ -53,17 +55,25 @@
             flex-direction: column;
             padding: 0;
             position: relative;
+            border-right: 1px solid #ddd; /* 오른쪽 구분선 추가 */
         }
         
         .right-section {
             width: 325px; /* 오른쪽 섹션 너비 수정 */
             padding: 10px 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .streamer-avatar-container {
+            padding: 8px; /* 이미지 주변 여백 */
         }
         
         .streamer-avatar {
-            width: 140px; /* 프로필 이미지 너비 */
-            height: 140px; /* 프로필 이미지 높이 - 정사각형 */
+            width: 124px; /* 프로필 이미지 너비 - 여백 적용 */
+            height: 124px; /* 프로필 이미지 높이 - 여백 적용 */
             overflow: hidden;
+            margin: 0 auto;
         }
         
         .streamer-avatar img {
@@ -84,21 +94,32 @@
         
         .streamer-role {
             color: #666;
-            font-size: 12px;
+            font-size: 13px;
             margin-bottom: 5px;
         }
         
         .streamer-name {
-            font-size: 18px;
+            font-size: 24px; /* 폰트 크기 증가 */
             font-weight: bold;
-            color: #1a1a1a;
+            color: #152956; /* 네이비 색상으로 변경 */
+        }
+        
+        .mission-block {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd; /* 미션 블록 구분선 */
+            padding-bottom: 10px;
+        }
+        
+        .mission-block:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
         }
         
         .mission-category {
             display: inline-block; /* 텍스트 길이에 맞게 너비 조정 */
             font-weight: bold;
-            padding: 8px 15px;
-            border-radius: 18px; /* 모서리 둥글게 */
+            padding: 6px 15px; /* 패딩 조절 */
+            border-radius: 12px; /* 모서리 둥글기 조절 - 약간만 둥글게 */
             margin-bottom: 10px;
         }
         
@@ -110,12 +131,11 @@
         .sub-mission {
             background-color: #b87d2b;
             color: white;
-            margin-top: 15px;
         }
         
         .mission-item {
             display: flex;
-            align-items: center;
+            align-items: flex-start; /* 상단 정렬로 변경 - 텍스트가 길어질 경우 체크박스 위치 유지 */
             margin-bottom: 8px;
             padding: 6px 0;
         }
@@ -131,6 +151,7 @@
             align-items: center;
             justify-content: center;
             background-color: white;
+            margin-top: 2px; /* 체크박스 위치 미세 조정 */
         }
         
         .mission-checkbox.checked {
@@ -147,6 +168,7 @@
         .mission-text {
             font-size: 15px;
             flex: 1;
+            line-height: 1.4; /* 줄 간격 추가 */
         }
         
         .loading-indicator {
@@ -164,8 +186,10 @@
         
         <div class="panel-content">
             <div class="left-section">
-                <div class="streamer-avatar">
-                    <img id="profile-image" src="./default-avatar.png" alt="프로필 이미지">
+                <div class="streamer-avatar-container">
+                    <div class="streamer-avatar">
+                        <img id="profile-image" src="./default-avatar.png" alt="프로필 이미지">
+                    </div>
                 </div>
                 <div class="streamer-info">
                     <div class="streamer-role">[특이사항]</div>
@@ -174,31 +198,76 @@
             </div>
             
             <div class="right-section">
-                <div class="mission-category main-mission">메인 미션</div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="check1"></div>
-                    <div class="mission-text" id="mission1">메인 미션 내용</div>
+                <div class="mission-block">
+                    <div class="mission-category main-mission">메인 미션</div>
+                    <div class="mission-item">
+                        <div class="mission-checkbox" id="check1"></div>
+                        <div class="mission-text" id="mission1">메인 미션 내용</div>
+                    </div>
                 </div>
                 
-                <div class="mission-category sub-mission">서브 미션</div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="check2"></div>
-                    <div class="mission-text" id="mission2">서브 미션 1</div>
-                </div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="check3"></div>
-                    <div class="mission-text" id="mission3">서브 미션 2</div>
-                </div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="check4"></div>
-                    <div class="mission-text" id="mission4">서브 미션 3</div>
+                <div class="mission-block">
+                    <div class="mission-category sub-mission">서브 미션</div>
+                    <div class="mission-item">
+                        <div class="mission-checkbox" id="check2"></div>
+                        <div class="mission-text" id="mission2">서브 미션 1</div>
+                    </div>
+                    <div class="mission-item">
+                        <div class="mission-checkbox" id="check3"></div>
+                        <div class="mission-text" id="mission3">서브 미션 2</div>
+                    </div>
+                    <div class="mission-item">
+                        <div class="mission-checkbox" id="check4"></div>
+                        <div class="mission-text" id="mission4">서브 미션 3</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- 테스트용 스크립트 (로컬 미리보기용) -->
     <script>
-        // Firebase 초기화
+    // 테스트용 데이터 (Firebase 미리보기용)
+    window.addEventListener('load', function() {
+        // 로딩 표시 숨기기
+        document.getElementById('loading').style.display = 'none';
+        
+        // 테스트 데이터
+        const testData = {
+            name: "닉네임",
+            role: "선생님",
+            mission1: "학생에게 훈나기",
+            mission2: "가성으로 수업하기",
+            mission3: "RP 개고 참여자 팬미팅 발하기 및 이것은 두 줄 이상의 긴 텍스트를 테스트하기 위한 예시입니다",
+            mission4: "학생들 앞에서 큰 소리로 울기",
+            check1: "1",
+            check2: "0",
+            check3: "1",
+            check4: "0",
+            image: "https://via.placeholder.com/140" // 테스트용 이미지
+        };
+        
+        // UI 업데이트 함수 직접 호출
+        document.getElementById('streamer-name').textContent = testData.name;
+        document.getElementById('streamer-role').textContent = testData.role;
+        
+        document.getElementById('mission1').textContent = testData.mission1;
+        document.getElementById('mission2').textContent = testData.mission2;
+        document.getElementById('mission3').textContent = testData.mission3;
+        document.getElementById('mission4').textContent = testData.mission4;
+        
+        if (testData.check1 === '1') document.getElementById('check1').classList.add('checked');
+        if (testData.check2 === '1') document.getElementById('check2').classList.add('checked');
+        if (testData.check3 === '1') document.getElementById('check3').classList.add('checked');
+        if (testData.check4 === '1') document.getElementById('check4').classList.add('checked');
+        
+        document.getElementById('profile-image').src = testData.image;
+    });
+    </script>
+
+    <script>
+        // Firebase 초기화 (실제 배포 시 주석 해제)
+        /*
         const firebaseConfig = {
           apiKey: "AIzaSyAAX8T5oKVHIaZf_xut7qmfn88LIB1jUcM",
           authDomain: "friendshiping-ee9a0.firebaseapp.com",
@@ -297,6 +366,7 @@
                 }
             }
         }
+        */
     </script>
 </body>
 </html>
