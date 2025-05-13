@@ -35,7 +35,7 @@
         
         .mission-panel {
             width: 465px;
-            height: 255px; /* 고정 높이 설정 */
+            min-height: 255px; /* 최소 높이 설정, 유동적으로 늘어남 */
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
@@ -65,7 +65,7 @@
             color: #ffffff; /* 닉네임 색상 */
             font-size: 29px; /* 28.89pt */
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 500; /* 폰트 굵기 1단계 낮춤 */
+            font-weight: 500; /* 폰트 굵기 */
             letter-spacing: 1px; /* 자간 100 대략 1px로 환산 */
             text-align: center;
         }
@@ -118,15 +118,15 @@
             align-items: center;
             justify-content: center;
             padding-top: 2px;
-            padding-bottom: 5px; /* 아래 여백 추가 */
-            margin-top: -5px; /* 위로 5픽셀 이동 */
+            padding-bottom: 5px;
+            margin-top: -10px; /* 위로 10픽셀 더 이동 (기존 -5px에서 5픽셀 더) */
         }
         
         .streamer-role {
             color: #1e1e1e; /* 특이사항 색상 */
             font-size: 16px; /* 16.12pt */
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 200; /* 폰트 굵기 2단계 낮춤 */
+            font-weight: 100; /* 폰트 굵기 3단계 낮춤 */
             letter-spacing: -0.5px; /* 자간 -50 대략 -0.5px로 환산 */
             text-align: center;
             margin-bottom: 4px;
@@ -136,7 +136,7 @@
             color: #103155; /* 역할 색상 */
             font-size: 29px; /* 28.79pt */
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 500; /* 폰트 굵기 1단계 낮춤 */
+            font-weight: 500; /* 폰트 굵기 */
             letter-spacing: 1px; /* 자간 100 대략 1px로 환산 */
             text-align: center;
         }
@@ -144,29 +144,29 @@
         /* 오른쪽 섹션 - 미션 영역 */
         .right-section {
             width: 326px;
-            padding: 8px 0 8px 10px; /* 여백 더 축소 */
+            padding: 8px 0 8px 10px;
             display: flex;
             flex-direction: column;
         }
         
         .mission-section {
-            margin-bottom: 5px; /* 여백 더 축소 */
+            margin-bottom: 5px;
             width: 316px;
         }
         
         .mission-section:first-child {
-            margin-bottom: 5px; /* 여백 더 축소 */
+            margin-bottom: 5px;
         }
         
         .sub-mission-section {
-            margin-top: 5px; /* 서브미션 섹션 3픽셀 아래로 이동 */
+            margin-top: 5px; /* 서브미션 섹션 아래로 이동 */
         }
         
         .mission-label {
             display: block;
-            margin-bottom: 4px; /* 여백 더 축소 */
-            height: 25px; /* 이미지 높이 증가 */
-            width: 85px; /* 이미지 너비 증가 */
+            margin-bottom: 6px; /* 여백 조정 */
+            height: 25px;
+            width: 85px;
             opacity: 0.95;
         }
         
@@ -177,7 +177,7 @@
         .mission-item {
             display: flex;
             align-items: center;
-            margin-bottom: 7px; /* 미션 항목 간격 더 넓게 (+2픽셀) */
+            margin-bottom: 7px;
             padding: 0;
             padding-right: 10px;
         }
@@ -213,10 +213,10 @@
         
         .mission-text {
             color: #1c1c1c; /* 미션내용 색상 */
-            font-size: 17px; /* 크기 더 축소 */
+            font-size: 18px; /* 체크박스와 비슷한 크기로 조정 */
             font-family: 'GmarketSansMedium', sans-serif;
             letter-spacing: -0.3px; /* 자간 -30 대략 -0.3px로 환산 */
-            line-height: 1.2; /* 줄 간격 더 축소 */
+            line-height: 1.2;
             flex: 1;
             word-wrap: break-word;
             overflow-wrap: break-word;
@@ -238,7 +238,7 @@
         .divider {
             height: 1px;
             background-color: #eee;
-            margin: 3px 0; /* 여백 더 축소 */
+            margin: 4px 0; /* 여백 조정 */
             width: 316px;
         }
     </style>
@@ -408,6 +408,28 @@
                     // 이미지 소스 설정
                     imgElement.src = data.image;
                 }
+            }
+            
+            // 패널 높이 자동 조정 - 유동적 사이즈를 위해 추가
+            adjustPanelHeight();
+        }
+        
+        // 패널 높이 자동 조정 함수
+        function adjustPanelHeight() {
+            const panel = document.querySelector('.mission-panel');
+            const content = document.querySelector('.content-container');
+            const header = document.querySelector('.header-section');
+            
+            // 컨텐츠 높이에 따라 필요한 경우 패널 높이 자동 증가
+            const contentHeight = content.scrollHeight;
+            const headerHeight = header.offsetHeight;
+            const minHeight = 255; // 최소 높이
+            
+            // 필요한 높이가 최소 높이보다 크면 패널 크기 조정
+            if (contentHeight + headerHeight > minHeight) {
+                panel.style.height = (contentHeight + headerHeight) + 'px';
+            } else {
+                panel.style.height = minHeight + 'px';
             }
         }
     </script>
