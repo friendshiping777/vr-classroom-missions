@@ -13,48 +13,115 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     
+    <!-- 산돌 네모니2 03 Basic Regular -->
+    <link rel="preconnect" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com">
+    <link rel="stylesheet" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com/v1/api/css/drop_fontstream_css/?sid=gAAAAABoIxPBcQCEF4aaKexGpCgU073eTsLHzrUD2gxCvLHSM-ddD1JXhi0dRlmKz5nxqAb02keBhvXGjFWR-x8VeJ4aBfEzxh4gIgenaagVxOdiYnNMUJA1gkIoHqG8nd6_YZbNGKFZkLO1b34y1s_dEU79JQsK5xhvb1xNupr0RbwoMaX1txPYPYW75TgptookWRS22lDjU5cReP79DFHOQm9mjgId_aDkBSum29YhSmu_fPAHw5vOD5Q14ukfePmpWAYTPrBp" charset="utf-8" referrerpolicy="origin">
+
+    <!-- 산돌 네모니2 04 Basic Bold (닉네임/역할용) -->
+    <link rel="preconnect" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com">
+    <link rel="stylesheet" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com/v1/api/css/drop_fontstream_css/?sid=gAAAAABoIvrnGDxNsD_y2Pa1yAbit-8bEcBXiO2oWyoOJ9n8tYaeXBWIPXHPrmN8quh7kmzmJWSv3QOPs530HwySGvlpjz73XZMa2jmtDIerRMrEH0IdF-LM4aSB7rr_Y6zXxlLSZ_kybdaiGR2bX5FQaTwu7Wq71qE2OmWifR6r37Uob0-YISRQbAe1IpMdW-6tS1pUJPNWRI7hiv1Gp-0CercdxDCnDTl7w0xBluOr5MHXYCmohQ9TCRtJK6ouAaxjUhqun6Rh" charset="utf-8" referrerpolicy="origin">
+    
+    <!-- G마켓 산스 폰트 -->
     <style>
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        /* 리셋 및 기본 스타일 */
         body {
             margin: 0;
             padding: 0;
             background-color: transparent;
-            font-family: 'Malgun Gothic', sans-serif;
+            font-family: 'Sandoll Nemony2', 'GmarketSansMedium', 'Malgun Gothic', sans-serif;
         }
         
+        /* 전체 컨테이너 - 우측 정렬 및 여백 설정 */
+        .container {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            opacity: 0.95; /* 95% 불투명도 */
+        }
+        
+        /* 핵심 레이아웃 - 유동적 높이를 위해 CSS 기반 접근법 채택 */
         .mission-panel {
-            width: 400px;
+            width: 465px;
+            min-height: 255px; /* 최소 높이 설정 */
+            height: auto; /* 자동 높이 - 내용에 맞게 조정 */
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
         }
         
-        .streamer-header {
-            background-color: #2b5797;
-            color: white;
-            padding: 10px 15px;
-            font-size: 18px;
-            font-weight: bold;
+        /* 헤더 영역 - 닉네임 */
+        .header-section {
+            background-color: #3d6794;
+            height: 45px;
+            flex-shrink: 0; /* 헤더 높이 고정 */
+            display: flex;
+            border-bottom: 2px solid #151515; /* 닉네임 하단 구분선 색상 변경 */
+        }
+        
+        .name-area {
+            width: 138px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-right: 5px;
+            padding-bottom: 3px;
+        }
+        
+        /* 닉네임 - Bold 폰트 적용 */
+        .name-text {
+            color: #ffffff; 
+            font-size: 29px;
+            font-family: 'Sandoll Nemony2', sans-serif;
+            font-weight: 700; /* 04 Basic Bold */
+            letter-spacing: 3px; /* 자간 확대 */
             text-align: center;
         }
         
-        .panel-content {
-            display: flex;
-            flex-direction: row;
+        .empty-area {
+            flex: 1;
         }
         
+        /* 컨텐츠 영역 */
+        .content-container {
+            display: flex;
+            flex: 1;
+            min-height: 210px; /* 헤더 제외 최소 높이 */
+        }
+        
+        /* 왼쪽 섹션 */
         .left-section {
-            width: 120px;
-            border-right: 1px solid #eee;
-            padding: 10px;
+            width: 138px;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid #151515; /* 세로 구분선 색상 변경 */
+            flex-shrink: 0; /* 너비 고정 */
+        }
+        
+        /* 프로필 영역 */
+        .profile-area {
+            height: 131px;
+            display: flex;
+            justify-content: center;
+            padding-top: 8px;
+            padding-left: 8px;
+            padding-right: 8px;
+            padding-bottom: 0;
         }
         
         .streamer-avatar {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 10px;
-            border-radius: 4px;
-            overflow: hidden;
+            width: 122px;
+            height: 123px;
         }
         
         .streamer-avatar img {
@@ -63,58 +130,91 @@
             object-fit: cover;
         }
         
-        .streamer-role {
-            color: #666;
+        /* 역할 영역 */
+        .role-area {
+            height: 79px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 2px;
+            padding-bottom: 5px;
+            margin-top: -10px;
+        }
+        
+        /* 특이사항 - Regular 폰트 적용 */
+        .special-note {
+            color: #343434;
+            font-size: 16px;
+            font-family: 'Sandoll Nemony2', sans-serif;
+            font-weight: 400; /* 03 Basic Regular */
+            letter-spacing: -0.5px;
             text-align: center;
-            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        
+        /* 역할명 - Bold 폰트 적용 */
+        .role-text {
+            color: #103155;
+            font-size: 29px;
+            font-family: 'Sandoll Nemony2', sans-serif;
+            font-weight: 700; /* 04 Basic Bold */
+            letter-spacing: 3px; /* 자간 확대 */
+            text-align: center;
+        }
+        
+        /* 오른쪽 섹션 - 미션 영역 */
+        .right-section {
+            width: 326px;
+            padding: 8px 0 8px 10px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* 남은 공간 채우기 */
+        }
+        
+        .mission-section {
+            margin-bottom: 5px;
+            width: 316px;
+        }
+        
+        .mission-section:first-child {
             margin-bottom: 5px;
         }
         
-        .streamer-name {
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            color: #1a1a1a;
+        .sub-mission-section {
+            margin-top: 5px;
         }
         
-        .right-section {
-            flex: 1;
-            padding: 10px;
+        .mission-label {
+            display: block;
+            margin-bottom: 6px;
+            height: 25px;
+            width: 85px;
+            opacity: 0.95;
         }
         
-        .mission-category {
-            font-weight: bold;
-            padding: 8px 12px;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-        
-        .main-mission {
-            background-color: #c43e57;
-            color: white;
-            border-radius: 4px;
-        }
-        
-        .sub-mission {
-            background-color: #b87d2b;
-            color: white;
-            margin-top: 15px;
-            border-radius: 4px;
+        .mission-items {
+            margin-top: 0;
         }
         
         .mission-item {
             display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            padding: 8px 0;
+            align-items: center; /* 체크박스와 텍스트 중앙 정렬 */
+            margin-bottom: 7px;
+            padding: 0;
+            padding-right: 10px;
+        }
+        
+        .mission-item:last-child {
+            margin-bottom: 0;
         }
         
         .mission-checkbox {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border: 2px solid #aaa;
             border-radius: 3px;
-            margin-right: 10px;
+            margin-right: 8px;
             flex-shrink: 0;
             display: flex;
             align-items: center;
@@ -131,54 +231,106 @@
             content: "✓";
             color: white;
             font-weight: bold;
+            font-size: 14px;
         }
         
         .mission-text {
-            font-size: 15px;
+            color: #1c1c1c;
+            font-size: 18px;
+            font-family: 'GmarketSansMedium', sans-serif;
+            letter-spacing: -0.3px;
+            line-height: 1.2;
             flex: 1;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            padding-top: 1px;
         }
         
         .loading-indicator {
             text-align: center;
             padding: 20px;
             color: #666;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+        }
+        
+        /* 구분선 - 세로선과 연결되도록 수정 */
+        .divider {
+            height: 2px;
+            background-color: #151515; /* 구분선 색상 변경 */
+            margin: 4px 0 4px -12px; /* 왼쪽으로 확장하여 세로선과 연결 */
+            width: 328px; /* 폭을 늘려 세로선과 연결 */
         }
     </style>
 </head>
 <body>
-    <div class="mission-panel">
-        <div class="loading-indicator" id="loading">데이터 로딩 중...</div>
-        
-        <div class="streamer-header" id="streamer-name">닉네임</div>
-        
-        <div class="panel-content">
-            <div class="left-section">
-                <div class="streamer-avatar">
-                    <img id="profile-image" src="./default-avatar.png" alt="프로필 이미지">
+    <div class="container">
+        <div class="mission-panel">
+            <div class="loading-indicator" id="loading">데이터 로딩 중...</div>
+            
+            <!-- 헤더 영역 - 닉네임 -->
+            <div class="header-section">
+                <div class="name-area">
+                    <span id="streamer-name" class="name-text">닉네임</span>
                 </div>
-                <div class="streamer-role">[특이사항]</div>
-                <div class="streamer-name" id="streamer-role">선생님</div>
+                <div class="empty-area"></div>
             </div>
             
-            <div class="right-section">
-                <div class="mission-category main-mission">메인 미션</div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="check1"></div>
-                    <div class="mission-text" id="mission1">메인 미션 내용</div>
+            <!-- 컨텐츠 영역 -->
+            <div class="content-container">
+                <!-- 왼쪽 섹션 - 프로필 및 역할 -->
+                <div class="left-section">
+                    <!-- 프로필 영역 -->
+                    <div class="profile-area">
+                        <div class="streamer-avatar">
+                            <img id="profile-image" src="./default-avatar.png" alt="프로필 이미지">
+                        </div>
+                    </div>
+                    
+                    <!-- 역할 영역 -->
+                    <div class="role-area">
+                        <div class="special-note">[ 특이사항 ]</div>
+                        <div id="streamer-role" class="role-text">선생님</div>
+                    </div>
                 </div>
                 
-                <div class="mission-category sub-mission">서브 미션</div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="check2"></div>
-                    <div class="mission-text" id="mission2">서브 미션 1</div>
-                </div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="check3"></div>
-                    <div class="mission-text" id="mission3">서브 미션 2</div>
-                </div>
-                <div class="mission-item">
-                    <div class="mission-checkbox" id="check4"></div>
-                    <div class="mission-text" id="mission4">서브 미션 3</div>
+                <!-- 오른쪽 섹션 - 미션 목록 -->
+                <div class="right-section">
+                    <div class="mission-section">
+                        <!-- 메인 미션 이미지 -->
+                        <img src="main-mission.png" alt="메인 미션" class="mission-label">
+                        <div class="mission-items">
+                            <div class="mission-item">
+                                <div class="mission-checkbox" id="check1"></div>
+                                <div class="mission-text" id="mission1">메인 미션 내용</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="divider"></div>
+                    
+                    <div class="mission-section sub-mission-section">
+                        <!-- 서브 미션 이미지 -->
+                        <img src="sub-mission.png" alt="서브 미션" class="mission-label">
+                        <div class="mission-items">
+                            <div class="mission-item">
+                                <div class="mission-checkbox" id="check2"></div>
+                                <div class="mission-text" id="mission2">서브 미션 1</div>
+                            </div>
+                            <div class="mission-item">
+                                <div class="mission-checkbox" id="check3"></div>
+                                <div class="mission-text" id="mission3">서브 미션 2</div>
+                            </div>
+                            <div class="mission-item">
+                                <div class="mission-checkbox" id="check4"></div>
+                                <div class="mission-text" id="mission4">서브 미션 3</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
