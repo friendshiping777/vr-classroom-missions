@@ -22,7 +22,7 @@
         }
         
         .mission-panel {
-            width: 300px;
+            width: 400px;
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
@@ -35,19 +35,24 @@
             padding: 10px 15px;
             font-size: 18px;
             font-weight: bold;
+            text-align: center;
         }
         
-        .streamer-info {
+        .panel-content {
             display: flex;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
+            flex-direction: row;
+        }
+        
+        .left-section {
+            width: 120px;
+            border-right: 1px solid #eee;
+            padding: 10px;
         }
         
         .streamer-avatar {
-            width: 60px;
-            height: 60px;
-            background-color: #ddd;
-            margin-right: 15px;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 10px;
             border-radius: 4px;
             overflow: hidden;
         }
@@ -58,45 +63,43 @@
             object-fit: cover;
         }
         
-        .streamer-details {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
         .streamer-role {
-            font-size: 14px;
             color: #666;
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 5px;
         }
         
         .streamer-name {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
-            margin-top: 5px;
+            text-align: center;
+            color: #1a1a1a;
         }
         
-        .mission-section {
-            padding: 15px;
+        .right-section {
+            flex: 1;
+            padding: 10px;
         }
         
         .mission-category {
             font-weight: bold;
-            background-color: #efefef;
             padding: 8px 12px;
             border-radius: 4px;
             margin-bottom: 10px;
-            display: block;
         }
         
         .main-mission {
-            color: #c43e57;
-            border-left: 4px solid #c43e57;
+            background-color: #c43e57;
+            color: white;
+            border-radius: 4px;
         }
         
         .sub-mission {
-            color: #b87d2b;
-            border-left: 4px solid #b87d2b;
+            background-color: #b87d2b;
+            color: white;
             margin-top: 15px;
+            border-radius: 4px;
         }
         
         .mission-item {
@@ -146,37 +149,37 @@
     <div class="mission-panel">
         <div class="loading-indicator" id="loading">데이터 로딩 중...</div>
         
-        <div class="streamer-header" id="streamer-name"></div>
+        <div class="streamer-header" id="streamer-name">닉네임</div>
         
-        <div class="streamer-info">
-            <div class="streamer-avatar">
-                <img id="profile-image" src="./default-avatar.png" alt="프로필 이미지">
-            </div>
-            <div class="streamer-details">
+        <div class="panel-content">
+            <div class="left-section">
+                <div class="streamer-avatar">
+                    <img id="profile-image" src="./default-avatar.png" alt="프로필 이미지">
+                </div>
                 <div class="streamer-role">[특이사항]</div>
-                <div class="streamer-name" id="streamer-role"></div>
-            </div>
-        </div>
-        
-        <div class="mission-section">
-            <div class="mission-category main-mission">메인 미션</div>
-            <div class="mission-item">
-                <div class="mission-checkbox" id="check1"></div>
-                <div class="mission-text" id="mission1">메인 미션 내용</div>
+                <div class="streamer-name" id="streamer-role">선생님</div>
             </div>
             
-            <div class="mission-category sub-mission">서브 미션</div>
-            <div class="mission-item">
-                <div class="mission-checkbox" id="check2"></div>
-                <div class="mission-text" id="mission2">서브 미션 1</div>
-            </div>
-            <div class="mission-item">
-                <div class="mission-checkbox" id="check3"></div>
-                <div class="mission-text" id="mission3">서브 미션 2</div>
-            </div>
-            <div class="mission-item">
-                <div class="mission-checkbox" id="check4"></div>
-                <div class="mission-text" id="mission4">서브 미션 3</div>
+            <div class="right-section">
+                <div class="mission-category main-mission">메인 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="check1"></div>
+                    <div class="mission-text" id="mission1">메인 미션 내용</div>
+                </div>
+                
+                <div class="mission-category sub-mission">서브 미션</div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="check2"></div>
+                    <div class="mission-text" id="mission2">서브 미션 1</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="check3"></div>
+                    <div class="mission-text" id="mission3">서브 미션 2</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="check4"></div>
+                    <div class="mission-text" id="mission4">서브 미션 3</div>
+                </div>
             </div>
         </div>
     </div>
