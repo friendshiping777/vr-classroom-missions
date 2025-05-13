@@ -13,9 +13,13 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     
-    <!-- 산돌 네모니2 폰트 - 수정된 웹폰트 코드 -->
+    <!-- 산돌 네모니2 03 Basic Regular -->
     <link rel="preconnect" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com">
     <link rel="stylesheet" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com/v1/api/css/drop_fontstream_css/?sid=gAAAAABoIxPBcQCEF4aaKexGpCgU073eTsLHzrUD2gxCvLHSM-ddD1JXhi0dRlmKz5nxqAb02keBhvXGjFWR-x8VeJ4aBfEzxh4gIgenaagVxOdiYnNMUJA1gkIoHqG8nd6_YZbNGKFZkLO1b34y1s_dEU79JQsK5xhvb1xNupr0RbwoMaX1txPYPYW75TgptookWRS22lDjU5cReP79DFHOQm9mjgId_aDkBSum29YhSmu_fPAHw5vOD5Q14ukfePmpWAYTPrBp" charset="utf-8" referrerpolicy="origin">
+
+    <!-- 산돌 네모니2 04 Basic Bold (닉네임/역할용) -->
+    <link rel="preconnect" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com">
+    <link rel="stylesheet" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com/v1/api/css/drop_fontstream_css/?sid=gAAAAABoIvrnGDxNsD_y2Pa1yAbit-8bEcBXiO2oWyoOJ9n8tYaeXBWIPXHPrmN8quh7kmzmJWSv3QOPs530HwySGvlpjz73XZMa2jmtDIerRMrEH0IdF-LM4aSB7rr_Y6zXxlLSZ_kybdaiGR2bX5FQaTwu7Wq71qE2OmWifR6r37Uob0-YISRQbAe1IpMdW-6tS1pUJPNWRI7hiv1Gp-0CercdxDCnDTl7w0xBluOr5MHXYCmohQ9TCRtJK6ouAaxjUhqun6Rh" charset="utf-8" referrerpolicy="origin">
     
     <!-- G마켓 산스 폰트 -->
     <style>
@@ -26,6 +30,7 @@
             font-style: normal;
         }
         
+        /* 리셋 및 기본 스타일 */
         body {
             margin: 0;
             padding: 0;
@@ -33,22 +38,24 @@
             font-family: 'Sandoll Nemony2', 'GmarketSansMedium', 'Malgun Gothic', sans-serif;
         }
         
+        /* 핵심 레이아웃 - 유동적 높이를 위해 CSS 기반 접근법 채택 */
         .mission-panel {
             width: 465px;
-            height: 255px; /* 기본 높이 설정 */
+            min-height: 255px; /* 최소 높이 설정 */
+            height: auto; /* 자동 높이 - 내용에 맞게 조정 */
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
-            transition: height 0.2s ease; /* 부드러운 높이 전환 효과 */
         }
         
         /* 헤더 영역 - 닉네임 */
         .header-section {
             background-color: #3d6794;
             height: 45px;
+            flex-shrink: 0; /* 헤더 높이 고정 */
             display: flex;
         }
         
@@ -62,12 +69,13 @@
             padding-bottom: 3px;
         }
         
-        .name-area span {
-            color: #ffffff; /* 닉네임 색상 */
-            font-size: 29px; /* 28.89pt */
+        /* 닉네임 - Bold 폰트 적용 */
+        .name-text {
+            color: #ffffff; 
+            font-size: 29px;
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 500; /* 폰트 굵기 */
-            letter-spacing: 1px; /* 자간 100 대략 1px로 환산 */
+            font-weight: 700; /* 04 Basic Bold */
+            letter-spacing: 1px;
             text-align: center;
         }
         
@@ -79,6 +87,7 @@
         .content-container {
             display: flex;
             flex: 1;
+            min-height: 210px; /* 헤더 제외 최소 높이 */
         }
         
         /* 왼쪽 섹션 */
@@ -87,6 +96,7 @@
             display: flex;
             flex-direction: column;
             border-right: 1px solid #eee;
+            flex-shrink: 0; /* 너비 고정 */
         }
         
         /* 프로필 영역 */
@@ -120,25 +130,27 @@
             justify-content: center;
             padding-top: 2px;
             padding-bottom: 5px;
-            margin-top: -10px; /* 위로 10픽셀 더 이동 (기존 -5px에서 5픽셀 더) */
+            margin-top: -10px;
         }
         
-        .streamer-role {
-            color: #343434; /* 특이사항 색상 - 수정됨 */
-            font-size: 16px; /* 16.12pt */
+        /* 특이사항 - Regular 폰트 적용 */
+        .special-note {
+            color: #343434;
+            font-size: 16px;
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 400; /* Sandoll Nemony2 03 Basic Regular 설정 */
-            letter-spacing: -0.5px; /* 자간 -50 대략 -0.5px로 환산 */
+            font-weight: 400; /* 03 Basic Regular */
+            letter-spacing: -0.5px;
             text-align: center;
             margin-bottom: 4px;
         }
         
-        .streamer-name {
-            color: #103155; /* 역할 색상 */
-            font-size: 29px; /* 28.79pt */
+        /* 역할명 - Bold 폰트 적용 */
+        .role-text {
+            color: #103155;
+            font-size: 29px;
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 500; /* 폰트 굵기 */
-            letter-spacing: 1px; /* 자간 100 대략 1px로 환산 */
+            font-weight: 700; /* 04 Basic Bold */
+            letter-spacing: 1px;
             text-align: center;
         }
         
@@ -148,6 +160,7 @@
             padding: 8px 0 8px 10px;
             display: flex;
             flex-direction: column;
+            flex-grow: 1; /* 남은 공간 채우기 */
         }
         
         .mission-section {
@@ -160,12 +173,12 @@
         }
         
         .sub-mission-section {
-            margin-top: 5px; /* 서브미션 섹션 아래로 이동 */
+            margin-top: 5px;
         }
         
         .mission-label {
             display: block;
-            margin-bottom: 6px; /* 여백 조정 */
+            margin-bottom: 6px;
             height: 25px;
             width: 85px;
             opacity: 0.95;
@@ -177,7 +190,7 @@
         
         .mission-item {
             display: flex;
-            align-items: center;
+            align-items: flex-start; /* 텍스트가 길 때 상단 정렬 */
             margin-bottom: 7px;
             padding: 0;
             padding-right: 10px;
@@ -198,6 +211,7 @@
             align-items: center;
             justify-content: center;
             background-color: white;
+            margin-top: 2px; /* 텍스트와 수직 정렬 개선 */
         }
         
         .mission-checkbox.checked {
@@ -213,10 +227,10 @@
         }
         
         .mission-text {
-            color: #1c1c1c; /* 미션내용 색상 */
-            font-size: 18px; /* 체크박스와 비슷한 크기로 조정 */
+            color: #1c1c1c;
+            font-size: 18px;
             font-family: 'GmarketSansMedium', sans-serif;
-            letter-spacing: -0.3px; /* 자간 -30 대략 -0.3px로 환산 */
+            letter-spacing: -0.3px;
             line-height: 1.2;
             flex: 1;
             word-wrap: break-word;
@@ -239,25 +253,25 @@
         .divider {
             height: 1px;
             background-color: #eee;
-            margin: 4px 0; /* 여백 조정 */
+            margin: 4px 0;
             width: 316px;
         }
     </style>
 </head>
 <body>
-    <div class="mission-panel" id="mission-panel">
+    <div class="mission-panel">
         <div class="loading-indicator" id="loading">데이터 로딩 중...</div>
         
         <!-- 헤더 영역 - 닉네임 -->
         <div class="header-section">
             <div class="name-area">
-                <span id="streamer-name">닉네임</span>
+                <span id="streamer-name" class="name-text">닉네임</span>
             </div>
             <div class="empty-area"></div>
         </div>
         
         <!-- 컨텐츠 영역 -->
-        <div class="content-container" id="content-container">
+        <div class="content-container">
             <!-- 왼쪽 섹션 - 프로필 및 역할 -->
             <div class="left-section">
                 <!-- 프로필 영역 -->
@@ -269,8 +283,8 @@
                 
                 <!-- 역할 영역 -->
                 <div class="role-area">
-                    <div class="streamer-role">[ 특이사항 ]</div>
-                    <div class="streamer-name" id="streamer-role">선생님</div>
+                    <div class="special-note">[ 특이사항 ]</div>
+                    <div id="streamer-role" class="role-text">선생님</div>
                 </div>
             </div>
             
@@ -327,9 +341,6 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
         
-        // 기본 패널 크기
-        const DEFAULT_PANEL_HEIGHT = 255;
-        
         // 스트리머 ID 추출 (파일명에서)
         function getStreamerId() {
             const path = window.location.pathname;
@@ -367,14 +378,6 @@
         
         // UI 업데이트 함수
         function updateUI(data) {
-            // 이전 미션 텍스트 저장 (변화 감지용)
-            const oldTexts = {
-                mission1: document.getElementById('mission1').textContent,
-                mission2: document.getElementById('mission2').textContent,
-                mission3: document.getElementById('mission3').textContent,
-                mission4: document.getElementById('mission4').textContent
-            };
-            
             // 기본 정보 설정
             document.getElementById('streamer-name').textContent = data.name || getStreamerId();
             document.getElementById('streamer-role').textContent = data.role || '';
@@ -421,133 +424,7 @@
                     imgElement.src = data.image;
                 }
             }
-            
-            // 미션 텍스트 변경 여부 확인 (하나라도 변경되었으면 true)
-            const textChanged = 
-                oldTexts.mission1 !== document.getElementById('mission1').textContent ||
-                oldTexts.mission2 !== document.getElementById('mission2').textContent ||
-                oldTexts.mission3 !== document.getElementById('mission3').textContent ||
-                oldTexts.mission4 !== document.getElementById('mission4').textContent;
-            
-            // 미션 텍스트가 변경되었을 때만 패널 높이 다시 조정
-            if (textChanged) {
-                // 미션 텍스트 변경 시 즉시 패널 높이 재조정 (동기화 문제 해결)
-                setTimeout(function() {
-                    forceReflowAndAdjustHeight();
-                }, 0);
-            }
         }
-        
-        // 강제 리플로우와 높이 조정을 결합한 함수
-        function forceReflowAndAdjustHeight() {
-            // 강제 리플로우 유발 - DOM 업데이트를 확실히 완료하게 함
-            document.body.offsetHeight;
-            
-            // 즉시 패널 높이 조정
-            adjustPanelHeight();
-            
-            // 약간의 지연 후 한번 더 조정 (텍스트 렌더링 지연 문제 대비)
-            setTimeout(adjustPanelHeight, 50);
-            setTimeout(adjustPanelHeight, 100);
-        }
-        
-        // 패널 높이 자동 조정 함수 - 완전 개선 버전
-        function adjustPanelHeight() {
-            const panel = document.getElementById('mission-panel');
-            const contentContainer = document.getElementById('content-container');
-            const header = document.querySelector('.header-section');
-            
-            // 모든 미션 텍스트 요소의 실제 렌더링된 높이 합계 계산
-            let totalMissionHeight = 0;
-            document.querySelectorAll('.mission-text').forEach(element => {
-                const computedStyle = window.getComputedStyle(element);
-                const elementHeight = element.getBoundingClientRect().height;
-                const marginTop = parseFloat(computedStyle.marginTop);
-                const marginBottom = parseFloat(computedStyle.marginBottom);
-                totalMissionHeight += elementHeight + marginTop + marginBottom;
-            });
-            
-            // 컨텐츠 및 헤더 높이 정밀 계산 (getBoundingClientRect은 실제 렌더링된 크기를 반환)
-            const contentHeight = contentContainer.getBoundingClientRect().height;
-            const headerHeight = header.getBoundingClientRect().height;
-            const totalHeight = Math.ceil(contentHeight + headerHeight);
-            
-            console.log('미션 텍스트 총 높이:', totalMissionHeight, 
-                      '컨텐츠 높이:', contentHeight, 
-                      '헤더 높이:', headerHeight, 
-                      '총 높이:', totalHeight);
-            
-            // 새 높이 결정
-            let newHeight;
-            if (totalHeight > DEFAULT_PANEL_HEIGHT) {
-                newHeight = totalHeight;
-                console.log('높이 확장:', totalHeight + 'px');
-            } else {
-                newHeight = DEFAULT_PANEL_HEIGHT;
-                console.log('기본 높이로 설정:', DEFAULT_PANEL_HEIGHT + 'px');
-            }
-            
-            // 패널 높이 실시간 적용
-            panel.style.height = newHeight + 'px';
-            console.log('패널 높이 업데이트:', newHeight + 'px');
-        }
-        
-        // DOM 완전 로드 후 실행
-        document.addEventListener('DOMContentLoaded', function() {
-            // 정확한 높이 계산을 위해 모든 미션 텍스트에 MutationObserver 설정
-            const missionTextObserver = new MutationObserver(function(mutations) {
-                // 텍스트 변경을 감지하면 즉시 높이 재조정
-                forceReflowAndAdjustHeight();
-            });
-            
-            // 각 미션 텍스트 요소에 옵저버 적용
-            document.querySelectorAll('.mission-text').forEach(function(element) {
-                missionTextObserver.observe(element, {
-                    characterData: true,
-                    childList: true,
-                    subtree: true
-                });
-            });
-            
-            // ResizeObserver 설정 (지원되는 브라우저에서만)
-            if (typeof ResizeObserver !== 'undefined') {
-                const resizeObserver = new ResizeObserver(function(entries) {
-                    forceReflowAndAdjustHeight();
-                });
-                
-                // 미션 텍스트 요소들 관찰
-                document.querySelectorAll('.mission-text').forEach(function(element) {
-                    resizeObserver.observe(element);
-                });
-                
-                // 컨텐츠 컨테이너 관찰
-                resizeObserver.observe(document.getElementById('content-container'));
-            }
-            
-            // 초기 패널 높이 설정
-            forceReflowAndAdjustHeight();
-        });
-        
-        // 폰트 로드 감지 (텍스트 렌더링 후 정확한 높이 계산을 위해)
-        document.fonts.ready.then(function() {
-            console.log('모든 폰트 로드 완료');
-            forceReflowAndAdjustHeight();
-        });
-        
-        // 미션 텍스트 내용 변경 감지를 위한 추가 이벤트 리스너 (백업 수단)
-        ['mission1', 'mission2', 'mission3', 'mission4'].forEach(function(id) {
-            const element = document.getElementById(id);
-            
-            // 직접 콘텐츠 변경 감지
-            let lastContent = element.textContent;
-            setInterval(function() {
-                if (element.textContent !== lastContent) {
-                    lastContent = element.textContent;
-                    console.log(`${id} 콘텐츠 변경 감지:`, lastContent);
-                    forceReflowAndAdjustHeight();
-                }
-            }, 100); // 100ms마다 체크
-        });
     </script>
 </body>
 </html>
