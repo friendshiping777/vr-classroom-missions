@@ -35,13 +35,13 @@
         
         .mission-panel {
             width: 465px;
-            height: 255px; /* 기본 높이 설정 */
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
+            transition: height 0.2s ease; /* 부드러운 높이 전환 효과 */
         }
         
         /* 헤더 영역 - 닉네임 */
@@ -124,9 +124,10 @@
         
         .streamer-role {
             color: #343434; /* 특이사항 색상 - 수정됨 */
-            font-size: 15px; /* 14.12pt */
+            font-size: 16px; /* 16.12pt */
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 400; /* 폰트 굵기 더 낮춤 */
+            font-weight: 400; /* 폰트 굵기 - 산돌 네모니 2 03 basic Rg */
+            font-style: normal;
             letter-spacing: -0.5px; /* 자간 -50 대략 -0.5px로 환산 */
             text-align: center;
             margin-bottom: 4px;
@@ -329,6 +330,9 @@
         // 기본 패널 크기
         const DEFAULT_PANEL_HEIGHT = 255;
         
+        // 이전 높이 저장 변수
+        let lastContentHeight = 0;
+        
         // 스트리머 ID 추출 (파일명에서)
         function getStreamerId() {
             const path = window.location.pathname;
@@ -343,6 +347,10 @@
             
             // Firebase에서 데이터 가져오기
             const streamerRef = database.ref(`streamers/${streamerId}`);
+            
+            // 초기 패널 높이 설정
+            const panel = document.getElementById('mission-panel');
+            panel.style.height = DEFAULT_PANEL_HEIGHT + 'px';
             
             // 실시간 데이터 감지 리스너
             streamerRef.on('value', function(snapshot) {
@@ -359,9 +367,34 @@
                     console.log('데이터가 없습니다. 기본값 사용');
                     document.getElementById('streamer-name').textContent = streamerId;
                 }
+                
+                // 데이터 변경 후 패널 높이 재조정
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(adjustPanelHeight);
+                });
             }, function(error) {
                 console.error('Firebase 데이터 로드 오류:', error);
             });
+            
+            // 미션 텍스트 변경 감지를 위한 MutationObserver 설정
+            const missionTextElements = document.querySelectorAll('.mission-text');
+            const observer = new MutationObserver(function() {
+                // 텍스트 변경 시 즉시 패널 높이 재조정
+                requestAnimationFrame(adjustPanelHeight);
+            });
+            
+            // 각 미션 텍스트 요소의 변경 감지
+            missionTextElements.forEach(function(element) {
+                observer.observe(element, { 
+                    childList: true, 
+                    characterData: true, 
+                    subtree: true,
+                    characterDataOldValue: true
+                });
+            });
+            
+            // 초기 패널 높이 조정
+            requestAnimationFrame(adjustPanelHeight);
         });
         
         // UI 업데이트 함수
@@ -412,64 +445,68 @@
                     imgElement.src = data.image;
                 }
             }
-            
-            // UI 업데이트 후 패널 높이 재조정 (약간 지연을 두어 DOM이 완전히 업데이트되게 함)
-            setTimeout(adjustPanelHeight, 10);
         }
         
-        // 패널 높이 자동 조정 개선 함수
+        // 패널 높이 자동 조정 함수 - 완전히 새로 작성된 버전
         function adjustPanelHeight() {
             const panel = document.getElementById('mission-panel');
             const content = document.getElementById('content-container');
             const header = document.querySelector('.header-section');
             
-            // 모든 미션 텍스트 요소의 높이 계산을 위해 DOM을 강제로 리플로우
-            document.body.offsetHeight;
+            // 컨텐츠 및 헤더 높이 계산
+            const contentHeight = Math.ceil(content.getBoundingClientRect().height);
+            const headerHeight = Math.ceil(header.getBoundingClientRect().height);
+            const totalHeight = contentHeight + headerHeight;
             
-            // 컨텐츠 높이 계산
-            const contentHeight = content.offsetHeight;
-            const headerHeight = header.offsetHeight;
-            const totalRequiredHeight = contentHeight + headerHeight;
+            console.log('현재 컨텐츠 높이:', contentHeight, '헤더 높이:', headerHeight, '총 높이:', totalHeight);
             
-            console.log('컨텐츠 높이:', contentHeight, '헤더 높이:', headerHeight, '필요 총 높이:', totalRequiredHeight);
-            
-            // 필요한 높이가 기본 높이보다 크면 패널 크기 조정
-            if (totalRequiredHeight > DEFAULT_PANEL_HEIGHT) {
-                panel.style.height = totalRequiredHeight + 'px';
-                console.log('패널 높이 확장:', totalRequiredHeight + 'px');
+            // 새 높이 결정
+            let newHeight;
+            if (totalHeight > DEFAULT_PANEL_HEIGHT) {
+                newHeight = totalHeight;
+                console.log('높이 확장:', totalHeight + 'px');
             } else {
-                // 필요한 높이가 기본 높이보다 작으면 기본 크기로 복귀
-                panel.style.height = DEFAULT_PANEL_HEIGHT + 'px';
-                console.log('패널 높이 기본값으로 복귀:', DEFAULT_PANEL_HEIGHT + 'px');
+                newHeight = DEFAULT_PANEL_HEIGHT;
+                console.log('기본 높이로 설정:', DEFAULT_PANEL_HEIGHT + 'px');
             }
+            
+            // 현재 높이와 다를 경우만 업데이트
+            if (parseInt(panel.style.height) !== newHeight) {
+                panel.style.height = newHeight + 'px';
+                console.log('패널 높이 업데이트:', newHeight + 'px');
+                
+                // 높이 변경 이벤트 발생 (디버깅용)
+                panel.dispatchEvent(new CustomEvent('heightChanged', { 
+                    detail: { 
+                        oldHeight: parseInt(panel.style.height), 
+                        newHeight: newHeight 
+                    } 
+                }));
+            }
+            
+            // 마지막 높이 저장
+            lastContentHeight = contentHeight;
         }
         
-        // 미션 텍스트 변경을 감지하기 위한 MutationObserver 설정
-        const missionTextObserver = new MutationObserver(function(mutations) {
-            // DOM 변경 후 패널 높이 재조정 (약간 지연을 주어 DOM이 완전히 업데이트되게 함)
-            setTimeout(adjustPanelHeight, 10);
-        });
-        
-        // 모든 미션 텍스트 요소 관찰 설정
-        document.querySelectorAll('.mission-text').forEach(function(element) {
-            missionTextObserver.observe(element, {
-                childList: true,
-                characterData: true,
-                subtree: true
+        // 리사이즈 옵저버 설정 - 더 정확한 높이 감지를 위해
+        if (typeof ResizeObserver !== 'undefined') {
+            const resizeObserver = new ResizeObserver(entries => {
+                requestAnimationFrame(adjustPanelHeight);
             });
-        });
-        
-        // 윈도우 리사이즈 시 패널 높이 재조정
-        window.addEventListener('resize', adjustPanelHeight);
-        
-        // DOM이 완전히 로드된 후 초기 패널 높이 설정
-        document.addEventListener('DOMContentLoaded', function() {
-            // 기본 높이 설정
-            const panel = document.getElementById('mission-panel');
-            panel.style.height = DEFAULT_PANEL_HEIGHT + 'px';
             
-            // DOM이 완전히 렌더링된 후 패널 높이 조정
-            setTimeout(adjustPanelHeight, 100);
+            // 컨텐츠 컨테이너 관찰
+            const contentContainer = document.getElementById('content-container');
+            resizeObserver.observe(contentContainer);
+            
+            // 각 미션 텍스트 요소 관찰
+            document.querySelectorAll('.mission-text').forEach(element => {
+                resizeObserver.observe(element);
+            });
+        }
+        
+        // 변경 감지 이벤트 리스너 (디버깅용)
+        document.getElementById('mission-panel').addEventListener('heightChanged', function(e) {
+            console.log('높이 변경됨:', e.detail.oldHeight, '->', e.detail.newHeight);
         });
     </script>
 </body>
