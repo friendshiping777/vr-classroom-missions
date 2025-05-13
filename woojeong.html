@@ -45,11 +45,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding-right: 3px; /* 3픽셀 오른쪽으로 */
+            padding-bottom: 1px; /* 1픽셀 아래로 */
         }
         
         .name-area span {
             color: white;
-            font-size: 22px; /* 텍스트 크기 증가 */
+            font-size: 25px; /* 텍스트 크기 증가 */
             font-weight: bold;
             text-align: center;
         }
@@ -101,6 +103,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            padding-top: 4px; /* 4픽셀 아래로 */
         }
         
         .streamer-role {
@@ -111,7 +114,7 @@
         }
         
         .streamer-name {
-            font-size: 30px; /* 역할 텍스트 크기 더 증가 */
+            font-size: 30px; /* 역할 텍스트 크기 */
             font-weight: bold;
             color: #153067;
             text-align: center;
@@ -123,15 +126,19 @@
             padding: 15px 0 15px 10px; /* 좌측 패딩만 적용 */
             display: flex;
             flex-direction: column;
-            overflow-y: auto; /* 내용이 늘어날 경우 스크롤 */
         }
         
         .mission-section {
             margin-bottom: 10px;
+            width: 316px; /* 오른쪽 섹션 너비에서 패딩 제외 */
         }
         
         .mission-section:first-child {
             margin-bottom: 12px;
+        }
+        
+        .sub-mission-section {
+            margin-top: 5px; /* 서브미션 섹션 아래로 이동 */
         }
         
         .mission-label {
@@ -149,7 +156,7 @@
         .mission-item {
             display: flex;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 8px; /* 미션 항목 간격 증가 */
             padding: 0;
             padding-right: 10px; /* 우측 여백 */
         }
@@ -187,6 +194,8 @@
             font-size: 14px;
             line-height: 1.4;
             flex: 1;
+            word-wrap: break-word; /* 텍스트가 길 경우 줄바꿈 */
+            overflow-wrap: break-word;
         }
         
         .loading-indicator {
@@ -206,8 +215,7 @@
             height: 1px;
             background-color: #eee;
             margin: 8px 0;
-            width: 100%;
-            padding-right: 10px;
+            width: 316px; /* 오른쪽 섹션 너비에서 패딩 제외 */
         }
     </style>
 </head>
@@ -256,7 +264,7 @@
                 
                 <div class="divider"></div>
                 
-                <div class="mission-section">
+                <div class="mission-section sub-mission-section">
                     <!-- 서브 미션 이미지 -->
                     <img src="sub-mission.png" alt="서브 미션" class="mission-label">
                     <div class="mission-items">
@@ -376,6 +384,22 @@
                     // 이미지 소스 설정
                     imgElement.src = data.image;
                 }
+            }
+            
+            // 패널 높이 자동 조정
+            adjustPanelHeight();
+        }
+        
+        // 패널 높이 자동 조정 함수
+        function adjustPanelHeight() {
+            // 컨텐츠 높이에 따라 패널 높이 자동 조정
+            const panel = document.querySelector('.mission-panel');
+            const content = document.querySelector('.content-container');
+            const header = document.querySelector('.header-section');
+            
+            // 필요한 경우 min-height 이상으로 패널 높이 증가
+            if (content.scrollHeight + header.offsetHeight > panel.offsetHeight) {
+                panel.style.height = (content.scrollHeight + header.offsetHeight) + 'px';
             }
         }
     </script>
