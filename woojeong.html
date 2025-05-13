@@ -13,17 +13,29 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     
+    <!-- 산돌 네모니2 폰트 -->
+    <link rel="preconnect" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com">
+    <link rel="stylesheet" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com/v1/api/css/drop_fontstream_css/?sid=gAAAAABoIvrnGDxNsD_y2Pa1yAbit-8bEcBXiO2oWyoOJ9n8tYaeXBWIPXHPrmN8quh7kmzmJWSv3QOPs530HwySGvlpjz73XZMa2jmtDIerRMrEH0IdF-LM4aSB7rr_Y6zXxlLSZ_kybdaiGR2bX5FQaTwu7Wq71qE2OmWifR6r37Uob0-YISRQbAe1IpMdW-6tS1pUJPNWRI7hiv1Gp-0CercdxDCnDTl7w0xBluOr5MHXYCmohQ9TCRtJK6ouAaxjUhqun6Rh" charset="utf-8" referrerpolicy="origin">
+    
+    <!-- G마켓 산스 폰트 -->
     <style>
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
         body {
             margin: 0;
             padding: 0;
             background-color: transparent;
-            font-family: 'Malgun Gothic', sans-serif;
+            font-family: 'Sandoll Nemony2', 'GmarketSansMedium', 'Malgun Gothic', sans-serif;
         }
         
         .mission-panel {
             width: 465px;
-            min-height: 255px; /* 최소 높이 설정 */
+            min-height: 255px;
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
@@ -35,29 +47,31 @@
         /* 헤더 영역 - 닉네임 */
         .header-section {
             background-color: #3d6794;
-            height: 45px; /* 닉네임 영역 높이 */
+            height: 45px;
             display: flex;
         }
         
         .name-area {
-            width: 138px; /* 왼쪽 영역 너비 */
+            width: 138px;
             height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding-right: 5px; /* 5픽셀 오른쪽으로 */
-            padding-bottom: 3px; /* 3픽셀 아래로 */
+            padding-right: 5px;
+            padding-bottom: 3px;
         }
         
         .name-area span {
-            color: white;
-            font-size: 28px; /* 텍스트 크기 더 증가 */
+            color: #ffffff; /* 닉네임 색상 */
+            font-size: 29px; /* 28.89pt */
+            font-family: 'Sandoll Nemony2', sans-serif;
             font-weight: bold;
+            letter-spacing: 1px; /* 자간 100 대략 1px로 환산 */
             text-align: center;
         }
         
         .empty-area {
-            flex: 1; /* 나머지 공간 차지 */
+            flex: 1;
         }
         
         /* 컨텐츠 영역 */
@@ -76,18 +90,18 @@
         
         /* 프로필 영역 */
         .profile-area {
-            height: 131px; /* 프로필 영역 높이 */
+            height: 131px;
             display: flex;
             justify-content: center;
-            padding-top: 8px; /* 상단 여백 */
-            padding-left: 8px; /* 좌측 여백 */
-            padding-right: 8px; /* 우측 여백 */
-            padding-bottom: 0; /* 하단 여백 없음 */
+            padding-top: 8px;
+            padding-left: 8px;
+            padding-right: 8px;
+            padding-bottom: 0;
         }
         
         .streamer-avatar {
-            width: 122px; /* 프로필 이미지 너비 (138-8-8) */
-            height: 123px; /* 프로필 이미지 높이 (131-8) */
+            width: 122px;
+            height: 123px;
         }
         
         .streamer-avatar img {
@@ -98,39 +112,44 @@
         
         /* 역할 영역 */
         .role-area {
-            height: 79px; /* 역할 영역 높이 */
+            height: 79px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding-top: 2px; /* 2픽셀 위로 이동 */
+            padding-top: 2px;
         }
         
         .streamer-role {
-            color: #666;
-            font-size: 12px;
-            margin-bottom: 4px;
+            color: #1e1e1e; /* 특이사항 색상 */
+            font-size: 16px; /* 16.12pt */
+            font-family: 'Sandoll Nemony2', sans-serif;
+            font-weight: normal; /* Regular */
+            letter-spacing: -0.5px; /* 자간 -50 대략 -0.5px로 환산 */
             text-align: center;
+            margin-bottom: 4px;
         }
         
         .streamer-name {
-            font-size: 30px; /* 역할 텍스트 크기 */
+            color: #103155; /* 역할 색상 */
+            font-size: 29px; /* 28.79pt */
+            font-family: 'Sandoll Nemony2', sans-serif;
             font-weight: bold;
-            color: #153067;
+            letter-spacing: 1px; /* 자간 100 대략 1px로 환산 */
             text-align: center;
         }
         
         /* 오른쪽 섹션 - 미션 영역 */
         .right-section {
             width: 326px;
-            padding: 15px 0 15px 10px; /* 좌측 패딩만 적용 */
+            padding: 15px 0 15px 10px;
             display: flex;
             flex-direction: column;
         }
         
         .mission-section {
             margin-bottom: 10px;
-            width: 316px; /* 오른쪽 섹션 너비에서 패딩 제외 */
+            width: 316px;
         }
         
         .mission-section:first-child {
@@ -138,14 +157,14 @@
         }
         
         .sub-mission-section {
-            margin-top: 6px; /* 서브미션 섹션 1픽셀 더 아래로 */
+            margin-top: 6px;
         }
         
         .mission-label {
             display: block;
             margin-bottom: 8px;
-            height: 20px; /* 이미지 높이 */
-            width: 70px; /* 이미지 너비 */
+            height: 20px;
+            width: 70px;
             opacity: 0.95;
         }
         
@@ -156,9 +175,9 @@
         .mission-item {
             display: flex;
             align-items: center;
-            margin-bottom: 10px; /* 미션 항목 간격 추가로 증가 */
+            margin-bottom: 10px;
             padding: 0;
-            padding-right: 10px; /* 우측 여백 */
+            padding-right: 10px;
         }
         
         .mission-item:last-child {
@@ -191,10 +210,13 @@
         }
         
         .mission-text {
-            font-size: 14px;
+            color: #1c1c1c; /* 미션내용 색상 */
+            font-size: 21px; /* 20.83pt */
+            font-family: 'GmarketSansMedium', sans-serif;
+            letter-spacing: -0.3px; /* 자간 -30 대략 -0.3px로 환산 */
             line-height: 1.4;
             flex: 1;
-            word-wrap: break-word; /* 텍스트가 길 경우 줄바꿈 */
+            word-wrap: break-word;
             overflow-wrap: break-word;
         }
         
@@ -215,7 +237,7 @@
             height: 1px;
             background-color: #eee;
             margin: 8px 0;
-            width: 316px; /* 오른쪽 섹션 너비에서 패딩 제외 */
+            width: 316px;
         }
     </style>
 </head>
