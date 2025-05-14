@@ -1001,54 +1001,60 @@
             if (!confirm('모든 스트리머의 미션을 초기 상태로 복원하시겠습니까?')) {
                 return;
             }
-        
-            const defaultSubMissions = {
-                kyeonjahee: ["견자희 서브 미션1", "견자희 서브 미션2", "견자희 서브 미션3"],
-                woojeong: ["우정잉 서브 미션1", "우정잉 서브 미션2", "우정잉 서브 미션3"],
-                mingyeolhui: ["민결희 서브 미션1", "민결희 서브 미션2", "민결희 서브 미션3"],
-                jjamtasua: ["짬타수아 서브 미션1", "짬타수아 서브 미션2", "짬타수아 서브 미션3"],
-                jini: ["지니씨 서브 미션1", "지니씨 서브 미션2", "지니씨 서브 미션3"],
-                manggulang: ["망구랑 서브 미션1", "망구랑 서브 미션2", "망구랑 서브 미션3"],
-                mygomi: ["마이곰이 서브 미션1", "마이곰이 서브 미션2", "마이곰이 서브 미션3"]
-            };
-        
-            const streamers = Object.keys(defaultSubMissions);
-        
-            streamers.forEach(streamerId => {
+            
+            // 각 스트리머의 초기 상태 복원
+            Object.keys(initialStates).forEach(streamerId => {
+                const initialData = initialStates[streamerId];
+                
+                // 카드에 초기 데이터 적용
                 const card = document.querySelector(`[data-streamer-id="${streamerId}"]`);
-                if (!card) return;
-        
-                // 서브 미션 텍스트 복원
-                card.querySelector('.mission-text[data-mission-id="2"]').textContent = defaultSubMissions[streamerId][0];
-                card.querySelector('.mission-text[data-mission-id="3"]').textContent = defaultSubMissions[streamerId][1];
-                card.querySelector('.mission-text[data-mission-id="4"]').textContent = defaultSubMissions[streamerId][2];
-        
-                // 체크박스 초기화
-                ['2', '3', '4'].forEach(num => {
-                    const checkbox = card.querySelector(`#${streamerId}-check${num}`);
-                    checkbox.classList.remove('checked');
-                });
-        
-                // Firebase 반영
+                if (card) {
+                    // 미션 텍스트 업데이트
+                    if (initialData.mission1) card.querySelector('.mission-text[data-mission-id="1"]').textContent = initialData.mission1;
+                    if (initialData.mission2) card.querySelector('.mission-text[data-mission-id="2"]').textContent = initialData.mission2;
+                    if (initialData.mission3) card.querySelector('.mission-text[data-mission-id="3"]').textContent = initialData.mission3;
+                    if (initialData.mission4) card.querySelector('.mission-text[data-mission-id="4"]').textContent = initialData.mission4;
+                    
+                    // 체크박스 상태 업데이트
+                    const check1El = card.querySelector(`#${streamerId}-check1`);
+                    const check2El = card.querySelector(`#${streamerId}-check2`);
+                    const check3El = card.querySelector(`#${streamerId}-check3`);
+                    const check4El = card.querySelector(`#${streamerId}-check4`);
+                    
+                    if (initialData.check1 === '1') check1El.classList.add('checked');
+                    else check1El.classList.remove('checked');
+                    
+                    if (initialData.check2 === '1') check2El.classList.add('checked');
+                    else check2El.classList.remove('checked');
+                    
+                    if (initialData.check3 === '1') check3El.classList.add('checked');
+                    else check3El.classList.remove('checked');
+                    
+                    if (initialData.check4 === '1') check4El.classList.add('checked');
+                    else check4El.classList.remove('checked');
+                }
+                
+                // Firebase에 초기 데이터 저장
                 const streamerRef = database.ref(`streamers/${streamerId}`);
                 streamerRef.update({
-                    mission2: defaultSubMissions[streamerId][0],
-                    mission3: defaultSubMissions[streamerId][1],
-                    mission4: defaultSubMissions[streamerId][2],
-                    check2: '0',
-                    check3: '0',
-                    check4: '0',
+                    mission1: initialData.mission1,
+                    mission2: initialData.mission2,
+                    mission3: initialData.mission3,
+                    mission4: initialData.mission4,
+                    check1: initialData.check1,
+                    check2: initialData.check2,
+                    check3: initialData.check3,
+                    check4: initialData.check4,
                     lastUpdate: firebase.database.ServerValue.TIMESTAMP
                 }).then(() => {
-                    console.log(`${streamerId} 초기 상태 복원 완료`);
+                    console.log(`${streamerId}의 미션이 초기 상태로 복원되었습니다.`);
                 }).catch(error => {
-                    console.error(`${streamerId} 초기 복원 실패:`, error);
+                    console.error(`${streamerId} 복원 오류:`, error);
                 });
             });
-        
-            showToast("서브 미션이 초기 상태로 복원되었습니다!");
+            
+            showToast("모든 미션이 초기 상태로 복원되었습니다!");
         }
-
         
         // 체크박스 토글 함수
         function toggleCheck(element, streamerId, checkNum) {
