@@ -186,17 +186,20 @@
             margin-top: 0; /* 여백 제거 - 모든 간격을 8px로 통일 */
         }
         
-        /* 미션 라벨 - 미션 컨트롤러 스타일로 완전히 통일 */
+        /* 미션 라벨 - 탭 스타일로 수정 */
         .mission-category {
-            font-weight: bold;
+            font-weight: 200; /* 폰트 굵기 낮춤 */
             background-color: #efefef;
-            padding: 3px 6px;
-            border-radius: 4px;
+            padding: 8px 12px; /* 패딩 키워서 라벨 크기 증가 */
+            border-radius: 4px 4px 0 0; /* 상단만 라운딩 처리 */
             margin-bottom: 8px; /* 8픽셀 간격 */
-            display: inline-block;
-            width: auto;
-            font-size: 14px;
-            font-family: 'Sandoll Nemony2', sans-serif;
+            margin-left: 8px; /* 왼쪽 8픽셀 여백 */
+            margin-right: 8px; /* 오른쪽 8픽셀 여백 */
+            display: block; /* 블록으로 변경하여 전체 너비 차지 */
+            width: calc(100% - 16px); /* 전체 너비에서 좌우 여백 제외 */
+            font-size: 16px; /* 폰트 크기 증가 */
+            font-family: 'Sandoll Nemony2', sans-serif; /* 폰트 통일 */
+            box-sizing: border-box;
         }
         
         .main-mission {
