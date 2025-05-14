@@ -186,20 +186,18 @@
             margin-top: 0; /* 여백 제거 - 모든 간격을 8px로 통일 */
         }
         
-        /* 미션 라벨 - 탭 스타일로 수정 */
+        /* 미션 라벨 - 라벨 스타일 수정 */
         .mission-category {
-            font-weight: 200; /* 폰트 굵기 낮춤 */
+            font-weight: normal; /* 원래 폰트 굵기로 복원 */
             background-color: #efefef;
-            padding: 8px 12px; /* 패딩 키워서 라벨 크기 증가 */
-            border-radius: 4px 4px 0 0; /* 상단만 라운딩 처리 */
+            padding: 5px 10px; /* 패딩 줄여서 라벨 크기 조절 */
+            border-radius: 4px;
             margin-bottom: 8px; /* 8픽셀 간격 */
-            margin-left: 8px; /* 왼쪽 8픽셀 여백 */
-            margin-right: 8px; /* 오른쪽 8픽셀 여백 */
-            display: block; /* 블록으로 변경하여 전체 너비 차지 */
-            width: calc(100% - 16px); /* 전체 너비에서 좌우 여백 제외 */
-            font-size: 16px; /* 폰트 크기 증가 */
+            margin-left: 32px; /* 체크박스와 동일한 왼쪽 간격 */
+            display: inline-block; /* 인라인 블록으로 변경 */
+            width: auto; /* 자동 너비 */
+            font-size: 15px; /* 폰트 크기 약간 줄임 */
             font-family: 'Sandoll Nemony2', sans-serif; /* 폰트 통일 */
-            box-sizing: border-box;
         }
         
         .main-mission {
@@ -219,7 +217,7 @@
         
         .mission-item {
             display: flex;
-            align-items: flex-start; /* 미션 내용이 여러 줄일 때 체크박스를 상단에 정렬 */
+            align-items: center; /* 체크박스와 텍스트 수직 정렬 맞춤 */
             margin-bottom: 8px; /* 8픽셀 간격 */
             padding: 0;
             padding-right: 10px;
@@ -240,7 +238,8 @@
             align-items: center;
             justify-content: center;
             background-color: white;
-            margin-top: 1px; /* 체크박스 위치 미세 조정 */
+            margin-top: 0; /* 체크박스 수직 위치 조정 */
+            margin-left: 8px; /* 왼쪽 간격 8픽셀 */
         }
         
         .mission-checkbox.checked {
@@ -264,7 +263,7 @@
             flex: 1;
             word-wrap: break-word;
             overflow-wrap: break-word;
-            padding-top: 2px;
+            padding-top: 0; /* 텍스트 수직 위치 조정 */
             white-space: pre-line; /* 줄바꿈 유지 */
         }
         
@@ -287,7 +286,7 @@
             border-radius: 3px;
             margin-bottom: 0; /* 간격을 mission-item에서 관리 */
             width: 95%;
-            margin-top: 2px; /* 체크박스와 높이 맞추기 위해 2픽셀 아래로 조정 */
+            margin-top: 0; /* 체크박스와 높이 맞추기 */
         }
         
         /* 콘텐츠가 비었을 때도 최소 높이 유지 */
@@ -350,9 +349,9 @@
                 <!-- 오른쪽 섹션 - 미션 목록 -->
                 <div class="right-section">
                     <div class="mission-section">
-                        <!-- 메인 미션 라벨 - 인라인 블록으로 변경 -->
+                        <!-- 메인 미션 라벨 - 볼드체 제거 -->
                         <div class="mission-category main-mission">
-                            <strong>메인 미션</strong>
+                            메인 미션
                         </div>
                         <div class="mission-items">
                             <div class="mission-item">
@@ -365,9 +364,9 @@
                     <div class="divider"></div>
                     
                     <div class="mission-section sub-mission-section">
-                        <!-- 서브 미션 라벨 - 인라인 블록으로 변경 -->
+                        <!-- 서브 미션 라벨 - 볼드체 제거 -->
                         <div class="mission-category sub-mission">
-                            <strong>서브 미션</strong>
+                            서브 미션
                         </div>
                         <div class="mission-items">
                             <div class="mission-item">
