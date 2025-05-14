@@ -53,12 +53,12 @@
             margin: 0;
         }
         
-        /* 가로형 카드 스타일 - 크기 축소 */
+        /* 가로형 카드 스타일 - 가로 비율 확장 */
         .streamer-card {
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            width: 360px; /* 카드 너비 축소 */
+            width: 480px; /* 카드 가로 너비 증가 */
             overflow: hidden;
             margin-bottom: 15px;
             display: flex;
@@ -79,12 +79,12 @@
         .streamer-content {
             display: flex;
             flex: 1;
-            height: 230px; /* 고정 높이 설정 */
+            height: 180px; /* 전체 높이 축소 */
         }
         
         /* 왼쪽 프로필 영역 - 크기 축소 */
         .left-section {
-            width: 130px; /* 프로필 영역 너비 축소 */
+            width: 100px; /* 프로필 영역 너비 더 축소 */
             padding: 10px;
             border-right: 1px solid #eee;
             display: flex;
@@ -93,8 +93,8 @@
         }
         
         .streamer-avatar {
-            width: 110px; /* 프로필 이미지 크기 축소 */
-            height: 110px;
+            width: 80px; /* 프로필 이미지 크기 더 축소 */
+            height: 80px;
             background-color: #ddd;
             border-radius: 4px;
             overflow: hidden;
@@ -129,7 +129,7 @@
         
         .avatar-overlay-text {
             color: white;
-            font-size: 12px;
+            font-size: 10px;
             text-align: center;
         }
         
@@ -141,19 +141,19 @@
         }
         
         .streamer-role {
-            font-size: 13px;
+            font-size: 12px;
             color: #666;
             margin-bottom: 3px;
         }
         
         .streamer-role-value {
-            font-size: 20px; /* 역할 폰트 크기 축소 */
+            font-size: 16px; /* 역할 폰트 크기 더 축소 */
             font-weight: bold;
             color: #2b5797;
             text-align: center;
         }
         
-        /* 오른쪽 미션 영역 - 간격 축소 */
+        /* 오른쪽 미션 영역 - 공간 확장 */
         .right-section {
             flex: 1;
             padding: 10px;
@@ -186,7 +186,7 @@
         .sub-mission {
             color: #b87d2b;
             border-left: 4px solid #b87d2b;
-            margin-top: 8px; /* 서브 미션 상단 간격 축소 */
+            margin-top: 8px;
         }
         
         .mission-item {
@@ -224,7 +224,7 @@
         }
         
         .mission-text {
-            font-size: 14px; /* 미션 텍스트 폰트 크기 축소 */
+            font-size: 14px;
             flex: 1;
             padding: 3px;
             border-radius: 3px;
@@ -238,14 +238,14 @@
             background-color: #f0f0f0;
         }
         
-        /* 하단 링크 영역 - 간격 축소 */
+        /* 하단 링크 영역 */
         .links-section {
             padding: 8px 10px;
             background-color: #f9f9f9;
             border-top: 1px solid #eee;
             display: flex;
             align-items: center;
-            font-size: 12px; /* 링크 텍스트 폰트 크기 축소 */
+            font-size: 12px;
         }
         
         .links-title {
@@ -282,7 +282,56 @@
             background-color: #1e3a6a;
         }
         
-        /* 랜덤 미션 버튼 - 크기 및 간격 축소 */
+        .file-upload {
+            display: none;
+        }
+        
+        .edit-button {
+            font-size: 14px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .edit-button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .toast.fade-out {
+            animation: fadeOut 0.5s ease-in-out;
+        }
+        
+        .editable {
+            cursor: text;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .editable:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .editable:focus {
+            outline: 2px solid #2b5797;
+            background-color: #f0f0f0;
+        }
+        
+        /* 랜덤 미션 버튼 */
         .random-mission-button {
             background-color: #7b3dc9;
             color: white;
@@ -296,8 +345,20 @@
             font-size: 14px;
             transition: background-color 0.3s;
         }
-
-
+        
+        .random-mission-button:hover {
+            background-color: #6423ad;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translate(-50%, 0); }
+            to { opacity: 0; transform: translate(-50%, 20px); }
+        }
         
     </style>
 </head>
