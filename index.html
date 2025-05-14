@@ -8,7 +8,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
-        <style>
+    <style>
         /* 기본 스타일 */
         body {
             font-family: 'Malgun Gothic', sans-serif;
@@ -83,33 +83,38 @@
             cursor: pointer;
             transition: background-color 0.3s;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            width: 140px;
         }
         
         /* 🎲 랜덤 버튼 */
         #shuffle-button {
-            background-color: #8e44ad;
+            background-color: #9575cd;
             color: white;
         }
         #shuffle-button:hover {
-            background-color: #732d91;
+            background-color: #7e57c2;
         }
         
         /* ↩️ 초기화 버튼 */
         #reset-button {
-            background-color: #e74c3c;
+            background-color: #ef5350;
             color: white;
         }
         #reset-button:hover {
-            background-color: #c0392b;
+            background-color: #e53935;
         }
         
         /* 👀/🚫 공개/비공개 버튼 */
         #toggle-visibility-button.visible {
-            background-color: #c8e6c9;
+            background-color: #a5d6a7;
             color: #2e7d32;
         }
         #toggle-visibility-button.hidden {
-            background-color: #ffcdd2;
+            background-color: #ef9a9a;
             color: #c62828;
         }
         
@@ -437,9 +442,9 @@
             <li>'서브 미션 랜덤 뒤섞기' 버튼을 클릭하면 모든 스트리머의 서브 미션이 랜덤으로 섞여 재배치됩니다.</li>
         </ol>
         <div class="button-container">
-            <button class="random-mission-button" onclick="shuffleSubMissions()">서브 미션 랜덤 뒤섞기</button>
-            <button class="reset-button" onclick="resetToInitialState()">초기 상태로 복원</button>
-            <button class="random-mission-button" onclick="toggleSubMissionVisibility()" id="toggle-visibility-button">서브 미션 숨기기</button>
+            <button id="shuffle-button" onclick="shuffleSubMissions()">🎲 서브 미션 랜덤 뒤섞기</button>
+            <button id="reset-button" onclick="resetToInitialState()">↩️ 초기 상태로 복원</button>
+            <button id="toggle-visibility-button" class="visible" onclick="toggleSubMissionVisibility()">👀 서브 미션 숨기기</button>
         </div>
 
     </div>
