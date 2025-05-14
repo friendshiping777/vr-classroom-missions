@@ -87,6 +87,12 @@
             left: 1px; /* 1픽셀 오른쪽으로 */
         }
         
+        /* 4글자 이상일 때 사용할 작은 폰트 */
+        .name-text-small {
+            font-size: 28px; /* 기존 29px에서 28px로 1 줄임 */
+            letter-spacing: 2px; /* 자간도 줄임 */
+        }
+        
         .empty-area {
             flex: 1;
         }
@@ -391,7 +397,17 @@
         // UI 업데이트 함수
         function updateUI(data) {
             // 기본 정보 설정
-            document.getElementById('streamer-name').textContent = data.name || getStreamerId();
+            const nameElement = document.getElementById('streamer-name');
+            const streamerName = data.name || getStreamerId();
+            nameElement.textContent = streamerName;
+            
+            // 닉네임 길이에 따른 폰트 사이즈 조정
+            if (streamerName.length >= 4) {
+                nameElement.classList.add('name-text-small');
+            } else {
+                nameElement.classList.remove('name-text-small');
+            }
+            
             document.getElementById('streamer-role').textContent = data.role || '';
             
             // 미션 설정 - 줄바꿈 유지
