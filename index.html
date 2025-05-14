@@ -364,13 +364,12 @@
             transition: all 0.3s ease;
         }
         
-        /* 서브 미션이 비공개 상태일 때 스타일 */
+        /* 서브 미션이 비공개 상태일 때 스타일 - 텍스트 보이고 배경만 어둡게 */
         .sub-mission-hidden .mission-text {
             background-color: #e9e9e9;
             border: 1px dashed #ccc;
-            color: transparent;
-            height: 18px; /* 고정 높이 */
-            overflow: hidden;
+            color: #333; /* 텍스트 색상 유지 */
+            padding: 2px 4px;
         }
         
         /* 하단 링크 */
@@ -1080,7 +1079,7 @@
             const checkbox = document.getElementById('visibility-checkbox');
             
             // 서브미션 섹션 모두 찾기
-            const subMissionSections = document.querySelectorAll('.mission-section:has(.sub-mission)');
+            const subMissionSections = document.querySelectorAll('.mission-section');
             
             if (isSubMissionVisible) {
                 toggleContainer.classList.remove('hidden');
@@ -1088,7 +1087,7 @@
                 checkbox.checked = true;
                 
                 // 서브미션 텍스트 스타일 복원
-                document.querySelectorAll('.mission-section').forEach(section => {
+                subMissionSections.forEach(section => {
                     if (section.querySelector('.sub-mission')) {
                         section.classList.remove('sub-mission-hidden');
                     }
@@ -1098,8 +1097,8 @@
                 toggleText.textContent = '비공개 상태';
                 checkbox.checked = false;
                 
-                // 서브미션 텍스트 스타일 변경
-                document.querySelectorAll('.mission-section').forEach(section => {
+                // 서브미션 텍스트 스타일 변경 - 텍스트는 보이고 배경만 어둡게
+                subMissionSections.forEach(section => {
                     if (section.querySelector('.sub-mission')) {
                         section.classList.add('sub-mission-hidden');
                     }
