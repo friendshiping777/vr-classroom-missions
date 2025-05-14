@@ -13,13 +13,9 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     
-    <!-- 산돌 네모니2 03 Basic Regular -->
+    <!-- 산돌 네모니2 02 Basic Light (특이사항 및 텍스트용) -->
     <link rel="preconnect" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com">
     <link rel="stylesheet" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com/v1/api/css/drop_fontstream_css/?sid=gAAAAABoIxPBcQCEF4aaKexGpCgU073eTsLHzrUD2gxCvLHSM-ddD1JXhi0dRlmKz5nxqAb02keBhvXGjFWR-x8VeJ4aBfEzxh4gIgenaagVxOdiYnNMUJA1gkIoHqG8nd6_YZbNGKFZkLO1b34y1s_dEU79JQsK5xhvb1xNupr0RbwoMaX1txPYPYW75TgptookWRS22lDjU5cReP79DFHOQm9mjgId_aDkBSum29YhSmu_fPAHw5vOD5Q14ukfePmpWAYTPrBp" charset="utf-8" referrerpolicy="origin">
-
-    <!-- 산돌 네모니2 04 Basic Bold (닉네임/역할용) -->
-    <link rel="preconnect" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com">
-    <link rel="stylesheet" href="https://hmolhy4qpa.execute-api.ap-northeast-2.amazonaws.com/v1/api/css/drop_fontstream_css/?sid=gAAAAABoIvrnGDxNsD_y2Pa1yAbit-8bEcBXiO2oWyoOJ9n8tYaeXBWIPXHPrmN8quh7kmzmJWSv3QOPs530HwySGvlpjz73XZMa2jmtDIerRMrEH0IdF-LM4aSB7rr_Y6zXxlLSZ_kybdaiGR2bX5FQaTwu7Wq71qE2OmWifR6r37Uob0-YISRQbAe1IpMdW-6tS1pUJPNWRI7hiv1Gp-0CercdxDCnDTl7w0xBluOr5MHXYCmohQ9TCRtJK6ouAaxjUhqun6Rh" charset="utf-8" referrerpolicy="origin">
     
     <!-- G마켓 산스 폰트 -->
     <style>
@@ -78,12 +74,12 @@
             padding-bottom: 3px;
         }
         
-        /* 닉네임 - Bold 폰트 적용 */
+        /* 닉네임 - 폰트 굵기 한 단계 낮춤 */
         .name-text {
             color: #ffffff; 
             font-size: 29px;
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 700; /* 04 Basic Bold */
+            font-weight: 300; /* 굵기 한 단계 낮춤 */
             letter-spacing: 3px; /* 자간 확대 */
             text-align: center;
         }
@@ -142,23 +138,23 @@
             margin-top: -10px;
         }
         
-        /* 특이사항 - Regular 폰트 적용 */
+        /* 특이사항 - Light 폰트 적용 */
         .special-note {
             color: #343434;
             font-size: 16px;
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 400; /* 03 Basic Regular */
+            font-weight: 300; /* 기본 설정 */
             letter-spacing: -0.5px;
             text-align: center;
             margin-bottom: 4px;
         }
         
-        /* 역할명 - Bold 폰트 적용 */
+        /* 역할명 - 폰트 굵기 한 단계 낮춤 */
         .role-text {
             color: #103155;
             font-size: 29px;
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 700; /* 04 Basic Bold */
+            font-weight: 300; /* 굵기 한 단계 낮춤 */
             letter-spacing: 3px; /* 자간 확대 */
             text-align: center;
         }
@@ -182,12 +178,12 @@
         }
         
         .sub-mission-section {
-            margin-top: 5px;
+            margin-top: 8px; /* 서브미션 섹션 3픽셀 더 아래로 이동 (기존 5px에서 증가) */
         }
         
         .mission-label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 6px; /* 여백 조정 */
             height: 25px;
             width: 85px;
             opacity: 0.95;
@@ -243,7 +239,7 @@
             flex: 1;
             word-wrap: break-word;
             overflow-wrap: break-word;
-            padding-top: 1px;
+            padding-top: 2px; /* 미션 텍스트 1픽셀 아래로 (기존 1px에서 2px로 증가) */
         }
         
         .loading-indicator {
