@@ -61,7 +61,7 @@
             height: 45px;
             flex-shrink: 0; /* 헤더 높이 고정 */
             display: flex;
-            border-bottom: 2px solid #151515; /* 닉네임 하단 구분선 색상 변경 */
+            border-bottom: 1px solid #eee; /* 선 색상 변경 - 얇은 회색 */
         }
         
         .name-area {
@@ -79,7 +79,7 @@
             color: #ffffff; 
             font-size: 29px;
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 300;
+            font-weight: 200; /* 폰트 굵기 낮춤 */
             letter-spacing: 3px;
             text-align: center;
             position: relative;
@@ -109,7 +109,7 @@
             width: 138px;
             display: flex;
             flex-direction: column;
-            border-right: 2px solid #151515; /* 세로 구분선 색상 변경 */
+            border-right: 1px solid #eee; /* 세로 구분선 색상 변경 - 얇은 회색 */
             flex-shrink: 0; /* 너비 고정 */
         }
         
@@ -152,7 +152,7 @@
             color: #343434;
             font-size: 15px; /* 기존 16px에서 15px로 감소 */
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 300;
+            font-weight: 200; /* 폰트 굵기 낮춤 */
             letter-spacing: -0.5px;
             text-align: center;
             margin-bottom: 4px;
@@ -163,7 +163,7 @@
             color: #103155;
             font-size: 31px; /* 기존 29px에서 31px로 증가 */
             font-family: 'Sandoll Nemony2', sans-serif;
-            font-weight: 300;
+            font-weight: 200; /* 폰트 굵기 낮춤 */
             letter-spacing: 3px;
             text-align: center;
         }
@@ -171,43 +171,57 @@
         /* 오른쪽 섹션 - 미션 영역 */
         .right-section {
             width: 326px;
-            padding: 8px 0 8px 10px;
+            padding: 0; /* 패딩 제거 */
             display: flex;
             flex-direction: column;
             flex-grow: 1; /* 남은 공간 채우기 */
         }
         
         .mission-section {
-            margin-bottom: 5px;
-            width: 316px;
-        }
-        
-        .mission-section:first-child {
-            margin-bottom: 5px;
+            margin: 0; /* 여백 제거 */
+            width: 100%;
         }
         
         .sub-mission-section {
-            margin-top: 8px; /* 서브미션 섹션 아래로 이동 */
+            margin: 0; /* 여백 제거 */
         }
         
-        .mission-label {
+        /* 미션 라벨 - 예시 이미지와 동일하게 수정 */
+        .mission-category {
+            font-weight: normal;
+            background-color: #f5f5f5;
+            padding: 10px 15px;
+            width: 100%;
+            box-sizing: border-box;
             display: block;
-            margin-bottom: 6px;
-            height: 25px;
-            width: 85px;
-            opacity: 0.95;
+            margin: 0; /* 여백 제거 */
+            font-family: 'Sandoll Nemony2', sans-serif;
+            font-size: 18px;  /* 15px에서 17px로 변경 */
+            position: relative;
+            text-align: left;
+            border-left: 4px solid transparent;
+        }
+        
+        .main-mission {
+            border-left-color: #c43e57;
+            color: #c43e57;
+        }
+        
+        .sub-mission {
+            border-left-color: #b87d2b;
+            color: #b87d2b;
         }
         
         .mission-items {
-            margin-top: 0;
+            margin: 0;
+            padding: 10px 0;
         }
         
         .mission-item {
             display: flex;
-            align-items: flex-start; /* 미션 내용이 여러 줄일 때 체크박스를 상단에 정렬 */
-            margin-bottom: 7px;
-            padding: 0;
-            padding-right: 10px;
+            align-items: center; /* 체크박스와 텍스트 수직 정렬 맞춤 */
+            margin-bottom: 8px; /* 8픽셀 간격 */
+            padding: 0 15px;
         }
         
         .mission-item:last-child {
@@ -225,7 +239,7 @@
             align-items: center;
             justify-content: center;
             background-color: white;
-            margin-top: 1px; /* 체크박스 위치 미세 조정 */
+            margin-top: 0; /* 체크박스 수직 위치 조정 */
         }
         
         .mission-checkbox.checked {
@@ -249,26 +263,30 @@
             flex: 1;
             word-wrap: break-word;
             overflow-wrap: break-word;
-            padding-top: 2px;
+            padding-top: 0; /* 텍스트 수직 위치 조정 */
             white-space: pre-line; /* 줄바꿈 유지 */
         }
         
-        /* 서브 미션 텍스트에 배경 추가 */
+        /* 서브 미션 텍스트 스타일 수정 - 공개 상태일 때 배경 없음 */
         .sub-mission-text {
-            background-color: #f9f9f9;
-            padding: 4px 6px;
+            background-color: transparent; /* 배경 투명으로 변경 */
+            padding: 0;
             border-radius: 3px;
-            border: 1px solid #eee;
-            min-height: 18px; /* 최소 높이 설정 */
-            margin-bottom: 2px;
+            border: none; /* 테두리 제거 */
+            min-height: 18px;
+            margin-bottom: 0; /* 간격을 mission-item에서 관리 */
+            transition: all 0.3s ease;
         }
         
-        /* 서브 미션 숨김 상태에서의 스타일 */
-        .sub-mission-text.hidden-mission {
+        /* 서브 미션 텍스트 박스 스타일 - 비공개 상태일 때 어두운 배경 */
+        .mission-placeholder {
             background-color: #e9e9e9;
             border: 1px dashed #ccc;
-            min-height: 18px;
-            visibility: hidden;
+            height: 18px;
+            border-radius: 3px;
+            margin-bottom: 0; /* 간격을 mission-item에서 관리 */
+            width: 95%;
+            margin-top: 0; /* 체크박스와 높이 맞추기 */
         }
         
         /* 콘텐츠가 비었을 때도 최소 높이 유지 */
@@ -288,12 +306,11 @@
             border-radius: 5px;
         }
         
-        /* 구분선 - 세로선과 연결되도록 수정 */
+        /* 구분선 - 예시 이미지와 동일하게 수정 */
         .divider {
-            height: 2px;
-            background-color: #151515; /* 구분선 색상 변경 */
-            margin: 4px 0 4px -12px; /* 왼쪽으로 확장하여 세로선과 연결 */
-            width: 328px; /* 폭을 늘려 세로선과 연결 */
+            height: 0; /* 구분선 없애기 */
+            margin: 0;
+            width: 0;
         }
     </style>
 </head>
@@ -331,8 +348,10 @@
                 <!-- 오른쪽 섹션 - 미션 목록 -->
                 <div class="right-section">
                     <div class="mission-section">
-                        <!-- 메인 미션 이미지 -->
-                        <img src="main-mission.png" alt="메인 미션" class="mission-label">
+                        <!-- 메인 미션 라벨 - 예시 이미지와 동일하게 수정 -->
+                        <div class="mission-category main-mission">
+                            메인 미션
+                        </div>
                         <div class="mission-items">
                             <div class="mission-item">
                                 <div class="mission-checkbox" id="check1"></div>
@@ -341,11 +360,11 @@
                         </div>
                     </div>
                     
-                    <div class="divider"></div>
-                    
                     <div class="mission-section sub-mission-section">
-                        <!-- 서브 미션 이미지 -->
-                        <img src="sub-mission.png" alt="서브 미션" class="mission-label">
+                        <!-- 서브 미션 라벨 - 예시 이미지와 동일하게 수정 -->
+                        <div class="mission-category sub-mission">
+                            서브 미션
+                        </div>
                         <div class="mission-items">
                             <div class="mission-item">
                                 <div class="mission-checkbox" id="check2"></div>
@@ -393,21 +412,34 @@
         function adjustPanelSize(subMissionVisible) {
             const missionPanel = document.querySelector('.mission-panel');
             const subMissionItems = document.querySelectorAll('.sub-mission-text');
+            const missionPlaceholders = document.querySelectorAll('.mission-placeholder');
             
             if (!subMissionVisible) {
                 // 서브 미션이 숨겨져 있을 때 패널 높이를 줄임
                 missionPanel.style.minHeight = '200px';
+                
+                // 실제 미션 텍스트 숨기기
                 subMissionItems.forEach(item => {
-                    item.classList.add('hidden-mission');
-                    item.style.height = '18px'; // 최소 높이로 고정
+                    item.style.display = 'none';
+                });
+                
+                // 플레이스홀더 표시 (어두운 텍스트 박스)
+                missionPlaceholders.forEach(item => {
+                    item.style.display = 'block';
                 });
             } else {
                 // 서브 미션이 보일 때 패널 높이를 자동 조정
                 missionPanel.style.minHeight = '255px';
                 missionPanel.style.height = 'auto';
+                
+                // 실제 미션 텍스트 표시 (흰 배경)
                 subMissionItems.forEach(item => {
-                    item.classList.remove('hidden-mission');
-                    item.style.height = 'auto'; // 높이 자동 조정
+                    item.style.display = 'block';
+                });
+                
+                // 플레이스홀더 숨기기
+                missionPlaceholders.forEach(item => {
+                    item.style.display = 'none';
                 });
             }
         }
@@ -416,6 +448,18 @@
         window.addEventListener('load', function() {
             const streamerId = getStreamerId();
             console.log('스트리머 ID:', streamerId);
+            
+            // 서브 미션 플레이스홀더 생성
+            const subMissionItems = document.querySelectorAll('.mission-item');
+            subMissionItems.forEach(item => {
+                const subMissionText = item.querySelector('.sub-mission-text');
+                if (subMissionText) {
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'mission-placeholder';
+                    placeholder.style.display = 'none'; // 초기에는 숨김
+                    item.appendChild(placeholder);
+                }
+            });
             
             // Firebase에서 데이터 가져오기
             const streamerRef = database.ref(`streamers/${streamerId}`);
@@ -446,20 +490,9 @@
                 if (!settings) return;
                 
                 const visible = settings.subMissionVisible;
-                const subMissions = document.querySelectorAll('#mission2, #mission3, #mission4');
                 
-                // 미션 패널 크기 조정
+                // 미션 패널 크기 조정 및 플레이스홀더 처리
                 adjustPanelSize(visible);
-                
-                if (visible) {
-                    subMissions.forEach(el => {
-                        el.style.visibility = 'visible';
-                    });
-                } else {
-                    subMissions.forEach(el => {
-                        el.style.visibility = 'hidden';
-                    });
-                }
             });
         });
         
@@ -535,4 +568,3 @@
     </script>
 </body>
 </html>
-        
