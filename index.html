@@ -8,7 +8,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
-        <style>
+    <style>
         /* 기본 스타일 */
         body {
             font-family: 'Malgun Gothic', sans-serif;
@@ -17,6 +17,7 @@
             max-width: 1800px; /* 최대 너비 1800px */
             margin: 0 auto;
             padding: 10px;
+            padding-bottom: 100px; /* 요청사항: 페이지 하단에 여유 공간 추가 */
             background-color: #f5f5f5;
         }
     
@@ -43,6 +44,7 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             margin: 0 auto 20px; /* 중앙 정렬 및 하단 여백 증가 */
             text-align: left; /* 내부 텍스트는 왼쪽 정렬 */
+            position: relative; /* 버튼 위치 지정을 위한 상대 위치 설정 */
         }
     
         .instructions h2 {
@@ -59,6 +61,46 @@
     
         .instructions ol li {
             margin-bottom: 5px; /* 리스트 항목 간격 추가 */
+        }
+        
+        /* 서브미션 관리 버튼 - 사용방법 우측 상단에 배치 */
+        .submission-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .control-button {
+            background-color: #2b5797;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.3s;
+        }
+        
+        .control-button:hover {
+            background-color: #1e3a6a;
+        }
+        
+        .reset-button {
+            background-color: #c43e57;
+        }
+        
+        .reset-button:hover {
+            background-color: #a62e45;
+        }
+        
+        .apply-button {
+            background-color: #44c767;
+        }
+        
+        .apply-button:hover {
+            background-color: #339e4f;
         }
     
         /* 가로형 카드 스타일 - 동적 높이 */
@@ -245,7 +287,7 @@
         }
     
         .mission-text {
-            font-size: 16px; /* 미션 텍스트 폰트 크기 추가 증가 (+2) */
+            font-size: 18px; /* 요청사항: 미션 텍스트 폰트 크기 증가 (16px → 18px) */
             flex: 1;
             padding: 1px;
             border-radius: 3px;
@@ -373,6 +415,59 @@
         .random-mission-button:hover {
             background-color: #6423ad;
         }
+        
+        /* 서브미션 카드 섹션 */
+        .submissions-container {
+            width: 80%;
+            margin: 0 auto 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .submissions-title {
+            color: #2b5797;
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .submissions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .submisson-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+        }
+        
+        .submisson-card-header {
+            color: #2b5797;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .submisson-input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .submisson-input:focus {
+            outline: 2px solid #2b5797;
+            border-color: #2b5797;
+        }
     
         @keyframes fadeIn {
             from { opacity: 0; transform: translate(-50%, 20px); }
@@ -399,6 +494,10 @@
             .instructions {
                 width: 70%; /* 작은 화면에서는 사용방법 영역 넓게 */
             }
+            
+            .submissions-container {
+                width: 90%;
+            }
         }
     
         @media (max-width: 900px) {
@@ -409,6 +508,10 @@
             .instructions {
                 width: 90%; /* 모바일에서는 사용방법 영역 더 넓게 */
             }
+            
+            .submissions-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
     
@@ -418,16 +521,98 @@
     
     <div class="instructions">
         <h2>사용 방법</h2>
+        <!-- 서브미션 관리 버튼 추가 -->
+        <div class="submission-controls">
+            <button class="control-button" onclick="shuffleSubmissionCards()">랜덤 섞기</button>
+            <button class="control-button apply-button" onclick="applySubmissions()">적용하기</button>
+            <button class="control-button reset-button" onclick="resetSubmissions()">초기화</button>
+        </div>
         <ol>
             <li>각 스트리머의 이름, 역할, 미션 내용을 편집 버튼(✏️)을 클릭하여 수정할 수 있습니다.</li>
             <li>프로필 이미지를 클릭하여 스트리머의 프로필 사진을 변경할 수 있습니다.</li>
             <li>각 스트리머의 미션 상태를 체크박스로 관리할 수 있습니다.</li>
             <li>스트리머는 OBS에 미션 현황판 링크를 브라우저 소스로 추가하면 됩니다.</li>
-            <li>'서브 미션 랜덤 뒤섞기' 버튼을 클릭하면 모든 스트리머의 서브 미션이 랜덤으로 섞여 재배치됩니다.</li>
+            <li>아래에서 각 스트리머별 서브 미션을 따로 관리할 수 있습니다. 랜덤 섞기, 적용, 초기화 기능을 사용해보세요.</li>
         </ol>
     </div>
     
-    <!-- 랜덤 서브 미션 버튼 -->
+    <!-- 서브미션 카드 섹션 추가 -->
+    <div class="submissions-container">
+        <h2 class="submissions-title">서브 미션 관리</h2>
+        <div class="submissions-grid">
+            <!-- 견자희 서브미션 카드 -->
+            <div class="submisson-card" data-streamer-id="kyeonjahee">
+                <div class="submisson-card-header">
+                    견자희 (모범생)
+                </div>
+                <input type="text" class="submisson-input" data-index="0" value="서브 미션 1-1" placeholder="서브 미션 1">
+                <input type="text" class="submisson-input" data-index="1" value="서브 미션 1-2" placeholder="서브 미션 2">
+                <input type="text" class="submisson-input" data-index="2" value="서브 미션 1-3" placeholder="서브 미션 3">
+            </div>
+            
+            <!-- 우정잉 서브미션 카드 -->
+            <div class="submisson-card" data-streamer-id="woojeong">
+                <div class="submisson-card-header">
+                    우정잉 (일진)
+                </div>
+                <input type="text" class="submisson-input" data-index="0" value="서브 미션 2-1" placeholder="서브 미션 1">
+                <input type="text" class="submisson-input" data-index="1" value="서브 미션 2-2" placeholder="서브 미션 2">
+                <input type="text" class="submisson-input" data-index="2" value="서브 미션 2-3" placeholder="서브 미션 3">
+            </div>
+            
+            <!-- 민결희 서브미션 카드 -->
+            <div class="submisson-card" data-streamer-id="mingyeolhui">
+                <div class="submisson-card-header">
+                    민결희 (일진)
+                </div>
+                <input type="text" class="submisson-input" data-index="0" value="서브 미션 3-1" placeholder="서브 미션 1">
+                <input type="text" class="submisson-input" data-index="1" value="서브 미션 3-2" placeholder="서브 미션 2">
+                <input type="text" class="submisson-input" data-index="2" value="서브 미션 3-3" placeholder="서브 미션 3">
+            </div>
+            
+            <!-- 짬타수아 서브미션 카드 -->
+            <div class="submisson-card" data-streamer-id="jjamtasua">
+                <div class="submisson-card-header">
+                    짬타수아 (오타쿠)
+                </div>
+                <input type="text" class="submisson-input" data-index="0" value="서브 미션 4-1" placeholder="서브 미션 1">
+                <input type="text" class="submisson-input" data-index="1" value="서브 미션 4-2" placeholder="서브 미션 2">
+                <input type="text" class="submisson-input" data-index="2" value="서브 미션 4-3" placeholder="서브 미션 3">
+            </div>
+            
+            <!-- 지니씨 서브미션 카드 -->
+            <div class="submisson-card" data-streamer-id="jini">
+                <div class="submisson-card-header">
+                    지니씨 (찐따)
+                </div>
+                <input type="text" class="submisson-input" data-index="0" value="서브 미션 5-1" placeholder="서브 미션 1">
+                <input type="text" class="submisson-input" data-index="1" value="서브 미션 5-2" placeholder="서브 미션 2">
+                <input type="text" class="submisson-input" data-index="2" value="서브 미션 5-3" placeholder="서브 미션 3">
+            </div>
+            
+            <!-- 망구랑 서브미션 카드 -->
+            <div class="submisson-card" data-streamer-id="manggulang">
+                <div class="submisson-card-header">
+                    망구랑 (모범생)
+                </div>
+                <input type="text" class="submisson-input" data-index="0" value="서브 미션 6-1" placeholder="서브 미션 1">
+                <input type="text" class="submisson-input" data-index="1" value="서브 미션 6-2" placeholder="서브 미션 2">
+                <input type="text" class="submisson-input" data-index="2" value="서브 미션 6-3" placeholder="서브 미션 3">
+            </div>
+            
+            <!-- 마이곰이 서브미션 카드 -->
+            <div class="submisson-card" data-streamer-id="mygomi">
+                <div class="submisson-card-header">
+                    마이곰이 (유학생)
+                </div>
+                <input type="text" class="submisson-input" data-index="0" value="서브 미션 7-1" placeholder="서브 미션 1">
+                <input type="text" class="submisson-input" data-index="1" value="서브 미션 7-2" placeholder="서브 미션 2">
+                <input type="text" class="submisson-input" data-index="2" value="서브 미션 7-3" placeholder="서브 미션 3">
+            </div>
+        </div>
+    </div>
+    
+    <!-- 랜덤 미션 버튼 -->
     <button class="random-mission-button" onclick="shuffleSubMissions()">서브 미션 랜덤 뒤섞기</button>
     
     <div class="container">
@@ -499,7 +684,6 @@
                 <button class="copy-button" onclick="copyToClipboard('kyeonjahee-link')">복사</button>
             </div>
         </div>
-        
         <!-- 우정잉 카드 -->
         <div class="streamer-card" data-streamer-id="woojeong">
             <div class="streamer-header">
@@ -775,7 +959,6 @@
                 <button class="copy-button" onclick="copyToClipboard('jini-link')">복사</button>
             </div>
         </div>
-        
         <!-- 망구랑 카드 -->
         <div class="streamer-card" data-streamer-id="manggulang">
             <div class="streamer-header">
@@ -931,6 +1114,9 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
         
+        // 원본 서브미션 데이터 저장용 객체
+        let originalSubmissionData = {};
+        
         // 페이지 로드 시 실행
         window.addEventListener('load', function() {
             // 각 스트리머 초기화
@@ -955,7 +1141,119 @@
                 // Firebase에서 데이터 불러오기 및 화면 업데이트
                 loadStreamerData(streamerId);
             });
+            
+            // 원본 서브미션 데이터 저장
+            saveOriginalSubmissions();
         });
+        
+        // 원본 서브미션 데이터 저장
+        function saveOriginalSubmissions() {
+            const submissionCards = document.querySelectorAll('.submisson-card');
+            submissionCards.forEach(card => {
+                const streamerId = card.getAttribute('data-streamer-id');
+                const inputs = card.querySelectorAll('.submisson-input');
+                const submissions = [];
+                
+                inputs.forEach(input => {
+                    submissions.push(input.value);
+                });
+                
+                originalSubmissionData[streamerId] = submissions;
+            });
+            
+            console.log('원본 서브미션 데이터 저장됨:', originalSubmissionData);
+        }
+        
+        // 서브미션 카드 섞기
+        function shuffleSubmissionCards() {
+            // 각 스트리머별 서브미션 수집
+            const submissionSets = [];
+            const submissionCards = document.querySelectorAll('.submisson-card');
+            
+            submissionCards.forEach(card => {
+                const streamerId = card.getAttribute('data-streamer-id');
+                const inputs = card.querySelectorAll('.submisson-input');
+                const missions = [];
+                
+                inputs.forEach(input => {
+                    missions.push(input.value);
+                });
+                
+                submissionSets.push({
+                    streamerId: streamerId,
+                    missions: missions
+                });
+            });
+            
+            // 셔플 알고리즘
+            const shuffledIndices = [...Array(submissionSets.length).keys()];
+            for (let i = shuffledIndices.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledIndices[i], shuffledIndices[j]] = [shuffledIndices[j], shuffledIndices[i]];
+            }
+            
+            // 셔플된 결과를 서브미션 카드에 적용
+            submissionCards.forEach((card, i) => {
+                const shuffledIndex = shuffledIndices[i];
+                const missionSet = submissionSets[shuffledIndex];
+                const inputs = card.querySelectorAll('.submisson-input');
+                
+                inputs.forEach((input, j) => {
+                    input.value = missionSet.missions[j];
+                });
+            });
+            
+            showToast('서브 미션이 랜덤으로 섞였습니다. 적용하려면 "적용하기" 버튼을 클릭하세요.');
+        }
+        
+        // 서브미션 적용하기
+        function applySubmissions() {
+            // 각 스트리머별 서브미션 카드의 값을 가져와서 스트리머 카드에 적용
+            const submissionCards = document.querySelectorAll('.submisson-card');
+            
+            submissionCards.forEach(card => {
+                const streamerId = card.getAttribute('data-streamer-id');
+                const streamerCard = document.querySelector(`.streamer-card[data-streamer-id="${streamerId}"]`);
+                const inputs = card.querySelectorAll('.submisson-input');
+                
+                if (streamerCard) {
+                    const missionTexts = streamerCard.querySelectorAll('.mission-text[data-mission-id="2"], .mission-text[data-mission-id="3"], .mission-text[data-mission-id="4"]');
+                    
+                    inputs.forEach((input, index) => {
+                        if (missionTexts[index]) {
+                            missionTexts[index].textContent = input.value;
+                        }
+                    });
+                    
+                    // Firebase에 저장
+                    updateStreamerData(streamerId);
+                }
+            });
+            
+            showToast('서브 미션이 적용되었습니다.');
+        }
+        
+        // 서브미션 초기화
+        function resetSubmissions() {
+            if (!confirm('서브 미션을 초기 상태로 되돌리시겠습니까?')) {
+                return;
+            }
+            
+            // 각 스트리머별 카드에 원본 데이터 적용
+            Object.keys(originalSubmissionData).forEach(streamerId => {
+                const card = document.querySelector(`.submisson-card[data-streamer-id="${streamerId}"]`);
+                if (card) {
+                    const inputs = card.querySelectorAll('.submisson-input');
+                    const originalMissions = originalSubmissionData[streamerId];
+                    
+                    inputs.forEach((input, index) => {
+                        input.value = originalMissions[index];
+                    });
+                }
+            });
+            
+            showToast('서브 미션이 초기 상태로 복원되었습니다. 적용하려면 "적용하기" 버튼을 클릭하세요.');
+        }
         
         // 체크박스 토글 함수
         function toggleCheck(element, streamerId, checkNum) {
@@ -997,6 +1295,11 @@
                 
                 // 자동 저장
                 updateStreamerData(streamerId);
+                
+                // 서브미션 카드에도 반영
+                if (type === 'sub') {
+                    updateSubmissionCards(streamerId);
+                }
             } else {
                 // 편집 시작
                 missionElements.forEach(element => {
@@ -1023,6 +1326,23 @@
                             return oldKeydownListeners(e);
                         }
                     };
+                });
+            }
+        }
+        
+        // 서브미션 카드 업데이트
+        function updateSubmissionCards(streamerId) {
+            const streamerCard = document.querySelector(`.streamer-card[data-streamer-id="${streamerId}"]`);
+            const submissionCard = document.querySelector(`.submisson-card[data-streamer-id="${streamerId}"]`);
+            
+            if (streamerCard && submissionCard) {
+                const missionTexts = streamerCard.querySelectorAll('.mission-text[data-mission-id="2"], .mission-text[data-mission-id="3"], .mission-text[data-mission-id="4"]');
+                const inputs = submissionCard.querySelectorAll('.submisson-input');
+                
+                missionTexts.forEach((missionText, index) => {
+                    if (inputs[index]) {
+                        inputs[index].value = missionText.textContent;
+                    }
                 });
             }
         }
@@ -1255,6 +1575,8 @@
                 const data = snapshot.val();
                 if (data) {
                     applyDataToCard(streamerId, data);
+                    // 서브미션 카드에도 데이터 적용
+                    updateSubmissionCards(streamerId);
                 }
             });
             
@@ -1344,7 +1666,7 @@
                 const shuffledIndex = shuffledIndices[i];
                 const targetStreamerId = missionSets[shuffledIndex].streamerId;
                 
-                const targetCard = document.querySelector(`[data-streamer-id="${targetStreamerId}"]`);
+                const targetCard = document.querySelector(`.streamer-card[data-streamer-id="${targetStreamerId}"]`);
                 if (targetCard) {
                     // 미션 텍스트 업데이트
                     targetCard.querySelector('.mission-text[data-mission-id="2"]').textContent = missionSet.missions[0];
@@ -1377,6 +1699,9 @@
                         lastUpdate: firebase.database.ServerValue.TIMESTAMP
                     }).then(() => {
                         console.log(`${targetStreamerId}의 서브 미션이 업데이트되었습니다.`);
+                        
+                        // 서브미션 카드도 업데이트
+                        updateSubmissionCards(targetStreamerId);
                     }).catch(error => {
                         console.error(`${targetStreamerId} 업데이트 오류:`, error);
                     });
