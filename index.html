@@ -13,7 +13,7 @@
             font-family: 'Malgun Gothic', sans-serif;
             line-height: 1.6;
             color: #333;
-            max-width: 1200px;
+            max-width: 1600px; /* 너비 증가 */
             margin: 0 auto;
             padding: 20px;
             background-color: #f5f5f5;
@@ -27,12 +27,13 @@
         
         .container {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: wrap; /* 여러 줄에 걸쳐 배치 */
             gap: 20px;
             justify-content: center;
         }
         
         .instructions {
+            width: 100%; /* 전체 너비 사용 */
             background-color: white;
             padding: 20px;
             border-radius: 8px;
@@ -53,7 +54,7 @@
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            width: 350px;
+            width: 360px; /* 약간 더 넓게 */
             overflow: hidden;
             margin-bottom: 20px;
         }
@@ -168,7 +169,7 @@
         
         .mission-item {
             display: flex;
-            align-items: flex-start; /* 다중 라인 텍스트 위해 상단 정렬 */
+            align-items: flex-start;
             margin-bottom: 8px;
             padding: 8px 0;
         }
@@ -185,7 +186,7 @@
             cursor: pointer;
             background-color: white;
             flex-shrink: 0;
-            margin-top: 3px; /* 체크박스 위치 조정 */
+            margin-top: 3px;
         }
         
         .mission-checkbox.checked {
@@ -205,7 +206,7 @@
             padding: 5px;
             border-radius: 3px;
             min-height: 20px;
-            white-space: pre-line; /* 줄바꿈 보존 */
+            white-space: pre-line;
             line-height: 1.4;
         }
         
@@ -248,43 +249,6 @@
         
         .copy-button:hover {
             background-color: #1e3a6a;
-        }
-        
-        .control-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-        
-        .update-button {
-            background-color: #44c767;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            flex: 1;
-            margin-right: 8px;
-        }
-        
-        .reset-button {
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100px;
-        }
-        
-        .update-button:hover {
-            background-color: #3d9e5c;
-        }
-        
-        .reset-button:hover {
-            background-color: #c0392b;
         }
         
         .file-upload {
@@ -336,6 +300,25 @@
             background-color: #f0f0f0;
         }
         
+        /* 랜덤 미션 버튼 */
+        .random-mission-button {
+            background-color: #7b3dc9;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 0 auto 30px;
+            display: block;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .random-mission-button:hover {
+            background-color: #6423ad;
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translate(-50%, 20px); }
             to { opacity: 1; transform: translate(-50%, 0); }
@@ -356,10 +339,12 @@
             <li>각 스트리머의 이름, 역할, 미션 내용을 편집 버튼(✏️)을 클릭하여 수정할 수 있습니다.</li>
             <li>프로필 이미지를 클릭하여 스트리머의 프로필 사진을 변경할 수 있습니다.</li>
             <li>각 스트리머의 미션 상태를 체크박스로 관리할 수 있습니다.</li>
-            <li><strong>업데이트</strong> 버튼을 클릭하면 해당 스트리머의 미션 현황판이 실시간으로 업데이트됩니다.</li>
             <li>스트리머는 OBS에 미션 현황판 링크를 브라우저 소스로 추가하면 됩니다.</li>
         </ol>
     </div>
+    
+    <!-- 랜덤 서브 미션 버튼 -->
+    <button class="random-mission-button" onclick="assignRandomMissions()">서브 미션 랜덤 할당</button>
     
     <div class="container">
         <!-- 견자희 카드 -->
@@ -422,11 +407,6 @@
                     https://friendshiping-ee9a0.web.app/kyeonjahee.html
                 </div>
                 <button class="copy-button" onclick="copyToClipboard('kyeonjahee-link')">복사</button>
-                
-                <div class="control-buttons">
-                    <button class="update-button" onclick="updateStreamer('kyeonjahee')">업데이트</button>
-                    <button class="reset-button" onclick="resetStreamer('kyeonjahee')">초기화</button>
-                </div>
             </div>
         </div>
         
@@ -490,11 +470,6 @@
                     https://friendshiping-ee9a0.web.app/woojeong.html
                 </div>
                 <button class="copy-button" onclick="copyToClipboard('woojeong-link')">복사</button>
-                
-                <div class="control-buttons">
-                    <button class="update-button" onclick="updateStreamer('woojeong')">업데이트</button>
-                    <button class="reset-button" onclick="resetStreamer('woojeong')">초기화</button>
-                </div>
             </div>
         </div>
         
@@ -558,11 +533,6 @@
                     https://friendshiping-ee9a0.web.app/mingyeolhui.html
                 </div>
                 <button class="copy-button" onclick="copyToClipboard('mingyeolhui-link')">복사</button>
-                
-                <div class="control-buttons">
-                    <button class="update-button" onclick="updateStreamer('mingyeolhui')">업데이트</button>
-                    <button class="reset-button" onclick="resetStreamer('mingyeolhui')">초기화</button>
-                </div>
             </div>
         </div>
         
@@ -626,11 +596,6 @@
                     https://friendshiping-ee9a0.web.app/jjamtasua.html
                 </div>
                 <button class="copy-button" onclick="copyToClipboard('jjamtasua-link')">복사</button>
-                
-                <div class="control-buttons">
-                    <button class="update-button" onclick="updateStreamer('jjamtasua')">업데이트</button>
-                    <button class="reset-button" onclick="resetStreamer('jjamtasua')">초기화</button>
-                </div>
             </div>
         </div>
         
@@ -694,11 +659,6 @@
                     https://friendshiping-ee9a0.web.app/jini.html
                 </div>
                 <button class="copy-button" onclick="copyToClipboard('jini-link')">복사</button>
-                
-                <div class="control-buttons">
-                    <button class="update-button" onclick="updateStreamer('jini')">업데이트</button>
-                    <button class="reset-button" onclick="resetStreamer('jini')">초기화</button>
-                </div>
             </div>
         </div>
         
@@ -762,11 +722,6 @@
                     https://friendshiping-ee9a0.web.app/manggulang.html
                 </div>
                 <button class="copy-button" onclick="copyToClipboard('manggulang-link')">복사</button>
-                
-                <div class="control-buttons">
-                    <button class="update-button" onclick="updateStreamer('manggulang')">업데이트</button>
-                    <button class="reset-button" onclick="resetStreamer('manggulang')">초기화</button>
-                </div>
             </div>
         </div>
         
@@ -830,11 +785,6 @@
                     https://friendshiping-ee9a0.web.app/mygomi.html
                 </div>
                 <button class="copy-button" onclick="copyToClipboard('mygomi-link')">복사</button>
-                
-                <div class="control-buttons">
-                    <button class="update-button" onclick="updateStreamer('mygomi')">업데이트</button>
-                    <button class="reset-button" onclick="resetStreamer('mygomi')">초기화</button>
-                </div>
             </div>
         </div>
     </div>
@@ -854,6 +804,81 @@
         // Firebase 초기화
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+        
+        // 서브 미션 묶음 데이터
+        const subMissionSets = [
+            {
+                name: "묶음 1",
+                missions: ["서브 미션 1-1", "서브 미션 1-2", "서브 미션 1-3"]
+            },
+            {
+                name: "묶음 2",
+                missions: ["서브 미션 2-1", "서브 미션 2-2", "서브 미션 2-3"]
+            },
+            {
+                name: "묶음 3",
+                missions: ["서브 미션 3-1", "서브 미션 3-2", "서브 미션 3-3"]
+            },
+            {
+                name: "묶음 4",
+                missions: ["서브 미션 4-1", "서브 미션 4-2", "서브 미션 4-3"]
+            },
+            {
+                name: "묶음 5",
+                missions: ["서브 미션 5-1", "서브 미션 5-2", "서브 미션 5-3"]
+            },
+            {
+                name: "묶음 6",
+                missions: ["서브 미션 6-1", "서브 미션 6-2", "서브 미션 6-3"]
+            },
+            {
+                name: "묶음 7",
+                missions: ["서브 미션 7-1", "서브 미션 7-2", "서브 미션 7-3"]
+            }
+        ];
+        
+        // 랜덤 서브 미션 할당 함수
+        function assignRandomMissions() {
+            if (!confirm("모든 스트리머의 서브 미션이 랜덤으로 변경됩니다. 계속하시겠습니까?")) {
+                return;
+            }
+            
+            const streamers = [
+                'kyeonjahee', 'woojeong', 'mingyeolhui', 
+                'jjamtasua', 'jini', 'manggulang', 'mygomi'
+            ];
+            
+            // 미션 묶음을 섞기
+            const shuffledSets = [...subMissionSets].sort(() => Math.random() - 0.5);
+            
+            // 각 스트리머에게 미션 할당
+            streamers.forEach((streamerId, index) => {
+                const missionSet = shuffledSets[index % shuffledSets.length];
+                
+                // 카드에 있는 미션 텍스트 업데이트
+                const card = document.querySelector(`[data-streamer-id="${streamerId}"]`);
+                if (card) {
+                    card.querySelector('.mission-text[data-mission-id="2"]').textContent = missionSet.missions[0];
+                    card.querySelector('.mission-text[data-mission-id="3"]').textContent = missionSet.missions[1];
+                    card.querySelector('.mission-text[data-mission-id="4"]').textContent = missionSet.missions[2];
+                }
+                
+                // Firebase에 저장
+                const streamerRef = database.ref(`streamers/${streamerId}`);
+                streamerRef.update({
+                    mission2: missionSet.missions[0],
+                    mission3: missionSet.missions[1],
+                    mission4: missionSet.missions[2],
+                    lastUpdate: firebase.database.ServerValue.TIMESTAMP
+                }).then(() => {
+                    console.log(`${streamerId}의 서브 미션이 업데이트되었습니다:`, missionSet.name);
+                }).catch(error => {
+                    console.error(`${streamerId} 업데이트 오류:`, error);
+                });
+            });
+            
+            showToast("서브 미션이 랜덤으로 할당되었습니다!");
+        }
         
         // 페이지 로드 시 실행
         window.addEventListener('load', function() {
@@ -1171,7 +1196,6 @@
                     showToast('업데이트 실패: ' + error.message);
                 } else {
                     console.log('Firebase 데이터 업데이트 성공:', streamerId);
-                    showToast('미션 현황판이 업데이트되었습니다.');
                 }
             });
         }
@@ -1230,29 +1254,6 @@
                 const imageElement = card.querySelector(`#${streamerId}-avatar`);
                 imageElement.src = data.image;
             }
-        }
-        
-        // 스트리머 업데이트 버튼 클릭 함수
-        function updateStreamer(streamerId) {
-            console.log('업데이트 요청:', streamerId);
-            updateStreamerData(streamerId);
-        }
-        
-        // 스트리머 리셋 버튼 클릭 함수
-        function resetStreamer(streamerId) {
-            const card = document.querySelector(`[data-streamer-id="${streamerId}"]`);
-            
-            // 체크박스 리셋
-            card.querySelector(`#${streamerId}-check1`).classList.remove('checked');
-            card.querySelector(`#${streamerId}-check2`).classList.remove('checked');
-            card.querySelector(`#${streamerId}-check3`).classList.remove('checked');
-            card.querySelector(`#${streamerId}-check4`).classList.remove('checked');
-            
-            // 데이터 업데이트
-            updateStreamerData(streamerId);
-            
-            // 리셋 메시지 표시
-            showToast('미션 현황판이 초기화되었습니다.');
         }
     </script>
 </body>
