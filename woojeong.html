@@ -261,14 +261,25 @@
             border: 1px solid #eee;
             min-height: 18px; /* 최소 높이 설정 */
             margin-bottom: 2px;
+            transition: all 0.3s ease;
         }
         
         /* 서브 미션 숨김 상태에서의 스타일 */
         .sub-mission-text.hidden-mission {
             background-color: #e9e9e9;
             border: 1px dashed #ccc;
-            min-height: 18px;
-            visibility: hidden;
+            color: transparent;
+            height: 18px; /* 고정 높이 */
+            overflow: hidden;
+        }
+        
+        /* 서브 미션 텍스트 박스 스타일 */
+        .mission-placeholder {
+            background-color: #e9e9e9;
+            border: 1px dashed #ccc;
+            height: 18px;
+            border-radius: 3px;
+            margin-bottom: 2px;
         }
         
         /* 콘텐츠가 비었을 때도 최소 높이 유지 */
@@ -393,21 +404,34 @@
         function adjustPanelSize(subMissionVisible) {
             const missionPanel = document.querySelector('.mission-panel');
             const subMissionItems = document.querySelectorAll('.sub-mission-text');
+            const missionPlaceholders = document.querySelectorAll('.mission-placeholder');
             
             if (!subMissionVisible) {
                 // 서브 미션이 숨겨져 있을 때 패널 높이를 줄임
                 missionPanel.style.minHeight = '200px';
+                
+                // 실제 미션 텍스트 숨기기
                 subMissionItems.forEach(item => {
-                    item.classList.add('hidden-mission');
-                    item.style.height = '18px'; // 최소 높이로 고정
+                    item.style.display = 'none';
+                });
+                
+                // 플레이스홀더 표시
+                missionPlaceholders.forEach(item => {
+                    item.style.display = 'block';
                 });
             } else {
                 // 서브 미션이 보일 때 패널 높이를 자동 조정
                 missionPanel.style.minHeight = '255px';
                 missionPanel.style.height = 'auto';
+                
+                // 실제 미션 텍스트 표시
                 subMissionItems.forEach(item => {
-                    item.classList.remove('hidden-mission');
-                    item.style.height = 'auto'; // 높이 자동 조정
+                    item.style.display = 'block';
+                });
+                
+                // 플레이스홀더 숨기기 
+                missionPlaceholders.forEach(item => {
+                    item.style.display = 'none';
                 });
             }
         }
@@ -416,6 +440,18 @@
         window.addEventListener('load', function() {
             const streamerId = getStreamerId();
             console.log('스트리머 ID:', streamerId);
+            
+            // 서브 미션 플레이스홀더 생성
+            const subMissionItems = document.querySelectorAll('.mission-item');
+            subMissionItems.forEach(item => {
+                const subMissionText = item.querySelector('.sub-mission-text');
+                if (subMissionText) {
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'mission-placeholder';
+                    placeholder.style.display = 'none'; // 초기에는 숨김
+                    item.appendChild(placeholder);
+                }
+            });
             
             // Firebase에서 데이터 가져오기
             const streamerRef = database.ref(`streamers/${streamerId}`);
@@ -446,20 +482,9 @@
                 if (!settings) return;
                 
                 const visible = settings.subMissionVisible;
-                const subMissions = document.querySelectorAll('#mission2, #mission3, #mission4');
                 
-                // 미션 패널 크기 조정
+                // 미션 패널 크기 조정 및 플레이스홀더 처리
                 adjustPanelSize(visible);
-                
-                if (visible) {
-                    subMissions.forEach(el => {
-                        el.style.visibility = 'visible';
-                    });
-                } else {
-                    subMissions.forEach(el => {
-                        el.style.visibility = 'hidden';
-                    });
-                }
             });
         });
         
@@ -535,4 +560,3 @@
     </script>
 </body>
 </html>
-        
