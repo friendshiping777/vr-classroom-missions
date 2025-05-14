@@ -1313,11 +1313,42 @@
     }
     
     // 서브미션 카드 업데이트
-    function updateSubmissionCards(streamerId) {
-        const streamerCard = document.querySelector(`.streamer-card[data-streamer-id="${streamerId}"]`);
-        const submissionCard = document.querySelector(`.submisson-card[data-streamer-id="${streamerId}
+function updateSubmissionCards(streamerId) {
+    const streamerCard = document.querySelector(`.streamer-card[data-streamer-id="${streamerId}"]`);
+    const submissionCard = document.querySelector(`.submisson-card[data-streamer-id="${streamerId}"]`);
+    
+    if (streamerCard && submissionCard) {
+        const missionTexts = streamerCard.querySelectorAll('.mission-text[data-mission-id="2"], .mission-text[data-mission-id="3"], .mission-text[data-mission-id="4"]');
+        const inputs = submissionCard.querySelectorAll('.submisson-input');
+        
+        missionTexts.forEach((missionText, index) => {
+            if (inputs[index]) {
+                inputs[index].value = missionText.textContent;
+            }
+        });
+    }
+}
 
-        // Firebase에 저장
+    // 서브미션 적용하기 (수정됨)
+    function applySubmissions() {
+        // 각 스트리머별 서브미션 카드의 값을 가져와서 스트리머 카드에 적용
+        const submissionCards = document.querySelectorAll('.submisson-card');
+        
+        submissionCards.forEach(card => {
+            const streamerId = card.getAttribute('data-streamer-id');
+            const streamerCard = document.querySelector(`.streamer-card[data-streamer-id="${streamerId}"]`);
+            const inputs = card.querySelectorAll('.submisson-input');
+            
+            if (streamerCard) {
+                const missionTexts = streamerCard.querySelectorAll('.mission-text[data-mission-id="2"], .mission-text[data-mission-id="3"], .mission-text[data-mission-id="4"]');
+                
+                inputs.forEach((input, index) => {
+                    if (missionTexts[index]) {
+                        missionTexts[index].textContent = input.value;
+                    }
+                });
+                
+                // Firebase에 저장
                 updateStreamerData(streamerId);
             }
         });
