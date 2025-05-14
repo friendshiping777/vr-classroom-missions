@@ -356,4 +356,479 @@
             <li>각 스트리머의 이름, 역할, 미션 내용을 편집 버튼(✏️)을 클릭하여 수정할 수 있습니다.</li>
             <li>프로필 이미지를 클릭하여 스트리머의 프로필 사진을 변경할 수 있습니다.</li>
             <li>각 스트리머의 미션 상태를 체크박스로 관리할 수 있습니다.</li>
-            <li><strong>업데이트</strong
+            <li><strong>업데이트</strong> 버튼을 클릭하면 해당 스트리머의 미션 현황판이 실시간으로 업데이트됩니다.</li>
+            <li>스트리머는 OBS에 미션 현황판 링크를 브라우저 소스로 추가하면 됩니다.</li>
+        </ol>
+    </div>
+    
+    <div class="container">
+        <!-- 견자희 카드 -->
+        <div class="streamer-card" data-streamer-id="kyeonjahee">
+            <div class="streamer-header">
+                <div class="streamer-name-container">
+                    <span class="streamer-name-text editable" contenteditable="false" data-field="name">견자희</span>
+                </div>
+                <button class="edit-button" onclick="editStreamerName(this)">✏️</button>
+            </div>
+            
+            <div class="streamer-info">
+                <div class="streamer-avatar" onclick="triggerFileUpload('kyeonjahee')">
+                    <img id="kyeonjahee-avatar" src="./default-avatar.png" alt="견자희">
+                    <div class="avatar-overlay">
+                        <div class="avatar-overlay-text">클릭하여<br>이미지 변경</div>
+                    </div>
+                    <input type="file" id="kyeonjahee-image" class="file-upload" accept="image/*" onchange="uploadImage('kyeonjahee')">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role-container">
+                        <div class="streamer-role">[특이사항]</div>
+                        <button class="edit-button" onclick="editStreamerRole(this)">✏️</button>
+                    </div>
+                    <div class="streamer-name editable" contenteditable="false" data-field="role">모범생</div>
+                </div>
+            </div>
+            
+            <div class="mission-section">
+                <div class="mission-category main-mission">
+                    메인 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'main')">✏️</button>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="kyeonjahee-check1" onclick="toggleCheck(this, 'kyeonjahee', 1)"></div>
+                    <div class="mission-text" data-mission-id="1">메인 미션</div>
+                </div>
+                
+                <div class="mission-category sub-mission">
+                    서브 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'sub')">✏️</button>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="kyeonjahee-check2" onclick="toggleCheck(this, 'kyeonjahee', 2)"></div>
+                    <div class="mission-text" data-mission-id="2">서브 미션 1</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="kyeonjahee-check3" onclick="toggleCheck(this, 'kyeonjahee', 3)"></div>
+                    <div class="mission-text" data-mission-id="3">서브 미션 2</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="kyeonjahee-check4" onclick="toggleCheck(this, 'kyeonjahee', 4)"></div>
+                    <div class="mission-text" data-mission-id="4">서브 미션 3</div>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="kyeonjahee-link">
+                    https://friendshiping-ee9a0.web.app/kyeonjahee.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('kyeonjahee-link')">복사</button>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('kyeonjahee')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('kyeonjahee')">초기화</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 다른 스트리머 카드 (생략) -->
+    </div>
+
+    <script>
+        // Firebase 초기화
+        const firebaseConfig = {
+          apiKey: "AIzaSyAAX8T5oKVHIaZf_xut7qmfn88LIB1jUcM",
+          authDomain: "friendshiping-ee9a0.firebaseapp.com",
+          databaseURL: "https://friendshiping-ee9a0-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "friendshiping-ee9a0",
+          storageBucket: "friendshiping-ee9a0.firebasestorage.app",
+          messagingSenderId: "142784785070",
+          appId: "1:142784785070:web:0c94cf9d10c5eb0bf19b3f"
+        };
+        
+        // Firebase 초기화
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        
+        // 페이지 로드 시 실행
+        window.addEventListener('load', function() {
+            // 각 스트리머 초기화
+            const streamers = [
+                'kyeonjahee', 'woojeong', 'mingyeolhui', 'jjamtasua', 
+                'jini', 'manggulang', 'mygomi'
+            ];
+            
+            streamers.forEach(streamerId => {
+                // 링크 설정
+                const linkElement = document.getElementById(`${streamerId}-link`);
+                if (linkElement) {
+                    const baseUrl = `https://friendshiping-ee9a0.web.app/${streamerId}.html`;
+                    linkElement.innerText = baseUrl;
+                }
+                
+                // Firebase에서 데이터 불러오기 및 화면 업데이트
+                loadStreamerData(streamerId);
+            });
+        });
+        
+        // 체크박스 토글 함수
+        function toggleCheck(element, streamerId, checkNum) {
+            element.classList.toggle('checked');
+            
+            // 데이터 업데이트 & 자동 저장
+            updateStreamerData(streamerId);
+        }
+        
+        // 미션 텍스트 편집 함수 - 줄바꿈 유지 수정
+        function editMissionSection(buttonElement, type) {
+            const card = buttonElement.closest('.streamer-card');
+            const streamerId = card.getAttribute('data-streamer-id');
+            
+            let missionElements;
+            if (type === 'main') {
+                missionElements = [card.querySelector('.mission-text[data-mission-id="1"]')];
+            } else {
+                missionElements = [
+                    card.querySelector('.mission-text[data-mission-id="2"]'),
+                    card.querySelector('.mission-text[data-mission-id="3"]'),
+                    card.querySelector('.mission-text[data-mission-id="4"]')
+                ];
+            }
+            
+            const isEditing = missionElements[0].contentEditable === 'true';
+            
+            if (isEditing) {
+                // 편집 종료
+                missionElements.forEach(element => {
+                    if (element) {
+                        element.contentEditable = 'false';
+                        element.style.outline = 'none';
+                        element.style.backgroundColor = '';
+                        
+                        // 줄바꿈을 그대로 유지 (텍스트 내용을 그대로 사용)
+                        // 여기서 textContent를 그대로 사용하면 줄바꿈이 보존됨
+                    }
+                });
+                
+                buttonElement.textContent = '✏️';
+                
+                // 자동 저장
+                updateStreamerData(streamerId);
+            } else {
+                // 편집 시작
+                missionElements.forEach(element => {
+                    if (element) {
+                        element.contentEditable = 'true';
+                        element.style.outline = '2px solid #2b5797';
+                        element.style.backgroundColor = '#f0f0f0';
+                    }
+                });
+                
+                missionElements[0].focus();
+                buttonElement.textContent = '💾';
+                
+                // 엔터키 처리 - 이벤트 리스너 추가 없이 기본 동작 허용
+                // contentEditable에서는 엔터키가 기본적으로 줄바꿈을 생성함
+            }
+        }
+        
+        // 스트리머 이름 편집 함수
+        function editStreamerName(buttonElement) {
+            const card = buttonElement.closest('.streamer-card');
+            const streamerId = card.getAttribute('data-streamer-id');
+            const nameElement = card.querySelector('.streamer-name-text');
+            
+            const isEditing = nameElement.contentEditable === 'true';
+            
+            if (isEditing) {
+                // 편집 종료
+                nameElement.contentEditable = 'false';
+                nameElement.style.outline = 'none';
+                nameElement.style.backgroundColor = '';
+                
+                buttonElement.textContent = '✏️';
+                
+                // 자동 저장
+                updateStreamerData(streamerId);
+            } else {
+                // 편집 시작
+                nameElement.contentEditable = 'true';
+                nameElement.style.outline = '2px solid #2b5797';
+                nameElement.style.backgroundColor = '#f0f0f0';
+                nameElement.focus();
+                
+                buttonElement.textContent = '💾';
+                
+                // 엔터키 처리
+                nameElement.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        buttonElement.click();
+                    }
+                }, { once: true });
+            }
+        }
+        
+        // 스트리머 역할 편집 함수
+        function editStreamerRole(buttonElement) {
+            const card = buttonElement.closest('.streamer-card');
+            const streamerId = card.getAttribute('data-streamer-id');
+            const roleElement = card.querySelector('.streamer-name[data-field="role"]');
+            
+            const isEditing = roleElement.contentEditable === 'true';
+            
+            if (isEditing) {
+                // 편집 종료
+                roleElement.contentEditable = 'false';
+                roleElement.style.outline = 'none';
+                roleElement.style.backgroundColor = '';
+                
+                buttonElement.textContent = '✏️';
+                
+                // 자동 저장
+                updateStreamerData(streamerId);
+            } else {
+                // 편집 시작
+                roleElement.contentEditable = 'true';
+                roleElement.style.outline = '2px solid #2b5797';
+                roleElement.style.backgroundColor = '#f0f0f0';
+                roleElement.focus();
+                
+                buttonElement.textContent = '💾';
+                
+                // 엔터키 처리
+                roleElement.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        buttonElement.click();
+                    }
+                }, { once: true });
+            }
+        }
+        
+        // 파일 업로드 트리거 함수
+        function triggerFileUpload(streamerId) {
+            document.getElementById(`${streamerId}-image`).click();
+        }
+        
+        // 이미지 업로드 함수
+        function uploadImage(streamerId) {
+            const fileInput = document.getElementById(`${streamerId}-image`);
+            const file = fileInput.files[0];
+            
+            if (!file) return;
+            if (!file.type.match('image.*')) {
+                showToast('오류: 이미지 파일만 업로드 가능합니다.');
+                return;
+            }
+            
+            // 로딩 표시
+            showToast('이미지 업로드 중...');
+            
+            // 이미지 최적화
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    // 이미지 크기 조정 (최대 200x200px)
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const maxSize = 200;
+                    let width = img.width;
+                    let height = img.height;
+                    
+                    if (width > height) {
+                        if (width > maxSize) {
+                            height *= maxSize / width;
+                            width = maxSize;
+                        }
+                    } else {
+                        if (height > maxSize) {
+                            width *= maxSize / height;
+                            height = maxSize;
+                        }
+                    }
+                    
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    // 최적화된 이미지 데이터 (낮은 품질의 JPEG로 변환)
+                    const optimizedImageData = canvas.toDataURL('image/jpeg', 0.7);
+                    
+                    // 이미지 미리보기 업데이트
+                    document.getElementById(`${streamerId}-avatar`).src = optimizedImageData;
+                    
+                    // Firebase에 이미지 데이터 저장 (현재 시간 타임스탬프 추가)
+                    const timestamp = Date.now();
+                    const streamerRef = database.ref(`streamers/${streamerId}`);
+                    streamerRef.update({
+                        image: optimizedImageData,
+                        imageTimestamp: timestamp,
+                        lastUpdate: firebase.database.ServerValue.TIMESTAMP
+                    }).then(() => {
+                        showToast('프로필 이미지가 업데이트되었습니다.');
+                    }).catch(error => {
+                        console.error('이미지 저장 오류:', error);
+                        showToast('이미지 업로드 실패: ' + error.message);
+                    });
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        // 클립보드에 텍스트 복사
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text)
+                .then(() => showToast('링크가 복사되었습니다.'))
+                .catch(err => console.error('클립보드 복사 실패:', err));
+        }
+        
+        // 토스트 메시지 표시 함수
+        function showToast(message) {
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) existingToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('fade-out');
+                setTimeout(() => toast.remove(), 500);
+            }, 2000);
+        }
+        
+        // 스트리머 데이터 업데이트 함수 - 줄바꿈 유지 수정
+        function updateStreamerData(streamerId) {
+            const card = document.querySelector(`[data-streamer-id="${streamerId}"]`);
+            
+            // 기본 정보 수집
+            const name = card.querySelector('.streamer-name-text').textContent;
+            const role = card.querySelector('.streamer-name[data-field="role"]').textContent;
+            
+            // 미션 텍스트 수집 - textContent를 그대로 사용하여 줄바꿈 유지
+            const mission1 = card.querySelector('.mission-text[data-mission-id="1"]').textContent;
+            const mission2 = card.querySelector('.mission-text[data-mission-id="2"]').textContent;
+            const mission3 = card.querySelector('.mission-text[data-mission-id="3"]').textContent;
+            const mission4 = card.querySelector('.mission-text[data-mission-id="4"]').textContent;
+            
+            // 체크박스 상태 수집
+            const check1 = card.querySelector(`#${streamerId}-check1`).classList.contains('checked') ? '1' : '0';
+            const check2 = card.querySelector(`#${streamerId}-check2`).classList.contains('checked') ? '1' : '0';
+            const check3 = card.querySelector(`#${streamerId}-check3`).classList.contains('checked') ? '1' : '0';
+            const check4 = card.querySelector(`#${streamerId}-check4`).classList.contains('checked') ? '1' : '0';
+            
+            // 이미지 데이터 가져오기
+            const imageElement = card.querySelector(`#${streamerId}-avatar`);
+            const imageData = imageElement.src;
+            
+            // Firebase에 데이터 업데이트
+            const streamerRef = database.ref(`streamers/${streamerId}`);
+            streamerRef.update({
+                name: name,
+                role: role,
+                mission1: mission1, // 줄바꿈이 그대로 보존됨
+                mission2: mission2,
+                mission3: mission3,
+                mission4: mission4,
+                check1: check1,
+                check2: check2,
+                check3: check3,
+                check4: check4,
+                image: imageData,
+                lastUpdate: firebase.database.ServerValue.TIMESTAMP
+            }, function(error) {
+                if (error) {
+                    console.error('Firebase 데이터 업데이트 오류:', error);
+                    showToast('업데이트 실패: ' + error.message);
+                } else {
+                    console.log('Firebase 데이터 업데이트 성공:', streamerId);
+                    showToast('미션 현황판이 업데이트되었습니다.');
+                }
+            });
+        }
+        
+        // 스트리머 데이터 불러오기 함수
+        function loadStreamerData(streamerId) {
+            const streamerRef = database.ref(`streamers/${streamerId}`);
+            
+            // 초기 데이터 로드
+            streamerRef.once('value', snapshot => {
+                const data = snapshot.val();
+                if (data) {
+                    applyDataToCard(streamerId, data);
+                }
+            });
+            
+            // 실시간 업데이트 리스너 설정
+            streamerRef.on('value', snapshot => {
+                const data = snapshot.val();
+                if (data) {
+                    applyDataToCard(streamerId, data);
+                }
+            });
+        }
+        
+        // 카드에 데이터 적용 함수 - 줄바꿈 유지
+        function applyDataToCard(streamerId, data) {
+            const card = document.querySelector(`[data-streamer-id="${streamerId}"]`);
+            if (!card) return;
+            
+            // 각 필드 업데이트
+            card.querySelector('.streamer-name-text').textContent = data.name || '';
+            card.querySelector('.streamer-name[data-field="role"]').textContent = data.role || '';
+            
+            // 미션 설정 - 줄바꿈 유지
+            if (data.mission1) card.querySelector('.mission-text[data-mission-id="1"]').textContent = data.mission1;
+            if (data.mission2) card.querySelector('.mission-text[data-mission-id="2"]').textContent = data.mission2;
+            if (data.mission3) card.querySelector('.mission-text[data-mission-id="3"]').textContent = data.mission3;
+            if (data.mission4) card.querySelector('.mission-text[data-mission-id="4"]').textContent = data.mission4;
+            
+            // 체크박스 상태 설정
+            if (data.check1 === '1') card.querySelector(`#${streamerId}-check1`).classList.add('checked');
+            else card.querySelector(`#${streamerId}-check1`).classList.remove('checked');
+            
+            if (data.check2 === '1') card.querySelector(`#${streamerId}-check2`).classList.add('checked');
+            else card.querySelector(`#${streamerId}-check2`).classList.remove('checked');
+            
+            if (data.check3 === '1') card.querySelector(`#${streamerId}-check3`).classList.add('checked');
+            else card.querySelector(`#${streamerId}-check3`).classList.remove('checked');
+            
+            if (data.check4 === '1') card.querySelector(`#${streamerId}-check4`).classList.add('checked');
+            else card.querySelector(`#${streamerId}-check4`).classList.remove('checked');
+            
+            // 이미지 설정
+            if (data.image) {
+                const imageElement = card.querySelector(`#${streamerId}-avatar`);
+                imageElement.src = data.image;
+            }
+        }
+        
+        // 스트리머 업데이트 버튼 클릭 함수
+        function updateStreamer(streamerId) {
+            console.log('업데이트 요청:', streamerId);
+            updateStreamerData(streamerId);
+        }
+        
+        // 스트리머 리셋 버튼 클릭 함수
+        function resetStreamer(streamerId) {
+            const card = document.querySelector(`[data-streamer-id="${streamerId}"]`);
+            
+            // 체크박스 리셋
+            card.querySelector(`#${streamerId}-check1`).classList.remove('checked');
+            card.querySelector(`#${streamerId}-check2`).classList.remove('checked');
+            card.querySelector(`#${streamerId}-check3`).classList.remove('checked');
+            card.querySelector(`#${streamerId}-check4`).classList.remove('checked');
+            
+            // 데이터 업데이트
+            updateStreamerData(streamerId);
+            
+            // 리셋 메시지 표시
+            showToast('미션 현황판이 초기화되었습니다.');
+        }
+    </script>
+</body>
+</html>
