@@ -8,13 +8,13 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
-    <style>
+        <style>
         /* 기본 스타일 */
         body {
             font-family: 'Malgun Gothic', sans-serif;
             line-height: 1.5;
             color: #333;
-            width: 100%; /* 최대 너비 제한 해제, 화면 전체 사용 */
+            max-width: 1500px; /* 너비 제한 설정 - 빨간 네모 박스 크기에 맞춤 */
             margin: 0 auto;
             padding: 10px;
             background-color: #f5f5f5;
@@ -31,12 +31,12 @@
             flex-wrap: wrap;
             gap: 12px; /* 카드 간격 */
             justify-content: center;
-            width: 98%; /* 화면 거의 전체 사용 */
+            width: 100%; /* 컨테이너 너비를 최대 너비 내에서 100% */
             margin: 0 auto;
         }
     
         .instructions {
-            width: 98%; /* 화면 거의 전체 사용 */
+            width: 100%; /* 지시사항 너비도 최대 너비 내에서 100% */
             background-color: white;
             padding: 12px;
             border-radius: 8px;
@@ -56,16 +56,15 @@
             margin: 0;
         }
     
-        /* 가로형 카드 스타일 - 세로 크기 조정 */
+        /* 가로형 카드 스타일 - 동적 높이 */
         .streamer-card {
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             width: calc(25% - 12px); /* 한 줄에 4개 카드 배치 (여백 고려) */
-            min-width: 380px; /* 최소 너비 설정 */
-            height: 200px; /* 카드 높이 증가 */
-            overflow: hidden;
-            margin-bottom: 8px;
+            min-width: 350px; /* 최소 너비 설정 */
+            overflow: visible; /* 내용에 맞게 확장 */
+            margin-bottom: 12px;
             display: flex;
             flex-direction: column;
         }
@@ -79,13 +78,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 28px; /* 헤더 높이 약간 증가 */
+            height: 26px; /* 헤더 높이 */
         }
     
         .streamer-content {
             display: flex;
             flex: 1;
-            height: 140px; /* 콘텐츠 영역 높이 증가 */
+            overflow: visible; /* 내용에 맞게 확장 */
         }
     
         /* 왼쪽 프로필 영역 - 1:2 비율 적용 */
@@ -100,8 +99,8 @@
         }
     
         .streamer-avatar {
-            width: 55px; /* 프로필 이미지 크기 */
-            height: 55px;
+            width: 60px; /* 프로필 이미지 크기 */
+            height: 60px;
             background-color: #ddd;
             border-radius: 4px;
             overflow: hidden;
@@ -166,11 +165,11 @@
             padding: 6px 8px;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
+            overflow: visible; /* 내용에 맞게 확장 */
         }
     
         .mission-section {
-            margin-bottom: 8px; /* 미션 섹션 간격 증가 */
+            margin-bottom: 5px; /* 미션 섹션 간격 축소 */
         }
     
         .mission-category {
@@ -178,7 +177,7 @@
             background-color: #efefef;
             padding: 3px 6px;
             border-radius: 4px;
-            margin-bottom: 4px;
+            margin-bottom: 3px; /* 간격 축소 */
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -193,14 +192,14 @@
         .sub-mission {
             color: #b87d2b;
             border-left: 3px solid #b87d2b;
-            margin-top: 4px; /* 서브 미션 상단 간격 */
+            margin-top: 3px; /* 서브 미션 상단 간격 축소 */
         }
     
         .mission-item {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 4px; /* 미션 아이템 간격 증가 */
-            padding: 2px 0;
+            margin-bottom: 3px; /* 미션 아이템 간격 축소 */
+            padding: 1px 0;
         }
     
         .mission-checkbox {
@@ -233,11 +232,11 @@
         .mission-text {
             font-size: 12px;
             flex: 1;
-            padding: 2px;
+            padding: 1px;
             border-radius: 3px;
             min-height: 16px;
             white-space: pre-line;
-            line-height: 1.3; /* 줄 간격 약간 증가 */
+            line-height: 1.2; /* 줄 간격 축소 */
         }
     
         .mission-text:focus {
@@ -253,7 +252,7 @@
             display: flex;
             align-items: center;
             font-size: 10px;
-            height: 28px; /* 링크 영역 높이 약간 증가 */
+            height: 24px; /* 링크 영역 높이 */
         }
     
         .links-title {
@@ -370,13 +369,13 @@
         }
     
         /* 미디어 쿼리 - 화면 크기에 따라 카드 조정 */
-        @media (max-width: 1600px) {
+        @media (max-width: 1500px) {
             .streamer-card {
                 width: calc(33.33% - 12px); /* 작은 화면에서는 한 줄에 3개 */
             }
         }
     
-        @media (max-width: 1200px) {
+        @media (max-width: 1150px) {
             .streamer-card {
                 width: calc(50% - 12px); /* 더 작은 화면에서는 한 줄에 2개 */
             }
