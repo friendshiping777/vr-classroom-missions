@@ -34,10 +34,11 @@
             justify-content: center;
             width: 100%;
             margin: 0 auto;
+            margin-top: 30px; /* 사용방법 카드와 스트리머 카드 간 간격 추가 */
         }
         
         .instructions {
-            width: 50%;
+            width: 60%; /* 넓이 증가 */
             background-color: white;
             padding: 15px 20px;
             border-radius: 8px;
@@ -64,7 +65,7 @@
             margin-bottom: 5px;
         }
         
-        /* 🔘 버튼 스타일 */
+        /* 버튼 스타일 */
         .button-container {
             position: absolute;
             top: 15px;
@@ -85,32 +86,92 @@
             white-space: nowrap;
         }
         
-        /* 🎲 랜덤 버튼 */
-        #shuffle-button {
-            background-color: #8e44ad;
+        /* 랜덤 버튼 */
+        .random-mission-button {
+            background-color: #1d79d4;
             color: white;
         }
-        #shuffle-button:hover {
-            background-color: #732d91;
+        .random-mission-button:hover {
+            background-color: #1667b7;
         }
         
-        /* ↩️ 초기화 버튼 */
-        #reset-button {
-            background-color: #e74c3c;
+        /* 초기화 버튼 */
+        .reset-button {
+            background-color: #40464d;
             color: white;
         }
-        #reset-button:hover {
-            background-color: #c0392b;
+        .reset-button:hover {
+            background-color: #333a40;
         }
         
-        /* 👀/🚫 공개/비공개 버튼 */
-        #toggle-visibility-button.visible {
-            background-color: #c8e6c9;
-            color: #2e7d32;
+        /* 토글 스위치 스타일 */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #c8e6c9; /* 기본 활성화 상태 색상 */
+            padding: 6px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
-        #toggle-visibility-button.hidden {
-            background-color: #ffcdd2;
-            color: #c62828;
+        
+        .toggle-container.hidden {
+            background-color: #ffcdd2; /* 비활성화 상태 색상 */
+        }
+        
+        .toggle-text {
+            font-size: 13px;
+            font-weight: bold;
+            color: #2e7d32; /* 활성화 상태 텍스트 색상 */
+        }
+        
+        .toggle-container.hidden .toggle-text {
+            color: #c62828; /* 비활성화 상태 텍스트 색상 */
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 20px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #4CAF50;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
         }
         
         /* 카드 레이아웃 */
@@ -280,7 +341,7 @@
             font-size: 9px;
         }
         .mission-text {
-            font-size: 18px;
+            font-size: 17px; /* 폰트 크기 1px 감소 */
             flex: 1;
             padding: 1px;
             border-radius: 3px;
@@ -291,6 +352,13 @@
         .mission-text:focus {
             outline: 2px solid #2b5797;
             background-color: #f0f0f0;
+        }
+        
+        /* 서브 미션 텍스트 영역 배경 */
+        .sub-mission .mission-text {
+            background-color: #f9f9f9;
+            padding: 2px 4px;
+            border: 1px solid #eee;
         }
         
         /* 하단 링크 */
@@ -439,7 +507,13 @@
         <div class="button-container">
             <button class="random-mission-button" onclick="shuffleSubMissions()">서브 미션 랜덤 뒤섞기</button>
             <button class="reset-button" onclick="resetToInitialState()">초기 상태로 복원</button>
-            <button class="random-mission-button" onclick="toggleSubMissionVisibility()" id="toggle-visibility-button">서브 미션 숨기기</button>
+            <div class="toggle-container" id="visibility-toggle">
+                <span class="toggle-text" id="toggle-status-text">공개 상태</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="visibility-checkbox" checked onchange="toggleSubMissionVisibility()">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
         </div>
 
     </div>
@@ -742,7 +816,7 @@
                     </div>
                     <div class="streamer-role-container">
                         <div class="streamer-role">[특이사항]</div>
-                        <div class="streamer-role-value editable" contenteditable="false" data-field="role">찐따</div>
+                        <div class="streamer-role-value editable" contenteditable="false" data-field="role">오타쿠</div>
                         <button class="edit-button" onclick="editStreamerRole(this)">✏️</button>
                     </div>
                 </div>
@@ -947,6 +1021,9 @@
         
         // 초기 상태 저장을 위한 변수
         let initialStates = {};
+        
+        // 전역 상태: 서브 미션 공개 여부
+        let isSubMissionVisible = true;
 
         // 페이지 로드 시 실행
         window.addEventListener('load', function() {
@@ -956,7 +1033,7 @@
                 'woojeong',   // 우정잉 (일진)
                 'mingyeolhui', // 민결희 (일진)
                 'jjamtasua',  // 짬타수아 (오타쿠)
-                'jini',       // 지니씨 (찐따)
+                'jini',       // 지니씨 (오타쿠)
                 'manggulang', // 망구랑 (모범생)
                 'mygomi'      // 마이곰이 (유학생)
             ];
@@ -973,11 +1050,33 @@
                 loadStreamerData(streamerId);
             });
             
-            // "스트리머 OBS 링크:" 텍스트를 "오버레이 링크:"로 변경
-            document.querySelectorAll('.links-title').forEach(function(element) {
-                element.textContent = '오버레이 링크:';
+            // 서브 미션 공개 상태 확인
+            const settingsRef = database.ref('streamers/settings');
+            settingsRef.once('value', function(snapshot) {
+                const settings = snapshot.val();
+                if (settings && settings.subMissionVisible !== undefined) {
+                    isSubMissionVisible = settings.subMissionVisible;
+                    updateToggleUI();
+                }
             });
         });
+        
+        // 토글 UI 업데이트 함수
+        function updateToggleUI() {
+            const toggleContainer = document.getElementById('visibility-toggle');
+            const toggleText = document.getElementById('toggle-status-text');
+            const checkbox = document.getElementById('visibility-checkbox');
+            
+            if (isSubMissionVisible) {
+                toggleContainer.classList.remove('hidden');
+                toggleText.textContent = '공개 상태';
+                checkbox.checked = true;
+            } else {
+                toggleContainer.classList.add('hidden');
+                toggleText.textContent = '비공개 상태';
+                checkbox.checked = false;
+            }
+        }
         
         // 데이터 로드 후 초기 상태 저장
         function saveInitialState(streamerId, data) {
@@ -1402,30 +1501,26 @@
                 imageElement.src = data.image;
             }
         }
-
-        // 전역 상태: 서브 미션 공개 여부
-        let isSubMissionVisible = true;
         
         // 서브 미션 공개/비공개 전환 함수
         function toggleSubMissionVisibility() {
             isSubMissionVisible = !isSubMissionVisible;
-            const subMissions = document.querySelectorAll('.sub-mission .mission-text');
-            subMissions.forEach(el => {
-                el.style.visibility = isSubMissionVisible ? 'visible' : 'hidden';
-            });
-        
-            const toggleButton = document.getElementById('toggle-visibility-button');
-            toggleButton.textContent = isSubMissionVisible ? '서브 미션 숨기기' : '서브 미션 보이기';
-        
-            // ✅ Firebase로 설정 전달
+            
+            // UI 업데이트
+            updateToggleUI();
+            
+            // Firebase로 설정 전달
             const settingsRef = database.ref('streamers/settings');
             settingsRef.update({
                 subMissionVisible: isSubMissionVisible,
                 lastUpdate: firebase.database.ServerValue.TIMESTAMP
+            }).then(() => {
+                showToast(isSubMissionVisible ? '서브 미션 공개 상태로 변경되었습니다.' : '서브 미션 비공개 상태로 변경되었습니다.');
+            }).catch(error => {
+                console.error('설정 업데이트 오류:', error);
+                showToast('설정 변경 실패: ' + error.message);
             });
         }
-
-
         
         // 서브 미션 랜덤 뒤섞기 함수
         function shuffleSubMissions() {
