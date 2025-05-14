@@ -190,12 +190,22 @@
             margin-top: 8px; /* 서브미션 섹션 아래로 이동 */
         }
         
+        /* 미션 라벨 텍스트로 대체 */
         .mission-label {
             display: block;
             margin-bottom: 6px;
-            height: 25px;
-            width: 85px;
+            padding: 3px 0;
+            font-size: 16px;
+            font-weight: bold;
             opacity: 0.95;
+        }
+        
+        .main-mission-label {
+            color: #c43e57;
+        }
+        
+        .sub-mission-label {
+            color: #b87d2b;
         }
         
         .mission-items {
@@ -272,6 +282,7 @@
             border-radius: 3px;
             margin-bottom: 2px;
             width: 95%;
+            margin-top: 2px; /* 체크박스와 높이 맞추기 위해 2픽셀 아래로 조정 */
         }
         
         /* 콘텐츠가 비었을 때도 최소 높이 유지 */
@@ -334,8 +345,8 @@
                 <!-- 오른쪽 섹션 - 미션 목록 -->
                 <div class="right-section">
                     <div class="mission-section">
-                        <!-- 메인 미션 이미지 -->
-                        <img src="main-mission.png" alt="메인 미션" class="mission-label">
+                        <!-- 메인 미션 라벨 (이미지 대신 텍스트로 변경) -->
+                        <div class="mission-label main-mission-label">메인 미션</div>
                         <div class="mission-items">
                             <div class="mission-item">
                                 <div class="mission-checkbox" id="check1"></div>
@@ -347,8 +358,8 @@
                     <div class="divider"></div>
                     
                     <div class="mission-section sub-mission-section">
-                        <!-- 서브 미션 이미지 -->
-                        <img src="sub-mission.png" alt="서브 미션" class="mission-label">
+                        <!-- 서브 미션 라벨 (이미지 대신 텍스트로 변경) -->
+                        <div class="mission-label sub-mission-label">서브 미션</div>
                         <div class="mission-items">
                             <div class="mission-item">
                                 <div class="mission-checkbox" id="check2"></div>
