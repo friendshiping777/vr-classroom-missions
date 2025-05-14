@@ -453,6 +453,19 @@
                 }
             }
         }
+        // ✅ 서브 미션 표시 여부를 Firebase에서 가져와 반영하는 코드
+        const settingsRef = database.ref('streamers/settings');
+        settingsRef.on('value', function(snapshot) {
+            const settings = snapshot.val();
+            if (!settings) return;
+        
+            const visible = settings.subMissionVisible;
+            const subMissions = document.querySelectorAll('#mission2, #mission3, #mission4');
+            subMissions.forEach(el => {
+                el.style.visibility = visible ? 'visible' : 'hidden';
+            });
+        });
+        
     </script>
 </body>
 </html>
