@@ -8,7 +8,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <style>
-        /* 이전 CSS 스타일은 그대로 유지 */
+        /* 기본 스타일 */
         body {
             font-family: 'Malgun Gothic', sans-serif;
             line-height: 1.6;
@@ -430,7 +430,413 @@
             </div>
         </div>
         
-        <!-- 다른 스트리머 카드 (생략) -->
+        <!-- 우정잉 카드 -->
+        <div class="streamer-card" data-streamer-id="woojeong">
+            <div class="streamer-header">
+                <div class="streamer-name-container">
+                    <span class="streamer-name-text editable" contenteditable="false" data-field="name">우정잉</span>
+                </div>
+                <button class="edit-button" onclick="editStreamerName(this)">✏️</button>
+            </div>
+            
+            <div class="streamer-info">
+                <div class="streamer-avatar" onclick="triggerFileUpload('woojeong')">
+                    <img id="woojeong-avatar" src="./default-avatar.png" alt="우정잉">
+                    <div class="avatar-overlay">
+                        <div class="avatar-overlay-text">클릭하여<br>이미지 변경</div>
+                    </div>
+                    <input type="file" id="woojeong-image" class="file-upload" accept="image/*" onchange="uploadImage('woojeong')">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role-container">
+                        <div class="streamer-role">[특이사항]</div>
+                        <button class="edit-button" onclick="editStreamerRole(this)">✏️</button>
+                    </div>
+                    <div class="streamer-name editable" contenteditable="false" data-field="role">일진</div>
+                </div>
+            </div>
+            
+            <div class="mission-section">
+                <div class="mission-category main-mission">
+                    메인 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'main')">✏️</button>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="woojeong-check1" onclick="toggleCheck(this, 'woojeong', 1)"></div>
+                    <div class="mission-text" data-mission-id="1">메인 미션</div>
+                </div>
+                
+                <div class="mission-category sub-mission">
+                    서브 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'sub')">✏️</button>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="woojeong-check2" onclick="toggleCheck(this, 'woojeong', 2)"></div>
+                    <div class="mission-text" data-mission-id="2">서브 미션 1</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="woojeong-check3" onclick="toggleCheck(this, 'woojeong', 3)"></div>
+                    <div class="mission-text" data-mission-id="3">서브 미션 2</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="woojeong-check4" onclick="toggleCheck(this, 'woojeong', 4)"></div>
+                    <div class="mission-text" data-mission-id="4">서브 미션 3</div>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="woojeong-link">
+                    https://friendshiping-ee9a0.web.app/woojeong.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('woojeong-link')">복사</button>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('woojeong')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('woojeong')">초기화</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 민결희 카드 -->
+        <div class="streamer-card" data-streamer-id="mingyeolhui">
+            <div class="streamer-header">
+                <div class="streamer-name-container">
+                    <span class="streamer-name-text editable" contenteditable="false" data-field="name">민결희</span>
+                </div>
+                <button class="edit-button" onclick="editStreamerName(this)">✏️</button>
+            </div>
+            
+            <div class="streamer-info">
+                <div class="streamer-avatar" onclick="triggerFileUpload('mingyeolhui')">
+                    <img id="mingyeolhui-avatar" src="./default-avatar.png" alt="민결희">
+                    <div class="avatar-overlay">
+                        <div class="avatar-overlay-text">클릭하여<br>이미지 변경</div>
+                    </div>
+                    <input type="file" id="mingyeolhui-image" class="file-upload" accept="image/*" onchange="uploadImage('mingyeolhui')">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role-container">
+                        <div class="streamer-role">[특이사항]</div>
+                        <button class="edit-button" onclick="editStreamerRole(this)">✏️</button>
+                    </div>
+                    <div class="streamer-name editable" contenteditable="false" data-field="role">일진</div>
+                </div>
+            </div>
+            
+            <div class="mission-section">
+                <div class="mission-category main-mission">
+                    메인 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'main')">✏️</button>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="mingyeolhui-check1" onclick="toggleCheck(this, 'mingyeolhui', 1)"></div>
+                    <div class="mission-text" data-mission-id="1">메인 미션</div>
+                </div>
+                
+                <div class="mission-category sub-mission">
+                    서브 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'sub')">✏️</button>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="mingyeolhui-check2" onclick="toggleCheck(this, 'mingyeolhui', 2)"></div>
+                    <div class="mission-text" data-mission-id="2">서브 미션 1</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="mingyeolhui-check3" onclick="toggleCheck(this, 'mingyeolhui', 3)"></div>
+                    <div class="mission-text" data-mission-id="3">서브 미션 2</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="mingyeolhui-check4" onclick="toggleCheck(this, 'mingyeolhui', 4)"></div>
+                    <div class="mission-text" data-mission-id="4">서브 미션 3</div>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="mingyeolhui-link">
+                    https://friendshiping-ee9a0.web.app/mingyeolhui.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('mingyeolhui-link')">복사</button>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('mingyeolhui')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('mingyeolhui')">초기화</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 짬타수아 카드 -->
+        <div class="streamer-card" data-streamer-id="jjamtasua">
+            <div class="streamer-header">
+                <div class="streamer-name-container">
+                    <span class="streamer-name-text editable" contenteditable="false" data-field="name">짬타수아</span>
+                </div>
+                <button class="edit-button" onclick="editStreamerName(this)">✏️</button>
+            </div>
+            
+            <div class="streamer-info">
+                <div class="streamer-avatar" onclick="triggerFileUpload('jjamtasua')">
+                    <img id="jjamtasua-avatar" src="./default-avatar.png" alt="짬타수아">
+                    <div class="avatar-overlay">
+                        <div class="avatar-overlay-text">클릭하여<br>이미지 변경</div>
+                    </div>
+                    <input type="file" id="jjamtasua-image" class="file-upload" accept="image/*" onchange="uploadImage('jjamtasua')">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role-container">
+                        <div class="streamer-role">[특이사항]</div>
+                        <button class="edit-button" onclick="editStreamerRole(this)">✏️</button>
+                    </div>
+                    <div class="streamer-name editable" contenteditable="false" data-field="role">오타쿠</div>
+                </div>
+            </div>
+            
+            <div class="mission-section">
+                <div class="mission-category main-mission">
+                    메인 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'main')">✏️</button>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jjamtasua-check1" onclick="toggleCheck(this, 'jjamtasua', 1)"></div>
+                    <div class="mission-text" data-mission-id="1">메인 미션</div>
+                </div>
+                
+                <div class="mission-category sub-mission">
+                    서브 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'sub')">✏️</button>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jjamtasua-check2" onclick="toggleCheck(this, 'jjamtasua', 2)"></div>
+                    <div class="mission-text" data-mission-id="2">서브 미션 1</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jjamtasua-check3" onclick="toggleCheck(this, 'jjamtasua', 3)"></div>
+                    <div class="mission-text" data-mission-id="3">서브 미션 2</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jjamtasua-check4" onclick="toggleCheck(this, 'jjamtasua', 4)"></div>
+                    <div class="mission-text" data-mission-id="4">서브 미션 3</div>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="jjamtasua-link">
+                    https://friendshiping-ee9a0.web.app/jjamtasua.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('jjamtasua-link')">복사</button>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('jjamtasua')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('jjamtasua')">초기화</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 지니씨 카드 -->
+        <div class="streamer-card" data-streamer-id="jini">
+            <div class="streamer-header">
+                <div class="streamer-name-container">
+                    <span class="streamer-name-text editable" contenteditable="false" data-field="name">지니씨</span>
+                </div>
+                <button class="edit-button" onclick="editStreamerName(this)">✏️</button>
+            </div>
+            
+            <div class="streamer-info">
+                <div class="streamer-avatar" onclick="triggerFileUpload('jini')">
+                    <img id="jini-avatar" src="./default-avatar.png" alt="지니씨">
+                    <div class="avatar-overlay">
+                        <div class="avatar-overlay-text">클릭하여<br>이미지 변경</div>
+                    </div>
+                    <input type="file" id="jini-image" class="file-upload" accept="image/*" onchange="uploadImage('jini')">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role-container">
+                        <div class="streamer-role">[특이사항]</div>
+                        <button class="edit-button" onclick="editStreamerRole(this)">✏️</button>
+                    </div>
+                    <div class="streamer-name editable" contenteditable="false" data-field="role">찐따</div>
+                </div>
+            </div>
+            
+            <div class="mission-section">
+                <div class="mission-category main-mission">
+                    메인 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'main')">✏️</button>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jini-check1" onclick="toggleCheck(this, 'jini', 1)"></div>
+                    <div class="mission-text" data-mission-id="1">메인 미션</div>
+                </div>
+                
+                <div class="mission-category sub-mission">
+                    서브 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'sub')">✏️</button>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jini-check2" onclick="toggleCheck(this, 'jini', 2)"></div>
+                    <div class="mission-text" data-mission-id="2">서브 미션 1</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jini-check3" onclick="toggleCheck(this, 'jini', 3)"></div>
+                    <div class="mission-text" data-mission-id="3">서브 미션 2</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="jini-check4" onclick="toggleCheck(this, 'jini', 4)"></div>
+                    <div class="mission-text" data-mission-id="4">서브 미션 3</div>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="jini-link">
+                    https://friendshiping-ee9a0.web.app/jini.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('jini-link')">복사</button>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('jini')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('jini')">초기화</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 망구랑 카드 -->
+        <div class="streamer-card" data-streamer-id="manggulang">
+            <div class="streamer-header">
+                <div class="streamer-name-container">
+                    <span class="streamer-name-text editable" contenteditable="false" data-field="name">망구랑</span>
+                </div>
+                <button class="edit-button" onclick="editStreamerName(this)">✏️</button>
+            </div>
+            
+            <div class="streamer-info">
+                <div class="streamer-avatar" onclick="triggerFileUpload('manggulang')">
+                    <img id="manggulang-avatar" src="./default-avatar.png" alt="망구랑">
+                    <div class="avatar-overlay">
+                        <div class="avatar-overlay-text">클릭하여<br>이미지 변경</div>
+                    </div>
+                    <input type="file" id="manggulang-image" class="file-upload" accept="image/*" onchange="uploadImage('manggulang')">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role-container">
+                        <div class="streamer-role">[특이사항]</div>
+                        <button class="edit-button" onclick="editStreamerRole(this)">✏️</button>
+                    </div>
+                    <div class="streamer-name editable" contenteditable="false" data-field="role">모범생</div>
+                </div>
+            </div>
+            
+            <div class="mission-section">
+                <div class="mission-category main-mission">
+                    메인 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'main')">✏️</button>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="manggulang-check1" onclick="toggleCheck(this, 'manggulang', 1)"></div>
+                    <div class="mission-text" data-mission-id="1">메인 미션</div>
+                </div>
+                
+                <div class="mission-category sub-mission">
+                    서브 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'sub')">✏️</button>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="manggulang-check2" onclick="toggleCheck(this, 'manggulang', 2)"></div>
+                    <div class="mission-text" data-mission-id="2">서브 미션 1</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="manggulang-check3" onclick="toggleCheck(this, 'manggulang', 3)"></div>
+                    <div class="mission-text" data-mission-id="3">서브 미션 2</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="manggulang-check4" onclick="toggleCheck(this, 'manggulang', 4)"></div>
+                    <div class="mission-text" data-mission-id="4">서브 미션 3</div>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="manggulang-link">
+                    https://friendshiping-ee9a0.web.app/manggulang.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('manggulang-link')">복사</button>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('manggulang')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('manggulang')">초기화</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 마이곰이 카드 -->
+        <div class="streamer-card" data-streamer-id="mygomi">
+            <div class="streamer-header">
+                <div class="streamer-name-container">
+                    <span class="streamer-name-text editable" contenteditable="false" data-field="name">마이곰이</span>
+                </div>
+                <button class="edit-button" onclick="editStreamerName(this)">✏️</button>
+            </div>
+            
+            <div class="streamer-info">
+                <div class="streamer-avatar" onclick="triggerFileUpload('mygomi')">
+                    <img id="mygomi-avatar" src="./default-avatar.png" alt="마이곰이">
+                    <div class="avatar-overlay">
+                        <div class="avatar-overlay-text">클릭하여<br>이미지 변경</div>
+                    </div>
+                    <input type="file" id="mygomi-image" class="file-upload" accept="image/*" onchange="uploadImage('mygomi')">
+                </div>
+                <div class="streamer-details">
+                    <div class="streamer-role-container">
+                        <div class="streamer-role">[특이사항]</div>
+                        <button class="edit-button" onclick="editStreamerRole(this)">✏️</button>
+                    </div>
+                    <div class="streamer-name editable" contenteditable="false" data-field="role">유학생</div>
+                </div>
+            </div>
+            
+            <div class="mission-section">
+                <div class="mission-category main-mission">
+                    메인 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'main')">✏️</button>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="mygomi-check1" onclick="toggleCheck(this, 'mygomi', 1)"></div>
+                    <div class="mission-text" data-mission-id="1">메인 미션</div>
+                </div>
+                
+                <div class="mission-category sub-mission">
+                    서브 미션
+                    <button class="edit-button" onclick="editMissionSection(this, 'sub')">✏️</button>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="mygomi-check2" onclick="toggleCheck(this, 'mygomi', 2)"></div>
+                    <div class="mission-text" data-mission-id="2">서브 미션 1</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="mygomi-check3" onclick="toggleCheck(this, 'mygomi', 3)"></div>
+                    <div class="mission-text" data-mission-id="3">서브 미션 2</div>
+                </div>
+                <div class="mission-item">
+                    <div class="mission-checkbox" id="mygomi-check4" onclick="toggleCheck(this, 'mygomi', 4)"></div>
+                    <div class="mission-text" data-mission-id="4">서브 미션 3</div>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-title">스트리머 OBS 링크</div>
+                <div class="link-box" id="mygomi-link">
+                    https://friendshiping-ee9a0.web.app/mygomi.html
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('mygomi-link')">복사</button>
+                
+                <div class="control-buttons">
+                    <button class="update-button" onclick="updateStreamer('mygomi')">업데이트</button>
+                    <button class="reset-button" onclick="resetStreamer('mygomi')">초기화</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -453,8 +859,13 @@
         window.addEventListener('load', function() {
             // 각 스트리머 초기화
             const streamers = [
-                'kyeonjahee', 'woojeong', 'mingyeolhui', 'jjamtasua', 
-                'jini', 'manggulang', 'mygomi'
+                'kyeonjahee', // 견자희 (모범생)
+                'woojeong',   // 우정잉 (일진)
+                'mingyeolhui', // 민결희 (일진)
+                'jjamtasua',  // 짬타수아 (오타쿠)
+                'jini',       // 지니씨 (찐따)
+                'manggulang', // 망구랑 (모범생)
+                'mygomi'      // 마이곰이 (유학생)
             ];
             
             streamers.forEach(streamerId => {
@@ -504,8 +915,8 @@
                         element.style.outline = 'none';
                         element.style.backgroundColor = '';
                         
-                        // 줄바꿈을 그대로 유지 (텍스트 내용을 그대로 사용)
-                        // 여기서 textContent를 그대로 사용하면 줄바꿈이 보존됨
+                        // 줄바꿈을 그대로 유지
+                        // 브라우저 contentEditable에서 줄바꿈은 이미 DOM에 반영됨
                     }
                 });
                 
@@ -526,8 +937,22 @@
                 missionElements[0].focus();
                 buttonElement.textContent = '💾';
                 
-                // 엔터키 처리 - 이벤트 리스너 추가 없이 기본 동작 허용
-                // contentEditable에서는 엔터키가 기본적으로 줄바꿈을 생성함
+                // 엔터키 처리 - 기본 동작 유지 (줄바꿈 허용)
+                // 엔터키 이벤트 리스너를 제거하여 기본 동작(줄바꿈)이 작동하도록 함
+                missionElements.forEach(element => {
+                    const oldKeydownListeners = element.onkeydown;
+                    element.onkeydown = function(e) {
+                        if (e.key === 'Enter') {
+                            // 기본 동작 유지 (preventDefault 호출 안 함)
+                            // 줄바꿈 허용
+                            return true;
+                        }
+                        // 그 외 키 이벤트는 기존 리스너로 처리
+                        if (oldKeydownListeners) {
+                            return oldKeydownListeners(e);
+                        }
+                    };
+                });
             }
         }
         
@@ -709,7 +1134,7 @@
             const name = card.querySelector('.streamer-name-text').textContent;
             const role = card.querySelector('.streamer-name[data-field="role"]').textContent;
             
-            // 미션 텍스트 수집 - textContent를 그대로 사용하여 줄바꿈 유지
+            // 미션 텍스트 수집 - textContent 사용하여 줄바꿈 유지
             const mission1 = card.querySelector('.mission-text[data-mission-id="1"]').textContent;
             const mission2 = card.querySelector('.mission-text[data-mission-id="2"]').textContent;
             const mission3 = card.querySelector('.mission-text[data-mission-id="3"]').textContent;
