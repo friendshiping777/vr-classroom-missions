@@ -1445,10 +1445,17 @@
                 el.style.visibility = isSubMissionVisible ? 'visible' : 'hidden';
             });
         
-            // 버튼 텍스트도 상태에 따라 바꾸기
             const toggleButton = document.getElementById('toggle-visibility-button');
             toggleButton.textContent = isSubMissionVisible ? '서브 미션 숨기기' : '서브 미션 보이기';
+        
+            // ✅ Firebase로 설정 전달
+            const settingsRef = database.ref('streamers/settings');
+            settingsRef.update({
+                subMissionVisible: isSubMissionVisible,
+                lastUpdate: firebase.database.ServerValue.TIMESTAMP
+            });
         }
+
 
         
         // 서브 미션 랜덤 뒤섞기 함수
