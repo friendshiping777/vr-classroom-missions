@@ -470,11 +470,10 @@
         <div class="button-container">
             <button class="random-mission-button" onclick="shuffleSubMissions()">서브 미션 랜덤 뒤섞기</button>
             <button class="reset-button" onclick="resetToInitialState()">초기 상태로 복원</button>
+            <button class="random-mission-button" onclick="toggleSubMissionVisibility()" id="toggle-visibility-button">서브 미션 숨기기</button>
         </div>
+
     </div>
-    
-    <!-- 랜덤 서브 미션 버튼 -->
-    <button class="random-mission-button" onclick="shuffleSubMissions()">서브 미션 랜덤 뒤섞기</button>
     
     <div class="container">
         <!-- 견자희 카드 -->
@@ -1434,6 +1433,23 @@
                 imageElement.src = data.image;
             }
         }
+
+        // 전역 상태: 서브 미션 공개 여부
+        let isSubMissionVisible = true;
+        
+        // 서브 미션 공개/비공개 전환 함수
+        function toggleSubMissionVisibility() {
+            isSubMissionVisible = !isSubMissionVisible;
+            const subMissions = document.querySelectorAll('.sub-mission .mission-text');
+            subMissions.forEach(el => {
+                el.style.visibility = isSubMissionVisible ? 'visible' : 'hidden';
+            });
+        
+            // 버튼 텍스트도 상태에 따라 바꾸기
+            const toggleButton = document.getElementById('toggle-visibility-button');
+            toggleButton.textContent = isSubMissionVisible ? '서브 미션 숨기기' : '서브 미션 보이기';
+        }
+
         
         // 서브 미션 랜덤 뒤섞기 함수
         function shuffleSubMissions() {
