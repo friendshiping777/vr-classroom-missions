@@ -181,12 +181,12 @@
             transform: translateX(20px);
         }
         
-        /* 카드 레이아웃 */
+        /* 카드 레이아웃 - 가로 비율 1.5배 증가 */
         .streamer-card {
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            width: 350px; /* 카드 고정 너비 설정 */
+            width: 525px; /* 카드 고정 너비 설정 (350px * 1.5) */
             margin-bottom: 12px;
             display: flex;
             flex-direction: column;
@@ -471,7 +471,7 @@
             to { opacity: 0; transform: translate(-50%, 20px); }
         }
         
-        /* 반응형 */
+        /* 반응형 - 가로 비율 1.5배 증가에 맞게 조정 */
         @media (max-width: 1200px) {
             .card-row {
                 justify-content: center;
@@ -483,7 +483,7 @@
         @media (max-width: 900px) {
             .streamer-card {
                 width: 100%;
-                max-width: 450px;
+                max-width: 675px; /* 450px * 1.5 */
             }
             .instructions {
                 width: 90%;
